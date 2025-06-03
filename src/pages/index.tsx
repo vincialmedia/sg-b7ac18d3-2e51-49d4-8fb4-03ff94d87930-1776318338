@@ -23,7 +23,10 @@ import {
   Gift,
   Package,
   Plus,
-  Minus
+  Minus,
+  ExternalLink,
+  Code,
+  Gauge
 } from "lucide-react"
 
 export default function Home() {
@@ -32,6 +35,23 @@ export default function Home() {
   const [userEmail, setUserEmail] = useState("")
   const [showEmailDialog, setShowEmailDialog] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 200)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
 
   const services = [
     {
@@ -60,6 +80,25 @@ export default function Home() {
       explanation: "Set up automated email campaigns, lead nurturing sequences, CRM integration, and analytics to convert more leads into customers while saving time.",
       basePoints: 350,
       features: ["Email Campaigns", "Lead Nurturing", "CRM Integration", "Analytics", "Workflow Automation"]
+    }
+  ]
+
+  const portfolioProjects = [
+    {
+      title: "Speed Comparer",
+      description: "A comprehensive speed testing and comparison platform that helps users analyze and optimize their internet connection performance.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+      technologies: ["React", "Node.js", "WebRTC", "Chart.js"],
+      features: ["Real-time Speed Testing", "ISP Comparison", "Historical Data", "Performance Analytics"],
+      link: "#"
+    },
+    {
+      title: "Allemann Performance",
+      description: "High-performance automotive website showcasing premium vehicle modifications and performance upgrades with stunning visual design.",
+      image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=400&fit=crop",
+      technologies: ["Next.js", "TypeScript", "Framer Motion", "Tailwind CSS"],
+      features: ["Interactive Gallery", "Performance Calculator", "Booking System", "Mobile Optimized"],
+      link: "#"
     }
   ]
 
@@ -111,6 +150,29 @@ export default function Home() {
       </Head>
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        {/* Sticky Progress Bar */}
+        <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? "bg-white/95 backdrop-blur-sm shadow-lg py-2" : "bg-transparent py-0"
+        }`}>
+          {isScrolled && (
+            <div className="max-w-6xl mx-auto px-4">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Star className="text-yellow-500 fill-current" size={16} />
+                  <span className="text-sm font-semibold text-slate-900">Points: {userPoints}</span>
+                </div>
+                {hasReachedGoal && (
+                  <Badge className="bg-green-100 text-green-800 border-green-300 text-xs">
+                    <Gift className="mr-1" size={12} />
+                    Gift Unlocked!
+                  </Badge>
+                )}
+              </div>
+              <Progress value={progressPercentage} className="h-2" />
+            </div>
+          )}
+        </div>
+
         {/* Hero Section */}
         <section className="relative px-4 py-16 md:py-24">
           <div className="max-w-6xl mx-auto">
@@ -130,11 +192,19 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+                  <Button 
+                    size="lg" 
+                    className="bg-blue-600 hover:bg-blue-700"
+                    onClick={() => scrollToSection("build-package")}
+                  >
                     Start Building Your Package
                     <ArrowRight className="ml-2" size={20} />
                   </Button>
-                  <Button variant="outline" size="lg">
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    onClick={() => scrollToSection("portfolio")}
+                  >
                     View Portfolio
                   </Button>
                 </div>
@@ -185,8 +255,76 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Portfolio Section */}
+        <section id="portfolio" className="px-4 py-16 bg-slate-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Featured Portfolio
+              </h2>
+              <p className="text-xl text-slate-600">
+                Recent projects showcasing our expertise and results
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {portfolioProjects.map((project, index) => (
+                <Card key={index} className="overflow-hidden hover:shadow-xl transition-all duration-300">
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-blue-600 text-white">
+                        {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
+                        {index === 0 ? "Performance" : "Automotive"}
+                      </Badge>
+                    </div>
+                  </div>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-xl">{project.title}</CardTitle>
+                      <Button variant="ghost" size="sm">
+                        <ExternalLink size={16} />
+                      </Button>
+                    </div>
+                    <CardDescription className="text-base">
+                      {project.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold mb-2">Key Features:</h4>
+                      <ul className="grid grid-cols-2 gap-1">
+                        {project.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-center gap-2">
+                            <CheckCircle className="text-green-500 flex-shrink-0" size={12} />
+                            <span className="text-sm text-slate-700">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold mb-2">Technologies:</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {project.technologies.map((tech, idx) => (
+                          <Badge key={idx} variant="outline" className="text-xs">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Services Selection Section */}
-        <section className="px-4 py-16 bg-white">
+        <section id="build-package" className="px-4 py-16 bg-white">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
