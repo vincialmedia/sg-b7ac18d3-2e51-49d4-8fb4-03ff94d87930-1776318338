@@ -219,35 +219,30 @@ export default function Home() {
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
         {/* Always Sticky Animated Progress Bar - Smaller and Centered */}
         <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200">
-          <div className="px-4 py-2 mx-auto max-w-sm">
-            <div className="flex items-center justify-between mb-1">
+          <div className="max-w-6xl mx-auto px-4 py-2">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Star className="text-yellow-500 fill-current" size={12} />
                 <span className="text-xs font-medium text-slate-900">
                   {userPoints} points
                 </span>
               </div>
-              {hasReachedGoal && (
+              <div className="w-full max-w-[200px] mx-4">
+                <div className="relative h-1 w-full">
+                  <Progress value={progressPercentage} className="h-1" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-500/10 rounded-full"></div>
+                </div>
+              </div>
+              {hasReachedGoal ? (
                 <Badge className="bg-green-100 text-green-800 border-green-300 text-xs py-0 px-2 h-4">
                   <Gift className="mr-1" size={8} />
                   Gift Unlocked
                 </Badge>
-              )}
-            </div>
-            <div className="space-y-1">
-              <div className="relative h-1 w-full">
-                <Progress value={progressPercentage} className="h-1" />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-500/10 rounded-full"></div>
-              </div>
-              <div className="flex justify-between text-xs">
+              ) : (
                 <span className="text-slate-500 text-[10px]">
-                  {hasReachedGoal 
-                    ? "Goal reached!" 
-                    : `${1000 - userPoints} more to unlock gift`
-                  }
+                  {1000 - userPoints} more to unlock gift
                 </span>
-                <span className="text-slate-700 font-medium text-[10px]">{Math.round(progressPercentage)}%</span>
-              </div>
+              )}
             </div>
           </div>
         </div>
