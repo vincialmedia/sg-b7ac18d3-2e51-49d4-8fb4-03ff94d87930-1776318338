@@ -217,8 +217,8 @@ export default function Home() {
       </Head>
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        {/* Always Sticky Animated Progress Bar - Smaller and Centered */}
-        <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200">
+        {/* Always Sticky Animated Progress Bar - Inside Main Container */}
+        <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200">
           <div className="max-w-6xl mx-auto px-4 py-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -247,8 +247,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Hero Section - Adjust top padding to account for smaller progress bar */}
-        <section className="relative px-4 py-16 md:py-24 pt-20">
+        {/* Hero Section */}
+        <section className="relative px-4 py-16 md:py-24">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
