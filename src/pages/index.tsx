@@ -217,43 +217,43 @@ export default function Home() {
       </Head>
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        {/* Always Sticky Animated Progress Bar - Smaller and Less Intrusive */}
+        {/* Always Sticky Animated Progress Bar - Smaller and Centered */}
         <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200">
-          <div className="max-w-6xl mx-auto px-4 py-2">
+          <div className="max-w-md mx-auto px-4 py-2">
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
-                <Star className="text-yellow-500 fill-current" size={14} />
-                <span className="text-sm font-medium text-slate-900">
+                <Star className="text-yellow-500 fill-current" size={12} />
+                <span className="text-xs font-medium text-slate-900">
                   {userPoints} points
                 </span>
               </div>
               {hasReachedGoal && (
-                <Badge className="bg-green-100 text-green-800 border-green-300 text-xs py-0 px-2 h-5">
-                  <Gift className="mr-1" size={10} />
+                <Badge className="bg-green-100 text-green-800 border-green-300 text-xs py-0 px-2 h-4">
+                  <Gift className="mr-1" size={8} />
                   Gift Unlocked
                 </Badge>
               )}
             </div>
             <div className="space-y-1">
-              <div className="relative">
-                <Progress value={progressPercentage} className="h-1.5" />
+              <div className="relative h-1 w-full">
+                <Progress value={progressPercentage} className="h-1" />
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-500/10 rounded-full"></div>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-slate-500">
+                <span className="text-slate-500 text-[10px]">
                   {hasReachedGoal 
                     ? "Goal reached!" 
                     : `${1000 - userPoints} more to unlock gift`
                   }
                 </span>
-                <span className="text-slate-700 font-medium">{Math.round(progressPercentage)}%</span>
+                <span className="text-slate-700 font-medium text-[10px]">{Math.round(progressPercentage)}%</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Hero Section */}
-        <section className="relative px-4 py-16 md:py-24 pt-28">
+        {/* Hero Section - Adjust top padding to account for smaller progress bar */}
+        <section className="relative px-4 py-16 md:py-24 pt-20">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
