@@ -457,62 +457,60 @@ export default function Home() {
                 const selectedCount = selectedServices[service.id] || 0
                 
                 return (
-                  <MouseAvoidanceWrapper key={service.id} intensity={40}>
-                    <Card className="transition-all duration-300 hover:shadow-xl">
-                      <CardHeader className="text-center">
-                        <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                          <Icon className="text-blue-600" size={32} />
-                        </div>
-                        <div className="flex items-center justify-center gap-2 mb-2">
-                          <Badge variant="outline" className="text-blue-600 border-blue-600">
-                            +{service.basePoints} Points
-                          </Badge>
-                        </div>
-                        <CardTitle className="text-xl">{service.title}</CardTitle>
-                        <CardDescription className="text-base">
-                          {service.description}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="p-3 bg-slate-50 rounded-lg">
-                          <p className="text-sm text-slate-700">{service.explanation}</p>
-                        </div>
-                        
-                        <ul className="space-y-2">
-                          {service.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="text-green-500 flex-shrink-0" size={14} />
-                              <span className="text-sm text-slate-700">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
+                  <Card key={service.id} className="transition-all duration-300 hover:shadow-xl">
+                    <CardHeader className="text-center">
+                      <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <Icon className="text-blue-600" size={32} />
+                      </div>
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <Badge variant="outline" className="text-blue-600 border-blue-600">
+                          +{service.basePoints} Points
+                        </Badge>
+                      </div>
+                      <CardTitle className="text-xl">{service.title}</CardTitle>
+                      <CardDescription className="text-base">
+                        {service.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="p-3 bg-slate-50 rounded-lg">
+                        <p className="text-sm text-slate-700">{service.explanation}</p>
+                      </div>
+                      
+                      <ul className="space-y-2">
+                        {service.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-center gap-2">
+                            <CheckCircle className="text-green-500 flex-shrink-0" size={14} />
+                            <span className="text-sm text-slate-700">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
 
-                        <div className="flex items-center justify-between pt-4">
-                          <div className="flex items-center gap-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => removeService(service.id, service.basePoints)}
-                              disabled={selectedCount === 0}
-                            >
-                              <Minus size={16} />
-                            </Button>
-                            <span className="w-8 text-center font-semibold">{selectedCount}</span>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => addService(service.id, service.basePoints)}
-                            >
-                              <Plus size={16} />
-                            </Button>
-                          </div>
-                          <Badge variant="secondary">
-                            {selectedCount * service.basePoints} pts
-                          </Badge>
+                      <div className="flex items-center justify-between pt-4">
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => removeService(service.id, service.basePoints)}
+                            disabled={selectedCount === 0}
+                          >
+                            <Minus size={16} />
+                          </Button>
+                          <span className="w-8 text-center font-semibold">{selectedCount}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => addService(service.id, service.basePoints)}
+                          >
+                            <Plus size={16} />
+                          </Button>
                         </div>
-                      </CardContent>
-                    </Card>
-                  </MouseAvoidanceWrapper>
+                        <Badge variant="secondary">
+                          {selectedCount * service.basePoints} pts
+                        </Badge>
+                      </div>
+                    </CardContent>
+                  </Card>
                 )
               })}
             </div>
