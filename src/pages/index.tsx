@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Head from "next/head"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -36,14 +35,34 @@ export default function Home() {
   const [showEmailDialog, setShowEmailDialog] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const imageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 200)
     }
 
+    const handleMouseMove = (e: MouseEvent) => {
+      if (imageRef.current) {
+        const rect = imageRef.current.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+        
+        setMousePosition({
+          x: (e.clientX - centerX) / 20,
+          y: (e.clientY - centerY) / 20
+        })
+      }
+    }
+
     window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    window.addEventListener("mousemove", handleMouseMove)
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("mousemove", handleMouseMove)
+    }
   }, [])
 
   const scrollToSection = (sectionId: string) => {
@@ -211,14 +230,46 @@ export default function Home() {
               </div>
 
               <div className="relative">
-                <div className="relative z-10 mx-auto w-80 h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl">
+                <div 
+                  ref={imageRef}
+                  className="relative z-10 mx-auto w-80 h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl transition-all duration-300 ease-out hover:scale-105 cursor-pointer"
+                  style={{
+                    transform: `translate(${mousePosition.x}px, ${mousePosition.y}px) translateY(${Math.sin(Date.now() / 1000) * 5}px)`,
+                    animation: "float 6s ease-in-out infinite"
+                  }}
+                  onMouseEnter={() => {
+                    if (imageRef.current) {
+                      imageRef.current.style.transform += " scale(1.05)"
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (imageRef.current) {
+                      imageRef.current.style.transform = imageRef.current.style.transform.replace(" scale(1.05)", "")
+                    }
+                  }}
+                >
                   <img 
                     src="/vince-mbggi03h.jpeg" 
                     alt="Vince - Vincialmedia Founder"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-3xl opacity-20 scale-110"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-3xl opacity-20 scale-110 animate-pulse"></div>
+                
+                {/* Floating particles */}
+                <div className="absolute top-10 left-10 w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0s" }}></div>
+                <div className="absolute top-20 right-16 w-3 h-3 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "1s" }}></div>
+                <div className="absolute bottom-16 left-20 w-2 h-2 bg-blue-300 rounded-full animate-bounce" style={{ animationDelay: "2s" }}></div>
+                <div className="absolute bottom-10 right-10 w-2 h-2 bg-purple-300 rounded-full animate-bounce" style={{ animationDelay: "0.5s" }}></div>
+                
+                {/* Orbiting elements */}
+                <div className="absolute inset-0 animate-spin" style={{ animationDuration: "20s" }}>
+                  <div className="absolute top-0 left-1/2 w-4 h-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transform -translate-x-1/2 -translate-y-2"></div>
+                </div>
+                <div className="absolute inset-0 animate-spin" style={{ animationDuration: "15s", animationDirection: "reverse" }}>
+                  <div className="absolute bottom-0 left-1/2 w-3 h-3 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transform -translate-x-1/2 translate-y-2"></div>
+                </div>
               </div>
             </div>
           </div>
