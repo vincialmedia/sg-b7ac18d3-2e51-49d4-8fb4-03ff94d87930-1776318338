@@ -36,14 +36,17 @@ export default function Home() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [globalMousePosition, setGlobalMousePosition] = useState({ x: 0, y: 0 })
   const imageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 200)
+      setIsScrolled(window.scrollY > 50)
     }
 
     const handleMouseMove = (e: MouseEvent) => {
+      setGlobalMousePosition({ x: e.clientX, y: e.clientY })
+      
       if (imageRef.current) {
         const rect = imageRef.current.getBoundingClientRect()
         const centerX = rect.left + rect.width / 2
@@ -64,6 +67,56 @@ export default function Home() {
       window.removeEventListener("mousemove", handleMouseMove)
     }
   }, [])
+
+  const getAvoidanceTransform = (elementRef: React.RefObject<HTMLElement>, intensity: number = 30) => {
+    if (!elementRef.current) return ""
+    
+    const rect = elementRef.current.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    
+    const distance = Math.sqrt(
+      Math.pow(globalMousePosition.x - centerX, 2) + 
+      Math.pow(globalMousePosition.y - centerY, 2)
+    )
+    
+    if (distance < 150) {
+      const angle = Math.atan2(centerY - globalMousePosition.y, centerX - globalMousePosition.x)
+      const force = Math.max(0, (150 - distance) / 150)
+      const moveX = Math.cos(angle) * force * intensity
+      const moveY = Math.sin(angle) * force * intensity
+      
+      return `translate(${moveX}px, ${moveY}px)`
+    }
+    
+    return ""
+  }
+
+  const MouseAvoidanceWrapper = ({ children, intensity = 30, className = "" }: { 
+    children: React.ReactNode, 
+    intensity?: number, 
+    className?: string 
+  }) => {
+    const ref = useRef<HTMLDivElement>(null)
+    const [transform, setTransform] = useState("")
+
+    useEffect(() => {
+      const updateTransform = () => {
+        setTransform(getAvoidanceTransform(ref, intensity))
+      }
+      updateTransform()
+    }, [globalMousePosition, intensity])
+
+    return (
+      <div 
+        ref={ref} 
+        className={`transition-transform duration-300 ease-out ${className}`}
+        style={{ transform }}
+      >
+        {children}
+      </div>
+    )
+  }
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -169,63 +222,96 @@ export default function Home() {
       </Head>
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        {/* Sticky Progress Bar */}
-        <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-white/95 backdrop-blur-sm shadow-lg py-2" : "bg-transparent py-0"
-        }`}>
-          {isScrolled && (
-            <div className="max-w-6xl mx-auto px-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Star className="text-yellow-500 fill-current" size={16} />
-                  <span className="text-sm font-semibold text-slate-900">Points: {userPoints}</span>
+        {/* Always Sticky Animated Progress Bar */}
+        <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg border-b border-slate-200">
+          <div className="max-w-6xl mx-auto px-4 py-3">
+            <div className="flex items-center justify-between mb-3">
+              <MouseAvoidanceWrapper intensity={20}>
+                <div className="flex items-center gap-3">
+                  <Star className="text-yellow-500 fill-current animate-pulse" size={20} />
+                  <span className="text-base font-bold text-slate-900 animate-bounce">
+                    Your Points Scale: {userPoints}
+                  </span>
                 </div>
-                {hasReachedGoal && (
-                  <Badge className="bg-green-100 text-green-800 border-green-300 text-xs">
-                    <Gift className="mr-1" size={12} />
+              </MouseAvoidanceWrapper>
+              {hasReachedGoal && (
+                <MouseAvoidanceWrapper intensity={15}>
+                  <Badge className="bg-green-100 text-green-800 border-green-300 animate-pulse">
+                    <Gift className="mr-1 animate-spin" size={14} />
                     Gift Unlocked!
                   </Badge>
-                )}
-              </div>
-              <Progress value={progressPercentage} className="h-2" />
+                </MouseAvoidanceWrapper>
+              )}
             </div>
-          )}
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <MouseAvoidanceWrapper intensity={10}>
+                  <span className="text-slate-600">Progress to 1000 points</span>
+                </MouseAvoidanceWrapper>
+                <MouseAvoidanceWrapper intensity={10}>
+                  <span className="text-slate-900 font-semibold">{Math.round(progressPercentage)}%</span>
+                </MouseAvoidanceWrapper>
+              </div>
+              <div className="relative">
+                <Progress value={progressPercentage} className="h-3 animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-500/20 rounded-full animate-pulse"></div>
+              </div>
+              <MouseAvoidanceWrapper intensity={15}>
+                <p className="text-sm text-slate-500 text-center animate-bounce">
+                  {hasReachedGoal 
+                    ? "🎉 Congratulations! You've unlocked a surprise gift or discount!" 
+                    : `${1000 - userPoints} more points to unlock your surprise gift!`
+                  }
+                </p>
+              </MouseAvoidanceWrapper>
+            </div>
+          </div>
         </div>
 
         {/* Hero Section */}
-        <section className="relative px-4 py-16 md:py-24">
+        <section className="relative px-4 py-16 md:py-24 pt-32">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
                 <div className="space-y-4">
-                  <Badge variant="secondary" className="text-blue-600 bg-blue-100">
-                    Digital Marketing Expert
-                  </Badge>
-                  <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
-                    Transform Your
-                    <span className="text-blue-600 block">Digital Presence</span>
-                  </h1>
-                  <p className="text-xl text-slate-600 leading-relaxed">
-                    I help businesses grow through strategic web development, marketing automation, and social media excellence.
-                  </p>
+                  <MouseAvoidanceWrapper intensity={25}>
+                    <Badge variant="secondary" className="text-blue-600 bg-blue-100">
+                      Digital Marketing Expert
+                    </Badge>
+                  </MouseAvoidanceWrapper>
+                  <MouseAvoidanceWrapper intensity={35}>
+                    <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
+                      Transform Your
+                      <span className="text-blue-600 block">Digital Presence</span>
+                    </h1>
+                  </MouseAvoidanceWrapper>
+                  <MouseAvoidanceWrapper intensity={30}>
+                    <p className="text-xl text-slate-600 leading-relaxed">
+                      I help businesses grow through strategic web development, marketing automation, and social media excellence.
+                    </p>
+                  </MouseAvoidanceWrapper>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button 
-                    size="lg" 
-                    className="bg-blue-600 hover:bg-blue-700"
-                    onClick={() => scrollToSection("build-package")}
-                  >
-                    Start Building Your Package
-                    <ArrowRight className="ml-2" size={20} />
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="lg"
-                    onClick={() => scrollToSection("portfolio")}
-                  >
-                    View Portfolio
-                  </Button>
+                  <MouseAvoidanceWrapper intensity={40}>
+                    <Button 
+                      size="lg" 
+                      className="bg-blue-600 hover:bg-blue-700"
+                      onClick={() => scrollToSection("build-package")}
+                    >
+                      Start Building Your Package
+                      <ArrowRight className="ml-2" size={20} />
+                    </Button>
+                  </MouseAvoidanceWrapper>
+                  <MouseAvoidanceWrapper intensity={40}>
+                    <Button 
+                      variant="outline" 
+                      size="lg"
+                      onClick={() => scrollToSection("portfolio")}
+                    >
+                      View Portfolio
+                    </Button>
+                  </MouseAvoidanceWrapper>
                 </div>
               </div>
 
@@ -275,100 +361,77 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Points Progress Section */}
-        <section className="px-4 py-8 bg-white border-b">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <Star className="text-yellow-500 fill-current" size={24} />
-                <span className="text-lg font-semibold text-slate-900">Your Points: {userPoints}</span>
-              </div>
-              {hasReachedGoal && (
-                <Badge className="bg-green-100 text-green-800 border-green-300">
-                  <Gift className="mr-1" size={16} />
-                  Surprise Gift Unlocked!
-                </Badge>
-              )}
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-600">Progress to 1000 points</span>
-                <span className="text-slate-900 font-semibold">{Math.round(progressPercentage)}%</span>
-              </div>
-              <Progress value={progressPercentage} className="h-3" />
-              <p className="text-sm text-slate-500">
-                {hasReachedGoal 
-                  ? "🎉 Congratulations! You've unlocked a surprise gift or discount!" 
-                  : `${1000 - userPoints} more points to unlock your surprise gift!`
-                }
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Points Progress Section - Remove this since it's now always sticky */}
 
         {/* Portfolio Section */}
         <section id="portfolio" className="px-4 py-16 bg-slate-50">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                Featured Portfolio
-              </h2>
-              <p className="text-xl text-slate-600">
-                Recent projects showcasing our expertise and results
-              </p>
+              <MouseAvoidanceWrapper intensity={30}>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                  Featured Portfolio
+                </h2>
+              </MouseAvoidanceWrapper>
+              <MouseAvoidanceWrapper intensity={25}>
+                <p className="text-xl text-slate-600">
+                  Recent projects showcasing our expertise and results
+                </p>
+              </MouseAvoidanceWrapper>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
               {portfolioProjects.map((project, index) => (
-                <Card key={index} className="overflow-hidden hover:shadow-xl transition-all duration-300">
-                  <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-blue-600 text-white">
-                        {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
-                        {index === 0 ? "Performance" : "Automotive"}
-                      </Badge>
-                    </div>
-                  </div>
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-xl">{project.title}</CardTitle>
-                      <Button variant="ghost" size="sm">
-                        <ExternalLink size={16} />
-                      </Button>
-                    </div>
-                    <CardDescription className="text-base">
-                      {project.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold mb-2">Key Features:</h4>
-                      <ul className="grid grid-cols-2 gap-1">
-                        {project.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center gap-2">
-                            <CheckCircle className="text-green-500 flex-shrink-0" size={12} />
-                            <span className="text-sm text-slate-700">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Technologies:</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {project.technologies.map((tech, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
+                <MouseAvoidanceWrapper key={index} intensity={35}>
+                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={project.image} 
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-blue-600 text-white">
+                          {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
+                          {index === 0 ? "Performance" : "Automotive"}
+                        </Badge>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-xl">{project.title}</CardTitle>
+                        <Button variant="ghost" size="sm">
+                          <ExternalLink size={16} />
+                        </Button>
+                      </div>
+                      <CardDescription className="text-base">
+                        {project.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold mb-2">Key Features:</h4>
+                        <ul className="grid grid-cols-2 gap-1">
+                          {project.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-center gap-2">
+                              <CheckCircle className="text-green-500 flex-shrink-0" size={12} />
+                              <span className="text-sm text-slate-700">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-2">Technologies:</h4>
+                        <div className="flex flex-wrap gap-1">
+                          {project.technologies.map((tech, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </MouseAvoidanceWrapper>
               ))}
             </div>
           </div>
@@ -378,12 +441,16 @@ export default function Home() {
         <section id="build-package" className="px-4 py-16 bg-white">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                Build Your Custom Package
-              </h2>
-              <p className="text-xl text-slate-600">
-                Select the services you need and earn points towards your surprise gift
-              </p>
+              <MouseAvoidanceWrapper intensity={30}>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                  Build Your Custom Package
+                </h2>
+              </MouseAvoidanceWrapper>
+              <MouseAvoidanceWrapper intensity={25}>
+                <p className="text-xl text-slate-600">
+                  Select the services you need and earn points towards your surprise gift
+                </p>
+              </MouseAvoidanceWrapper>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -392,60 +459,62 @@ export default function Home() {
                 const selectedCount = selectedServices[service.id] || 0
                 
                 return (
-                  <Card key={service.id} className="transition-all duration-300 hover:shadow-xl">
-                    <CardHeader className="text-center">
-                      <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                        <Icon className="text-blue-600" size={32} />
-                      </div>
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <Badge variant="outline" className="text-blue-600 border-blue-600">
-                          +{service.basePoints} Points
-                        </Badge>
-                      </div>
-                      <CardTitle className="text-xl">{service.title}</CardTitle>
-                      <CardDescription className="text-base">
-                        {service.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="p-3 bg-slate-50 rounded-lg">
-                        <p className="text-sm text-slate-700">{service.explanation}</p>
-                      </div>
-                      
-                      <ul className="space-y-2">
-                        {service.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center gap-2">
-                            <CheckCircle className="text-green-500 flex-shrink-0" size={14} />
-                            <span className="text-sm text-slate-700">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <div className="flex items-center justify-between pt-4">
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => removeService(service.id, service.basePoints)}
-                            disabled={selectedCount === 0}
-                          >
-                            <Minus size={16} />
-                          </Button>
-                          <span className="w-8 text-center font-semibold">{selectedCount}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => addService(service.id, service.basePoints)}
-                          >
-                            <Plus size={16} />
-                          </Button>
+                  <MouseAvoidanceWrapper key={service.id} intensity={40}>
+                    <Card className="transition-all duration-300 hover:shadow-xl">
+                      <CardHeader className="text-center">
+                        <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                          <Icon className="text-blue-600" size={32} />
                         </div>
-                        <Badge variant="secondary">
-                          {selectedCount * service.basePoints} pts
-                        </Badge>
-                      </div>
-                    </CardContent>
-                  </Card>
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                          <Badge variant="outline" className="text-blue-600 border-blue-600">
+                            +{service.basePoints} Points
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-xl">{service.title}</CardTitle>
+                        <CardDescription className="text-base">
+                          {service.description}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="p-3 bg-slate-50 rounded-lg">
+                          <p className="text-sm text-slate-700">{service.explanation}</p>
+                        </div>
+                        
+                        <ul className="space-y-2">
+                          {service.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-center gap-2">
+                              <CheckCircle className="text-green-500 flex-shrink-0" size={14} />
+                              <span className="text-sm text-slate-700">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="flex items-center justify-between pt-4">
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => removeService(service.id, service.basePoints)}
+                              disabled={selectedCount === 0}
+                            >
+                              <Minus size={16} />
+                            </Button>
+                            <span className="w-8 text-center font-semibold">{selectedCount}</span>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => addService(service.id, service.basePoints)}
+                            >
+                              <Plus size={16} />
+                            </Button>
+                          </div>
+                          <Badge variant="secondary">
+                            {selectedCount * service.basePoints} pts
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </MouseAvoidanceWrapper>
                 )
               })}
             </div>
