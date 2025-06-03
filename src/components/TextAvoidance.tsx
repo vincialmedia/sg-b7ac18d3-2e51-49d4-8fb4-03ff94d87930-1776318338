@@ -23,7 +23,7 @@ export default function TextAvoidance({
     if (!containerRef.current) return
     
     const chars = text.split("")
-    const newPositions = chars.map((char, index) => ({
+    const newPositions = chars.map((char) => ({
       x: 0,
       y: 0,
       char
@@ -48,11 +48,20 @@ export default function TextAvoidance({
         Math.pow(mousePosition.y - charCenterY, 2)
       )
       
-      if (distance < 100) {
+      if (distance < 80) {
+        // Calculate angle from mouse to character
         const angle = Math.atan2(charCenterY - mousePosition.y, charCenterX - mousePosition.x)
-        const force = Math.max(0, (100 - distance) / 100)
-        const moveX = Math.cos(angle) * force * intensity
-        const moveY = Math.sin(angle) * force * intensity
+        
+        // Add some randomness to the angle to make characters move in different directions
+        const randomAngleOffset = (Math.random() - 0.5) * 0.5
+        const finalAngle = angle + randomAngleOffset
+        
+        // Make force smaller for more subtle effect
+        const force = Math.max(0, (80 - distance) / 80) * 0.7
+        
+        // Calculate movement based on angle and force
+        const moveX = Math.cos(finalAngle) * force * intensity
+        const moveY = Math.sin(finalAngle) * force * intensity
         
         newPositions[index] = {
           ...newPositions[index],
@@ -63,8 +72,8 @@ export default function TextAvoidance({
         // Gradually return to original position
         newPositions[index] = {
           ...newPositions[index],
-          x: newPositions[index].x * 0.8,
-          y: newPositions[index].y * 0.8
+          x: newPositions[index].x * 0.85,
+          y: newPositions[index].y * 0.85
         }
       }
     })
@@ -79,7 +88,7 @@ export default function TextAvoidance({
       {charPositions.map((pos, index) => (
         <span 
           key={index} 
-          className="char inline-block transition-transform duration-200 ease-out"
+          className="char inline-block transition-transform duration-150 ease-out"
           style={{ 
             transform: `translate(${pos.x}px, ${pos.y}px)`,
             display: pos.char === " " ? "inline-block" : undefined,

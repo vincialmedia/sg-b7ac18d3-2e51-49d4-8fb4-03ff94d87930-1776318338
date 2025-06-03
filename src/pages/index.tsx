@@ -35,16 +35,11 @@ export default function Home() {
   const [userEmail, setUserEmail] = useState("")
   const [showEmailDialog, setShowEmailDialog] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [globalMousePosition, setGlobalMousePosition] = useState({ x: 0, y: 0 })
   const imageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
     const handleMouseMove = (e: MouseEvent) => {
       setGlobalMousePosition({ x: e.clientX, y: e.clientY })
       
@@ -60,11 +55,9 @@ export default function Home() {
       }
     }
 
-    window.addEventListener("scroll", handleScroll)
     window.addEventListener("mousemove", handleMouseMove)
     
     return () => {
-      window.removeEventListener("scroll", handleScroll)
       window.removeEventListener("mousemove", handleMouseMove)
     }
   }, [])
@@ -106,7 +99,8 @@ export default function Home() {
         setTransform(getAvoidanceTransform(ref, intensity))
       }
       updateTransform()
-    }, [globalMousePosition, intensity])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [intensity])
 
     return (
       <div 
