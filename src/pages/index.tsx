@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import TextAvoidance from "@/components/TextAvoidance"
 import { 
   Globe, 
   Zap, 
@@ -222,96 +223,91 @@ export default function Home() {
       </Head>
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        {/* Always Sticky Animated Progress Bar */}
-        <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg border-b border-slate-200">
-          <div className="max-w-6xl mx-auto px-4 py-3">
-            <div className="flex items-center justify-between mb-3">
-              <MouseAvoidanceWrapper intensity={20}>
-                <div className="flex items-center gap-3">
-                  <Star className="text-yellow-500 fill-current animate-pulse" size={20} />
-                  <span className="text-base font-bold text-slate-900 animate-bounce">
-                    Your Points Scale: {userPoints}
-                  </span>
-                </div>
-              </MouseAvoidanceWrapper>
+        {/* Always Sticky Animated Progress Bar - Smaller and Less Intrusive */}
+        <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200">
+          <div className="max-w-6xl mx-auto px-4 py-2">
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
+                <Star className="text-yellow-500 fill-current" size={14} />
+                <span className="text-sm font-medium text-slate-900">
+                  {userPoints} points
+                </span>
+              </div>
               {hasReachedGoal && (
-                <MouseAvoidanceWrapper intensity={15}>
-                  <Badge className="bg-green-100 text-green-800 border-green-300 animate-pulse">
-                    <Gift className="mr-1 animate-spin" size={14} />
-                    Gift Unlocked!
-                  </Badge>
-                </MouseAvoidanceWrapper>
+                <Badge className="bg-green-100 text-green-800 border-green-300 text-xs py-0 px-2 h-5">
+                  <Gift className="mr-1" size={10} />
+                  Gift Unlocked
+                </Badge>
               )}
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <MouseAvoidanceWrapper intensity={10}>
-                  <span className="text-slate-600">Progress to 1000 points</span>
-                </MouseAvoidanceWrapper>
-                <MouseAvoidanceWrapper intensity={10}>
-                  <span className="text-slate-900 font-semibold">{Math.round(progressPercentage)}%</span>
-                </MouseAvoidanceWrapper>
-              </div>
+            <div className="space-y-1">
               <div className="relative">
-                <Progress value={progressPercentage} className="h-3 animate-pulse" />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-500/20 rounded-full animate-pulse"></div>
+                <Progress value={progressPercentage} className="h-1.5" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-500/10 rounded-full"></div>
               </div>
-              <MouseAvoidanceWrapper intensity={15}>
-                <p className="text-sm text-slate-500 text-center animate-bounce">
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-500">
                   {hasReachedGoal 
-                    ? "🎉 Congratulations! You've unlocked a surprise gift or discount!" 
-                    : `${1000 - userPoints} more points to unlock your surprise gift!`
+                    ? "Goal reached!" 
+                    : `${1000 - userPoints} more to unlock gift`
                   }
-                </p>
-              </MouseAvoidanceWrapper>
+                </span>
+                <span className="text-slate-700 font-medium">{Math.round(progressPercentage)}%</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Hero Section */}
-        <section className="relative px-4 py-16 md:py-24 pt-32">
+        <section className="relative px-4 py-16 md:py-24 pt-28">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
                 <div className="space-y-4">
-                  <MouseAvoidanceWrapper intensity={25}>
-                    <Badge variant="secondary" className="text-blue-600 bg-blue-100">
-                      Digital Marketing Expert
-                    </Badge>
-                  </MouseAvoidanceWrapper>
-                  <MouseAvoidanceWrapper intensity={35}>
-                    <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
-                      Transform Your
-                      <span className="text-blue-600 block">Digital Presence</span>
-                    </h1>
-                  </MouseAvoidanceWrapper>
-                  <MouseAvoidanceWrapper intensity={30}>
-                    <p className="text-xl text-slate-600 leading-relaxed">
-                      I help businesses grow through strategic web development, marketing automation, and social media excellence.
-                    </p>
-                  </MouseAvoidanceWrapper>
+                  <Badge variant="secondary" className="text-blue-600 bg-blue-100">
+                    Digital Marketing Expert
+                  </Badge>
+                  <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
+                    <TextAvoidance 
+                      text="Transform Your" 
+                      tag="span"
+                      className="block"
+                      mousePosition={globalMousePosition} 
+                      intensity={8}
+                    />
+                    <TextAvoidance 
+                      text="Digital Presence" 
+                      tag="span"
+                      className="block text-blue-600"
+                      mousePosition={globalMousePosition} 
+                      intensity={8}
+                    />
+                  </h1>
+                  <TextAvoidance 
+                    text="I help businesses grow through strategic web development, marketing automation, and social media excellence."
+                    tag="p"
+                    className="text-xl text-slate-600 leading-relaxed"
+                    mousePosition={globalMousePosition} 
+                    intensity={5}
+                  />
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <MouseAvoidanceWrapper intensity={40}>
-                    <Button 
-                      size="lg" 
-                      className="bg-blue-600 hover:bg-blue-700"
-                      onClick={() => scrollToSection("build-package")}
-                    >
-                      Start Building Your Package
-                      <ArrowRight className="ml-2" size={20} />
-                    </Button>
-                  </MouseAvoidanceWrapper>
-                  <MouseAvoidanceWrapper intensity={40}>
-                    <Button 
-                      variant="outline" 
-                      size="lg"
-                      onClick={() => scrollToSection("portfolio")}
-                    >
-                      View Portfolio
-                    </Button>
-                  </MouseAvoidanceWrapper>
+                  <Button 
+                    size="lg" 
+                    className="bg-blue-600 hover:bg-blue-700"
+                    onClick={() => scrollToSection("build-package")}
+                  >
+                    Start Building Your Package
+                    <ArrowRight className="ml-2" size={20} />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    onClick={() => scrollToSection("portfolio")}
+                  >
+                    View Portfolio
+                  </Button>
                 </div>
               </div>
 
@@ -367,16 +363,20 @@ export default function Home() {
         <section id="portfolio" className="px-4 py-16 bg-slate-50">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <MouseAvoidanceWrapper intensity={30}>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                  Featured Portfolio
-                </h2>
-              </MouseAvoidanceWrapper>
-              <MouseAvoidanceWrapper intensity={25}>
-                <p className="text-xl text-slate-600">
-                  Recent projects showcasing our expertise and results
-                </p>
-              </MouseAvoidanceWrapper>
+              <TextAvoidance 
+                text="Featured Portfolio"
+                tag="h2"
+                className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
+                mousePosition={globalMousePosition} 
+                intensity={6}
+              />
+              <TextAvoidance 
+                text="Recent projects showcasing our expertise and results"
+                tag="p"
+                className="text-xl text-slate-600"
+                mousePosition={globalMousePosition} 
+                intensity={4}
+              />
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
@@ -441,16 +441,20 @@ export default function Home() {
         <section id="build-package" className="px-4 py-16 bg-white">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <MouseAvoidanceWrapper intensity={30}>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                  Build Your Custom Package
-                </h2>
-              </MouseAvoidanceWrapper>
-              <MouseAvoidanceWrapper intensity={25}>
-                <p className="text-xl text-slate-600">
-                  Select the services you need and earn points towards your surprise gift
-                </p>
-              </MouseAvoidanceWrapper>
+              <TextAvoidance 
+                text="Build Your Custom Package"
+                tag="h2"
+                className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
+                mousePosition={globalMousePosition} 
+                intensity={6}
+              />
+              <TextAvoidance 
+                text="Select the services you need and earn points towards your surprise gift"
+                tag="p"
+                className="text-xl text-slate-600"
+                mousePosition={globalMousePosition} 
+                intensity={4}
+              />
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
