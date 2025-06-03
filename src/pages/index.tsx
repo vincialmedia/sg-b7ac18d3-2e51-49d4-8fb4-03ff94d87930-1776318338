@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { 
   Globe, 
   Zap, 
@@ -16,55 +19,88 @@ import {
   Phone,
   Award,
   TrendingUp,
-  Target
+  Target,
+  Gift,
+  Package,
+  Plus,
+  Minus
 } from "lucide-react"
 
 export default function Home() {
-  const [skillProgress, setSkillProgress] = useState(0)
-  const [activeService, setActiveService] = useState(0)
-  const [experiencePoints, setExperiencePoints] = useState(0)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setSkillProgress(95), 500)
-    const xpTimer = setTimeout(() => setExperiencePoints(2847), 800)
-    return () => {
-      clearTimeout(timer)
-      clearTimeout(xpTimer)
-    }
-  }, [])
+  const [userPoints, setUserPoints] = useState(0)
+  const [selectedServices, setSelectedServices] = useState<{[key: string]: number}>({})
+  const [userEmail, setUserEmail] = useState("")
+  const [showEmailDialog, setShowEmailDialog] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   const services = [
     {
+      id: "website",
       icon: Globe,
-      title: "Website Development",
-      description: "Custom websites that convert visitors into customers",
-      features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Mobile First"],
-      level: "Expert",
-      xp: 950
+      title: "Website Design",
+      description: "Professional websites that convert visitors into customers and drive business growth",
+      explanation: "Get a custom-built website with modern design, mobile responsiveness, SEO optimization, and fast loading speeds. Perfect for establishing your online presence.",
+      basePoints: 400,
+      features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Mobile First", "Custom Design"]
     },
     {
-      icon: Zap,
-      title: "Marketing Automation",
-      description: "Streamline your marketing with intelligent automation",
-      features: ["Email Campaigns", "Lead Nurturing", "Analytics", "CRM Integration"],
-      level: "Advanced",
-      xp: 875
-    },
-    {
+      id: "social",
       icon: Users,
       title: "Social Media",
-      description: "Build your brand presence across all platforms",
-      features: ["Content Strategy", "Community Management", "Paid Advertising", "Analytics"],
-      level: "Expert",
-      xp: 920
+      description: "Strategic social media management to build your brand and engage your audience",
+      explanation: "Complete social media strategy including content creation, community management, paid advertising, and analytics to grow your following and engagement.",
+      basePoints: 300,
+      features: ["Content Strategy", "Community Management", "Paid Advertising", "Analytics", "Brand Building"]
+    },
+    {
+      id: "automation",
+      icon: Zap,
+      title: "Marketing Automation",
+      description: "Streamline your marketing with intelligent automation systems and workflows",
+      explanation: "Set up automated email campaigns, lead nurturing sequences, CRM integration, and analytics to convert more leads into customers while saving time.",
+      basePoints: 350,
+      features: ["Email Campaigns", "Lead Nurturing", "CRM Integration", "Analytics", "Workflow Automation"]
     }
   ]
 
-  const achievements = [
-    { icon: Award, title: "50+ Projects Completed", description: "Delivered excellence" },
-    { icon: TrendingUp, title: "300% Average ROI", description: "Proven results" },
-    { icon: Target, title: "98% Client Satisfaction", description: "Happy customers" }
-  ]
+  const addService = (serviceId: string, points: number) => {
+    setSelectedServices(prev => ({
+      ...prev,
+      [serviceId]: (prev[serviceId] || 0) + 1
+    }))
+    setUserPoints(prev => prev + points)
+  }
+
+  const removeService = (serviceId: string, points: number) => {
+    if (selectedServices[serviceId] > 0) {
+      setSelectedServices(prev => ({
+        ...prev,
+        [serviceId]: prev[serviceId] - 1
+      }))
+      setUserPoints(prev => prev - points)
+    }
+  }
+
+  const getTotalServices = () => {
+    return Object.values(selectedServices).reduce((sum, count) => sum + count, 0)
+  }
+
+  const handleSubmit = () => {
+    if (userEmail && getTotalServices() > 0) {
+      // In a real app, this would send an email
+      console.log("Sending email with package details:", {
+        email: userEmail,
+        services: selectedServices,
+        points: userPoints
+      })
+      setShowEmailDialog(false)
+      setShowSuccessMessage(true)
+      setTimeout(() => setShowSuccessMessage(false), 3000)
+    }
+  }
+
+  const progressPercentage = Math.min((userPoints / 1000) * 100, 100)
+  const hasReachedGoal = userPoints >= 1000
 
   return (
     <>
@@ -82,7 +118,7 @@ export default function Home() {
               <div className="space-y-8">
                 <div className="space-y-4">
                   <Badge variant="secondary" className="text-blue-600 bg-blue-100">
-                    Level {Math.floor(experiencePoints / 100)} Digital Expert
+                    Digital Marketing Expert
                   </Badge>
                   <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
                     Transform Your
@@ -93,23 +129,9 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Star className="text-yellow-500 fill-current" size={20} />
-                    <span className="text-slate-700">Experience Points: {experiencePoints.toLocaleString()}</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-slate-600">Overall Expertise</span>
-                      <span className="text-slate-900 font-semibold">{skillProgress}%</span>
-                    </div>
-                    <Progress value={skillProgress} className="h-3" />
-                  </div>
-                </div>
-
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                    Start Your Project
+                    Start Building Your Package
                     <ArrowRight className="ml-2" size={20} />
                   </Button>
                   <Button variant="outline" size="lg">
@@ -132,58 +154,107 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Services Section */}
+        {/* Points Progress Section */}
+        <section className="px-4 py-8 bg-white border-b">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <Star className="text-yellow-500 fill-current" size={24} />
+                <span className="text-lg font-semibold text-slate-900">Your Points: {userPoints}</span>
+              </div>
+              {hasReachedGoal && (
+                <Badge className="bg-green-100 text-green-800 border-green-300">
+                  <Gift className="mr-1" size={16} />
+                  Surprise Gift Unlocked!
+                </Badge>
+              )}
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-600">Progress to 1000 points</span>
+                <span className="text-slate-900 font-semibold">{Math.round(progressPercentage)}%</span>
+              </div>
+              <Progress value={progressPercentage} className="h-3" />
+              <p className="text-sm text-slate-500">
+                {hasReachedGoal 
+                  ? "🎉 Congratulations! You've unlocked a surprise gift or discount!" 
+                  : `${1000 - userPoints} more points to unlock your surprise gift!`
+                }
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Services Selection Section */}
         <section className="px-4 py-16 bg-white">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                Choose Your Power-Up
+                Build Your Custom Package
               </h2>
               <p className="text-xl text-slate-600">
-                Select the service that will level up your business
+                Select the services you need and earn points towards your surprise gift
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {services.map((service, index) => {
+              {services.map((service) => {
                 const Icon = service.icon
-                const isActive = activeService === index
+                const selectedCount = selectedServices[service.id] || 0
                 
                 return (
-                  <Card 
-                    key={index}
-                    className={`cursor-pointer transition-all duration-300 hover:shadow-xl ${
-                      isActive ? "ring-2 ring-blue-500 shadow-lg" : ""
-                    }`}
-                    onClick={() => setActiveService(index)}
-                  >
+                  <Card key={service.id} className="transition-all duration-300 hover:shadow-xl">
                     <CardHeader className="text-center">
                       <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
                         <Icon className="text-blue-600" size={32} />
                       </div>
                       <div className="flex items-center justify-center gap-2 mb-2">
-                        <Badge variant="outline" className="text-green-600 border-green-600">
-                          {service.level}
+                        <Badge variant="outline" className="text-blue-600 border-blue-600">
+                          +{service.basePoints} Points
                         </Badge>
-                        <span className="text-sm text-slate-500">{service.xp} XP</span>
                       </div>
                       <CardTitle className="text-xl">{service.title}</CardTitle>
                       <CardDescription className="text-base">
                         {service.description}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-3">
+                    <CardContent className="space-y-4">
+                      <div className="p-3 bg-slate-50 rounded-lg">
+                        <p className="text-sm text-slate-700">{service.explanation}</p>
+                      </div>
+                      
+                      <ul className="space-y-2">
                         {service.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center gap-3">
-                            <CheckCircle className="text-green-500 flex-shrink-0" size={16} />
-                            <span className="text-slate-700">{feature}</span>
+                          <li key={idx} className="flex items-center gap-2">
+                            <CheckCircle className="text-green-500 flex-shrink-0" size={14} />
+                            <span className="text-sm text-slate-700">{feature}</span>
                           </li>
                         ))}
                       </ul>
-                      <Button className="w-full mt-6" variant={isActive ? "default" : "outline"}>
-                        Learn More
-                      </Button>
+
+                      <div className="flex items-center justify-between pt-4">
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => removeService(service.id, service.basePoints)}
+                            disabled={selectedCount === 0}
+                          >
+                            <Minus size={16} />
+                          </Button>
+                          <span className="w-8 text-center font-semibold">{selectedCount}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => addService(service.id, service.basePoints)}
+                          >
+                            <Plus size={16} />
+                          </Button>
+                        </div>
+                        <Badge variant="secondary">
+                          {selectedCount * service.basePoints} pts
+                        </Badge>
+                      </div>
                     </CardContent>
                   </Card>
                 )
@@ -192,12 +263,119 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Package Summary Section */}
+        {getTotalServices() > 0 && (
+          <section className="px-4 py-16 bg-slate-50">
+            <div className="max-w-4xl mx-auto">
+              <Card className="border-2 border-blue-200">
+                <CardHeader className="text-center">
+                  <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <Package className="text-blue-600" size={32} />
+                  </div>
+                  <CardTitle className="text-2xl">Your Package Summary</CardTitle>
+                  <CardDescription>
+                    Review your selected services and submit to get started
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold mb-3">Selected Services:</h4>
+                      <ul className="space-y-2">
+                        {services.map((service) => {
+                          const count = selectedServices[service.id] || 0
+                          if (count === 0) return null
+                          return (
+                            <li key={service.id} className="flex justify-between">
+                              <span>{service.title} x{count}</span>
+                              <span className="font-semibold">{count * service.basePoints} pts</span>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="p-4 bg-blue-50 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-semibold">Total Points:</span>
+                          <span className="text-xl font-bold text-blue-600">{userPoints}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span>Services:</span>
+                          <span>{getTotalServices()}</span>
+                        </div>
+                      </div>
+                      {hasReachedGoal && (
+                        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                          <div className="flex items-center gap-2 text-green-800">
+                            <Gift size={20} />
+                            <span className="font-semibold">Surprise Gift Unlocked!</span>
+                          </div>
+                          <p className="text-sm text-green-700 mt-1">
+                            You'll receive a special discount or bonus with your package!
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+                    <DialogTrigger asChild>
+                      <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700">
+                        Submit Package Request
+                        <ArrowRight className="ml-2" size={20} />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Submit Your Package Request</DialogTitle>
+                        <DialogDescription>
+                          Enter your email to receive a detailed proposal for your selected services.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="email">Email Address</Label>
+                          <Input
+                            id="email"
+                            type="email"
+                            placeholder="your@email.com"
+                            value={userEmail}
+                            onChange={(e) => setUserEmail(e.target.value)}
+                          />
+                        </div>
+                        <Button 
+                          onClick={handleSubmit} 
+                          className="w-full"
+                          disabled={!userEmail || getTotalServices() === 0}
+                        >
+                          Send Package Details
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+        )}
+
+        {/* Success Message */}
+        {showSuccessMessage && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50">
+            <div className="flex items-center gap-2">
+              <CheckCircle size={20} />
+              <span>Package request sent successfully!</span>
+            </div>
+          </div>
+        )}
+
         {/* Achievements Section */}
         <section className="px-4 py-16 bg-slate-900 text-white">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Achievement Unlocked
+                Why Choose Vincialmedia
               </h2>
               <p className="text-xl text-slate-300">
                 Proven track record of delivering exceptional results
@@ -205,36 +383,45 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {achievements.map((achievement, index) => {
-                const Icon = achievement.icon
-                return (
-                  <div key={index} className="text-center group">
-                    <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                      <Icon size={40} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-2">{achievement.title}</h3>
-                    <p className="text-slate-300">{achievement.description}</p>
-                  </div>
-                )
-              })}
+              <div className="text-center group">
+                <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Award size={40} />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">50+ Projects Completed</h3>
+                <p className="text-slate-300">Delivered excellence across industries</p>
+              </div>
+              <div className="text-center group">
+                <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <TrendingUp size={40} />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">300% Average ROI</h3>
+                <p className="text-slate-300">Proven results that drive growth</p>
+              </div>
+              <div className="text-center group">
+                <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Target size={40} />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">98% Client Satisfaction</h3>
+                <p className="text-slate-300">Happy customers, lasting relationships</p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* Contact Section */}
         <section className="px-4 py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Level Up Your Business?
+              Ready to Get Started?
             </h2>
             <p className="text-xl mb-8 opacity-90">
-              Let's discuss how we can transform your digital presence and drive real results.
+              Have questions or want to discuss your project? Let's connect!
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-slate-100">
                 <Mail className="mr-2" size={20} />
-                Get In Touch
+                hello@vincialmedia.com
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600">
                 <Phone className="mr-2" size={20} />
@@ -250,7 +437,7 @@ export default function Home() {
             <h3 className="text-2xl font-bold mb-2">Vincialmedia</h3>
             <p className="text-slate-400 mb-4">Transforming businesses through digital excellence</p>
             <div className="flex justify-center gap-2">
-              <Badge variant="secondary">Web Development</Badge>
+              <Badge variant="secondary">Website Design</Badge>
               <Badge variant="secondary">Marketing Automation</Badge>
               <Badge variant="secondary">Social Media</Badge>
             </div>
