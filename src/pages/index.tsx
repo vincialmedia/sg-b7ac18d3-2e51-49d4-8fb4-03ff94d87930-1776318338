@@ -216,30 +216,30 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden w-full">
         {/* Always Sticky Animated Progress Bar - Inside Main Container */}
-        <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200">
-          <div className="max-w-6xl mx-auto px-4 py-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+        <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200 w-full">
+          <div className="max-w-6xl mx-auto px-4 py-2 w-full">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-2 flex-shrink-0">
                 <Star className="text-yellow-500 fill-current" size={12} />
                 <span className="text-xs font-medium text-slate-900">
                   {userPoints} points
                 </span>
               </div>
-              <div className="w-full max-w-[200px] mx-4">
+              <div className="flex-1 max-w-[150px] mx-2 sm:mx-4">
                 <div className="relative h-1 w-full">
                   <Progress value={progressPercentage} className="h-1" />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-500/10 rounded-full"></div>
                 </div>
               </div>
               {hasReachedGoal ? (
-                <Badge className="bg-green-100 text-green-800 border-green-300 text-xs py-0 px-2 h-4">
+                <Badge className="bg-green-100 text-green-800 border-green-300 text-xs py-0 px-2 h-4 flex-shrink-0">
                   <Gift className="mr-1" size={8} />
                   Gift Unlocked
                 </Badge>
               ) : (
-                <span className="text-slate-500 text-[10px]">
+                <span className="text-slate-500 text-[10px] flex-shrink-0">
                   {1000 - userPoints} more to unlock gift
                 </span>
               )}
