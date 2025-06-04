@@ -226,7 +226,7 @@ export default function Home() {
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden w-full">
         {/* Always Sticky Animated Progress Bar - Inside Main Container */}
         <div 
-          className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200 w-full transition-all duration-500 ease-out"
+          className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200 w-full transition-all duration-500 ease-out"
           style={{
             transform: `translateY(${Math.min(scrollY * 0.1, 10)}px)`,
             transition: 'transform 0.3s ease-out'
