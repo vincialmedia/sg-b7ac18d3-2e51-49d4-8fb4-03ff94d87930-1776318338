@@ -306,7 +306,7 @@ export default function Home() {
                   <Button 
                     variant="outline" 
                     size="lg"
-                    className="hover:text-black hover:font-bold transition-all duration-200"
+                    className="text-black hover:bg-white hover:text-black hover:font-bold transition-all duration-200"
                     onClick={() => scrollToSection("portfolio")}
                   >
                     View Portfolio
