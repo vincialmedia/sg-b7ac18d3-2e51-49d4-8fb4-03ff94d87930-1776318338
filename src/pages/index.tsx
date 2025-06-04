@@ -37,6 +37,7 @@ export default function Home() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [globalMousePosition, setGlobalMousePosition] = useState({ x: 0, y: 0 })
+  const [scrollY, setScrollY] = useState(0)
   const imageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -55,10 +56,16 @@ export default function Home() {
       }
     }
 
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
     window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("scroll", handleScroll)
     
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("scroll", handleScroll)
     }
   }, [])
 
@@ -218,7 +225,13 @@ export default function Home() {
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden w-full">
         {/* Always Sticky Animated Progress Bar - Inside Main Container */}
-        <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200 w-full">
+        <div 
+          className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200 w-full transition-all duration-500 ease-out"
+          style={{
+            transform: `translateY(${Math.min(scrollY * 0.1, 10)}px)`,
+            transition: 'transform 0.3s ease-out'
+          }}
+        >
           <div className="max-w-6xl mx-auto px-4 py-2 w-full">
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-2 flex-shrink-0">
@@ -284,7 +297,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button 
                     size="lg" 
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200"
                     onClick={() => scrollToSection("build-package")}
                   >
                     Start Building Your Package
@@ -293,6 +306,7 @@ export default function Home() {
                   <Button 
                     variant="outline" 
                     size="lg"
+                    className="hover:text-black hover:font-bold transition-all duration-200"
                     onClick={() => scrollToSection("portfolio")}
                   >
                     View Portfolio
@@ -486,6 +500,7 @@ export default function Home() {
                           <Button
                             variant="outline"
                             size="sm"
+                            className="hover:text-black hover:font-bold transition-all duration-200"
                             onClick={() => removeService(service.id, service.basePoints)}
                             disabled={selectedCount === 0}
                           >
@@ -495,6 +510,7 @@ export default function Home() {
                           <Button
                             variant="outline"
                             size="sm"
+                            className="hover:text-black hover:font-bold transition-all duration-200"
                             onClick={() => addService(service.id, service.basePoints)}
                           >
                             <Plus size={16} />
@@ -570,7 +586,7 @@ export default function Home() {
 
                   <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
                     <DialogTrigger asChild>
-                      <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700">
+                      <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200">
                         Submit Package Request
                         <ArrowRight className="ml-2" size={20} />
                       </Button>
@@ -595,7 +611,7 @@ export default function Home() {
                         </div>
                         <Button 
                           onClick={handleSubmit} 
-                          className="w-full"
+                          className="w-full hover:text-black hover:font-bold transition-all duration-200"
                           disabled={!userEmail || getTotalServices() === 0}
                         >
                           Send Package Details
@@ -668,11 +684,11 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-slate-100">
+              <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-slate-100 hover:text-black hover:font-bold transition-all duration-200">
                 <Mail className="mr-2" size={20} />
                 hello@vincialmedia.com
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black hover:font-bold transition-all duration-200">
                 <Phone className="mr-2" size={20} />
                 Schedule Call
               </Button>
