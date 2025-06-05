@@ -495,30 +495,39 @@ export default function Home() {
                         ))}
                       </ul>
 
-                      <div className="flex items-center justify-between pt-4">
-                        <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center pt-4">
+                        {selectedCount === 0 ? (
                           <Button
-                            variant="outline"
-                            size="sm"
-                            className="hover:text-black hover:font-bold transition-all duration-200"
-                            onClick={() => removeService(service.id, service.basePoints)}
-                            disabled={selectedCount === 0}
-                          >
-                            <Minus size={16} />
-                          </Button>
-                          <span className="w-8 text-center font-semibold">{selectedCount}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="hover:text-black hover:font-bold transition-all duration-200"
+                            className="bg-blue-600 hover:bg-blue-700 text-white hover:text-black hover:font-bold transition-all duration-200"
                             onClick={() => addService(service.id, service.basePoints)}
                           >
-                            <Plus size={16} />
+                            Add to order
                           </Button>
-                        </div>
-                        <Badge variant="secondary">
-                          {selectedCount * service.basePoints} pts
-                        </Badge>
+                        ) : (
+                          <div className="flex items-center gap-4">
+                            <Button
+                              variant="destructive"
+                              className="hover:text-black hover:font-bold transition-all duration-200"
+                              onClick={() => removeService(service.id, service.basePoints)}
+                            >
+                              Remove from order
+                            </Button>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm text-slate-600">Quantity:</span>
+                              <Badge variant="secondary" className="text-lg px-3 py-1">
+                                {selectedCount}
+                              </Badge>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="hover:text-black hover:font-bold transition-all duration-200"
+                                onClick={() => addService(service.id, service.basePoints)}
+                              >
+                                Add more
+                              </Button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -683,14 +692,10 @@ export default function Home() {
               Have questions or want to discuss your project? Let's connect!
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-slate-100 hover:text-black hover:font-bold transition-all duration-200">
                 <Mail className="mr-2" size={20} />
                 vincent@vincialmedia.com
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black hover:font-bold transition-all duration-200">
-                <Phone className="mr-2" size={20} />
-                Schedule Call
               </Button>
             </div>
           </div>
