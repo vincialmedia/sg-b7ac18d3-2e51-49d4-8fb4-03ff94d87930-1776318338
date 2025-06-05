@@ -19,8 +19,6 @@ export default function TextAvoidance({
   const [characters, setCharacters] = useState<Array<{ char: string; transform: string; wordIndex: number; charIndex: number }>>([])
 
   useEffect(() => {
-    if (!containerRef.current) return
-
     const words = text.split(" ")
     const chars: Array<{ char: string; transform: string; wordIndex: number; charIndex: number }> = []
     
@@ -28,49 +26,48 @@ export default function TextAvoidance({
       word.split("").forEach((char, charIndex) => {
         chars.push({ char, transform: "", wordIndex, charIndex })
       })
+      if (wordIndex < words.length - 1) {
+        // Add space character representation if needed for separate handling
+      }
     })
-    
     setCharacters(chars)
   }, [text])
 
   useEffect(() => {
     if (!containerRef.current) return
 
-    const charElements = containerRef.current.querySelectorAll('[data-char]')
+    const charElements = Array.from(containerRef.current.querySelectorAll<HTMLElement>('[data-char]'))
 
-    const updatedChars = characters.map((charObj, index) => {
-      const charElement = charElements[index] as HTMLElement
-      if (!charElement) return charObj
+    setCharacters(prevChars => 
+      prevChars.map((charObj, index) => {
+        const charElement = charElements[index]
+        if (!charElement) return charObj
 
-      const charRect = charElement.getBoundingClientRect()
-      const charCenterX = charRect.left + charRect.width / 2
-      const charCenterY = charRect.top + charRect.height / 2
+        const charRect = charElement.getBoundingClientRect()
+        const charCenterX = charRect.left + charRect.width / 2
+        const charCenterY = charRect.top + charRect.height / 2
 
-      const distance = Math.sqrt(
-        Math.pow(mousePosition.x - charCenterX, 2) +
-        Math.pow(mousePosition.y - charCenterY, 2)
-      )
+        const distance = Math.sqrt(
+          Math.pow(mousePosition.x - charCenterX, 2) +
+          Math.pow(mousePosition.y - charCenterY, 2)
+        )
 
-      if (distance < 100) {
-        const angle = Math.atan2(charCenterY - mousePosition.y, charCenterX - mousePosition.x)
-        const force = Math.max(0, (100 - distance) / 100)
-        const moveX = Math.cos(angle) * force * intensity
-        const moveY = Math.sin(angle) * force * intensity
+        let newTransform = ""
+        if (distance < 100) { // Interaction radius
+          const angle = Math.atan2(charCenterY - mousePosition.y, charCenterX - mousePosition.x)
+          const force = Math.max(0, (100 - distance) / 100) 
+          const moveX = Math.cos(angle) * force * intensity
+          const moveY = Math.sin(angle) * force * intensity
+          newTransform = `translate(${moveX}px, ${moveY}px)`
+        }
 
         return {
           ...charObj,
-          transform: `translate(${moveX}px, ${moveY}px)`
+          transform: newTransform
         }
-      }
-
-      return {
-        ...charObj,
-        transform: ""
-      }
-    })
-
-    setCharacters(updatedChars)
-  }, [mousePosition, intensity, characters])
+      })
+    )
+  }, [mousePosition, intensity, text]) // Added text dependency, as charElements depend on it
 
   const Tag = tag as React.ElementType
   const words = text.split(" ")

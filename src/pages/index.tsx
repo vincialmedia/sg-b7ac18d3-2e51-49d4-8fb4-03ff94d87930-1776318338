@@ -197,31 +197,47 @@ export default function Home() {
     return Object.values(selectedServices).reduce((sum, count) => sum + count, 0)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (userEmail && getTotalServices() > 0) {
-      // Track HubSpot form submission
-      if (typeof window !== 'undefined' && (window as unknown as { _hsq?: unknown[] })._hsq) {
-        const hsq = (window as unknown as { _hsq: unknown[] })._hsq;
-        hsq.push(['identify', {
-          email: userEmail
-        }]);
-        
-        hsq.push(['trackEvent', {
-          id: 'package_request_submitted',
-          value: userPoints
-        }]);
-      }
+      try {
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: userEmail,
+            services: selectedServices,
+            points: userPoints,
+            marketingConsent
+          })
+        })
 
-      // In a real app, this would send an email to vincent@vincialmedia.com
-      console.log("Sending email to vincent@vincialmedia.com with package details:", {
-        email: userEmail,
-        services: selectedServices,
-        points: userPoints,
-        marketingConsent
-      })
-      setShowEmailDialog(false)
-      setShowSuccessMessage(true)
-      setTimeout(() => setShowSuccessMessage(false), 3000)
+        const result = await response.json()
+
+        if (result.success) {
+          // Track HubSpot form submission
+          if (typeof window !== 'undefined' && (window as unknown as { _hsq?: unknown[] })._hsq) {
+            const hsq = (window as unknown as { _hsq: unknown[] })._hsq;
+            hsq.push(['identify', {
+              email: userEmail
+            }]);
+            
+            hsq.push(['trackEvent', {
+              id: 'package_request_submitted',
+              value: userPoints
+            }]);
+          }
+
+          setShowEmailDialog(false)
+          setShowSuccessMessage(true)
+          setTimeout(() => setShowSuccessMessage(false), 3000)
+        } else {
+          console.error('Failed to submit package request')
+        }
+      } catch (error) {
+        console.error('Error submitting package request:', error)
+      }
     }
   }
 
