@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState } from "react"
 
 interface TextAvoidanceProps {
@@ -15,21 +16,28 @@ export default function TextAvoidance({
   mousePosition,
   intensity = 10
 }: TextAvoidanceProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [characters, setCharacters] = useState<Array<{ char: string; transform: string }>>([])
+  const containerRef = useRef<HTMLElement>(null)
+  const [characters, setCharacters] = useState<Array<{ char: string; transform: string; wordIndex: number; charIndex: number }>>([])
 
   useEffect(() => {
     if (!containerRef.current) return
 
-    const chars = text.split("").map((char) => ({ char, transform: "" }))
+    const words = text.split(" ")
+    const chars: Array<{ char: string; transform: string; wordIndex: number; charIndex: number }> = []
+    
+    words.forEach((word, wordIndex) => {
+      word.split("").forEach((char, charIndex) => {
+        chars.push({ char, transform: "", wordIndex, charIndex })
+      })
+    })
+    
     setCharacters(chars)
   }, [text])
 
   useEffect(() => {
     if (!containerRef.current) return
 
-    const rect = containerRef.current.getBoundingClientRect()
-    const charElements = containerRef.current.children
+    const charElements = containerRef.current.querySelectorAll('[data-char]')
 
     const updatedChars = characters.map((charObj, index) => {
       const charElement = charElements[index] as HTMLElement
@@ -65,7 +73,7 @@ export default function TextAvoidance({
     setCharacters(updatedChars)
   }, [mousePosition, intensity, characters])
 
-  const Tag = tag
+  const Tag = tag as any
   const words = text.split(" ")
 
   return (
@@ -73,17 +81,21 @@ export default function TextAvoidance({
       {words.map((word, wordIndex) => (
         <React.Fragment key={wordIndex}>
           <span className="inline-block whitespace-nowrap">
-            {word.split("").map((char, charIndex) => (
-              <span
-                key={charIndex}
-                className="inline-block transition-transform duration-150 ease-out"
-                style={{
-                  transform: characters[wordIndex * word.length + charIndex]?.transform || "",
-                }}
-              >
-                {char}
-              </span>
-            ))}
+            {word.split("").map((char, charIndex) => {
+              const charData = characters.find(c => c.wordIndex === wordIndex && c.charIndex === charIndex)
+              return (
+                <span
+                  key={charIndex}
+                  data-char="true"
+                  className="inline-block transition-transform duration-150 ease-out"
+                  style={{
+                    transform: charData?.transform || "",
+                  }}
+                >
+                  {char}
+                </span>
+              )
+            })}
           </span>
           {wordIndex < words.length - 1 && (
             <span className="inline-block" style={{ width: "0.25em" }}> </span>
