@@ -231,6 +231,7 @@ export default function Home() {
     <>
       <Head>
       <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07" type="text/javascript" async></script>
+      <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/146320474.js"></script>
         <title>Vincialmedia - Digital Marketing & Web Development Expert</title>
         <meta name="description" content="Professional website development, marketing automation, and social media services. Transform your digital presence with Vincialmedia." />
         <link rel="icon" href="/favicon.ico" />
