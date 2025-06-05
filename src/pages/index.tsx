@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
 import Head from "next/head"
-import Script from "next/script"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
