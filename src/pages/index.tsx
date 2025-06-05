@@ -219,15 +219,17 @@ export default function Home() {
         if (result.success) {
           // Track HubSpot form submission
           if (typeof window !== "undefined" && (window as any)._hsq) {
-            const hsq = (window as any)._hsq
-            hsq.push(["identify", {
-              email: userEmail
-            }])
-            
-            hsq.push(["trackEvent", {
-              id: "package_request_submitted",
-              value: userPoints
-            }])
+            const hsq = (window as Window & { _hsq?: any[] })._hsq;
+            if (hsq) {
+              hsq.push(["identify", {
+                email: userEmail
+              }]);
+              
+              hsq.push(["trackEvent", {
+                id: "package_request_submitted",
+                value: userPoints
+              }]);
+            }
           }
 
           setShowEmailDialog(false)
