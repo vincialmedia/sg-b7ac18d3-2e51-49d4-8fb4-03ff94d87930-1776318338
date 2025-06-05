@@ -1,25 +1,28 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import '@/styles/globals.css'
+import type { AppProps } from 'next/app'
+import Script from 'next/script'
 
-export default function Document() {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Html lang="en">
-      <Head>
-        {/* 
-          CRITICAL: DO NOT REMOVE THIS SCRIPT
-          The Softgen AI monitoring script is essential for core app functionality.
-          The application will not function without it.
-        */}
-        <Script
-        id="Cookiebot"
-        src="https://consent.cookiebot.com/uc.js"
-        data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
-        strategy="beforeInteractive"
+    <>
+      {/* HubSpot */}
+      <Script
+        id="hs-script-loader"
+        strategy="afterInteractive"
+        src="//js-eu1.hs-scripts.com/146320474.js"
       />
-      </Head>
-      <body className="antialiased">
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
+
+      {/* Softgen AI Monitoring */}
+      <Script
+        src="https://cdn.softgen.ai/script.js"
+        strategy="afterInteractive"
+        data-softgen-monitoring="true"
+      />
+
+      {/* Render your app */}
+      <Component {...pageProps} />
+    </>
+  )
 }
+
+export default MyApp
