@@ -176,17 +176,18 @@ export default function Home() {
   const addService = (serviceId: string, points: number) => {
     setSelectedServices(prev => ({
       ...prev,
-      [serviceId]: (prev[serviceId] || 0) + 1
+      [serviceId]: 1
     }))
     setUserPoints(prev => prev + points)
   }
 
   const removeService = (serviceId: string, points: number) => {
     if (selectedServices[serviceId] > 0) {
-      setSelectedServices(prev => ({
-        ...prev,
-        [serviceId]: prev[serviceId] - 1
-      }))
+      setSelectedServices(prev => {
+        const newServices = { ...prev }
+        delete newServices[serviceId]
+        return newServices
+      })
       setUserPoints(prev => prev - points)
     }
   }
@@ -501,29 +502,13 @@ export default function Home() {
                             Add to order
                           </Button>
                         ) : (
-                          <div className="flex items-center gap-4">
-                            <Button
-                              variant="destructive"
-                              className="hover:text-black hover:font-bold transition-all duration-200"
-                              onClick={() => removeService(service.id, service.basePoints)}
-                            >
-                              Remove from order
-                            </Button>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-slate-600">Quantity:</span>
-                              <Badge variant="secondary" className="text-lg px-3 py-1">
-                                {selectedCount}
-                              </Badge>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="hover:text-black hover:font-bold transition-all duration-200"
-                                onClick={() => addService(service.id, service.basePoints)}
-                              >
-                                Add more
-                              </Button>
-                            </div>
-                          </div>
+                          <Button
+                            variant="destructive"
+                            className="hover:text-black hover:font-bold transition-all duration-200"
+                            onClick={() => removeService(service.id, service.basePoints)}
+                          >
+                            Remove from order
+                          </Button>
                         )}
                       </div>
                     </CardContent>
