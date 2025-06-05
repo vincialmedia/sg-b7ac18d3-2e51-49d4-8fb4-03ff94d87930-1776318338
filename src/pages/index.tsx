@@ -220,11 +220,15 @@ export default function Home() {
           // Track HubSpot form submission
           if (typeof window !== "undefined" && (window as any)._hsq) {
             // Define a more specific type for the HubSpot queue
-            type HubSpotCommand = 
-              | ["identify", { email: string }]
-              | ["trackEvent", { id: string; value: number }];
+            type HubSpotIdentifyCommand = ["identify", { email: string }];
+            type HubSpotTrackEventCommand = ["trackEvent", { id: string; value: number }];
+            type HubSpotCommand = HubSpotIdentifyCommand | HubSpotTrackEventCommand;
             
-            const hsq = (window as Window & { _hsq?: { push: (command: HubSpotCommand) => void }[] })._hsq;
+            interface HubSpotQueue extends Array<HubSpotCommand> {
+              push: (command: HubSpotCommand) => void;
+            }
+
+            const hsq = (window as Window & { _hsq?: HubSpotQueue })._hsq;
             
             if (hsq && typeof hsq.push === "function") {
               hsq.push(["identify", {
