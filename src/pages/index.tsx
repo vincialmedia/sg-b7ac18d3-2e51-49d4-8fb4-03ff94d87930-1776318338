@@ -41,7 +41,7 @@ export default function Home() {
   const imageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: globalThis.MouseEvent) => { // Changed to globalThis.MouseEvent
       setGlobalMousePosition({ x: e.clientX, y: e.clientY })
       
       if (imageRef.current) {
@@ -60,11 +60,11 @@ export default function Home() {
       setScrollY(window.scrollY)
     }
 
-    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mousemove", handleMouseMove as EventListener) // Cast to EventListener
     window.addEventListener("scroll", handleScroll)
     
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("mousemove", handleMouseMove as EventListener) // Cast to EventListener
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
