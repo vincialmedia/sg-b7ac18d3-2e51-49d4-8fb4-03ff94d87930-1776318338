@@ -1,5 +1,6 @@
+
 import { NextApiRequest, NextApiResponse } from "next"
-import { supabase } from "@/lib/supabase"
+import { supabase } from "@/integrations/supabase/client"
 
 export default async function handler(
   req: NextApiRequest,
@@ -47,10 +48,10 @@ export default async function handler(
 
     console.log("API: Successfully inserted data:", data)
 
-    // Trigger email notification using Supabase Edge Function
-    console.log("API: Attempting to send email notification...")
+    // Send notification email to Vincent
+    console.log("API: Attempting to send notification email to Vincent...")
     
-    const { error: emailError } = await supabase.functions.invoke("send-notification", {
+    const { error: notificationEmailError } = await supabase.functions.invoke("send-notification", {
       body: {
         to: "vincent@vincialmedia.com",
         subject: `New Package Request from ${email}`,
@@ -58,17 +59,35 @@ export default async function handler(
       }
     })
 
-    if (emailError) {
-      console.error("API: Error sending email:", emailError)
-      // Don't return error to client, as the data was saved successfully
+    if (notificationEmailError) {
+      console.error("API: Error sending notification email:", notificationEmailError)
     } else {
-      console.log("API: Email notification sent successfully")
+      console.log("API: Notification email sent successfully")
+    }
+
+    // Send confirmation email to customer
+    console.log("API: Attempting to send confirmation email to customer...")
+    
+    const { error: confirmationEmailError } = await supabase.functions.invoke("send-customer-confirmation", {
+      body: {
+        packageRequest: data
+      }
+    })
+
+    if (confirmationEmailError) {
+      console.error("API: Error sending confirmation email:", confirmationEmailError)
+    } else {
+      console.log("API: Confirmation email sent successfully")
     }
 
     return res.status(200).json({
       success: true,
       message: "Package request submitted successfully",
-      data
+      data,
+      emailStatus: {
+        notificationSent: !notificationEmailError,
+        confirmationSent: !confirmationEmailError
+      }
     })
 
   } catch (error) {
