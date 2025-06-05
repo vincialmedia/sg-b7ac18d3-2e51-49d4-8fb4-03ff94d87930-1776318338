@@ -132,7 +132,7 @@ export default function Home() {
       id: "website",
       icon: Globe,
       title: "Website Design",
-      description: "Professional websites that convert visitors into customers and drive business growth",
+      description: "Professional websites that convert visitors into customers and drive business growth.",
       explanation: "Get a custom-built website with modern design, mobile responsiveness, SEO optimization, and fast loading speeds. Perfect for establishing your online presence.",
       basePoints: 400,
       features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Mobile First", "Custom Design"]
@@ -141,7 +141,7 @@ export default function Home() {
       id: "social",
       icon: Users,
       title: "Social Media",
-      description: "Strategic social media management to build your brand and engage your audience",
+      description: "Strategic social media management to build your brand and engage your audience.",
       explanation: "Complete social media strategy including content creation, community management, paid advertising, and analytics to grow your following and engagement.",
       basePoints: 300,
       features: ["Content Strategy", "Community Management", "Paid Advertising", "Analytics", "Brand Building"]
@@ -150,7 +150,7 @@ export default function Home() {
       id: "automation",
       icon: Zap,
       title: "Marketing Automation",
-      description: "Streamline your marketing with intelligent automation systems and workflows",
+      description: "Streamline your marketing with intelligent automation systems and workflows.",
       explanation: "Set up automated email campaigns, lead nurturing sequences, CRM integration, and analytics to convert more leads into customers while saving time.",
       basePoints: 350,
       features: ["Email Campaigns", "Lead Nurturing", "CRM Integration", "Analytics", "Workflow Automation"]
