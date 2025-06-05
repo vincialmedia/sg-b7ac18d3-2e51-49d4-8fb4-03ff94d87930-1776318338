@@ -15,21 +15,6 @@ export default function Document() {
           async 
           data-softgen-monitoring="true"
         />
-        <script 
-          id="Cookiebot" 
-          src="https://consent.cookiebot.com/uc.js" 
-          data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07" 
-          data-blockingmode="auto" 
-          type="text/javascript"
-          async
-        />
-        <script 
-          type="text/javascript" 
-          id="hs-script-loader" 
-          async 
-          defer 
-          src="//js-eu1.hs-scripts.com/146320474.js"
-        />
       </Head>
       <body className="antialiased">
         <Main />
