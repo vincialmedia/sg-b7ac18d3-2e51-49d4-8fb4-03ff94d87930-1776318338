@@ -2,107 +2,91 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { supabase } from "@/integrations/supabase/client"
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" })
+    return res.status(405).json({ success: false, message: "Method not allowed" })
   }
 
   try {
-    console.log("API: Received request body:", req.body)
-    
     const { email, services, points, marketingConsent } = req.body
 
-    // Validate required fields
-    if (!email || !services || typeof points === 'undefined') {
-      console.log("API: Missing required fields")
-      return res.status(400).json({
-        success: false,
-        message: "Missing required fields: email, services, and points are required"
-      })
-    }
-
-    console.log("API: Attempting to insert into Supabase...")
-
     // Store the package request in Supabase
-    const { data, error } = await supabase
+    const { data: packageRequest, error: dbError } = await supabase
       .from("package_requests")
       .insert([
         {
           email,
           services,
           points,
-          marketing_consent: marketingConsent || false,
+          marketing_consent: marketingConsent,
           status: "pending"
         }
       ])
       .select()
       .single()
 
-    if (error) {
-      console.error("API: Supabase insert error:", error)
-      throw error
+    if (dbError) {
+      console.error("Database error:", dbError)
+      return res.status(500).json({ 
+        success: false, 
+        message: "Failed to store package request",
+        error: dbError.message 
+      })
     }
 
-    console.log("API: Successfully inserted data:", data)
-
-    // Send notification email to Vincent
-    console.log("API: Attempting to send notification email to Vincent...")
-    
-    const { error: notificationEmailError } = await supabase.functions.invoke("send-notification", {
-      body: {
-        to: "vincent@vincialmedia.com",
-        subject: `New Package Request from ${email}`,
-        packageRequest: data
+    // Send notification email to admin
+    const notificationResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-notification`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`
+        },
+        body: JSON.stringify({
+          to: "vincent@vincialmedia.com", // Admin email
+          subject: "New Package Request - Vincialmedia",
+          packageRequest
+        })
       }
-    })
+    )
 
-    if (notificationEmailError) {
-      console.error("API: Error sending notification email:", notificationEmailError)
-    } else {
-      console.log("API: Notification email sent successfully")
+    if (!notificationResponse.ok) {
+      console.error("Admin notification failed:", await notificationResponse.text())
     }
 
     // Send confirmation email to customer
-    console.log("API: Attempting to send confirmation email to customer...")
-    
-    const { error: confirmationEmailError } = await supabase.functions.invoke("send-customer-confirmation", {
-      body: {
-        packageRequest: data
+    const confirmationResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-customer-confirmation`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`
+        },
+        body: JSON.stringify({
+          packageRequest
+        })
       }
-    })
+    )
 
-    if (confirmationEmailError) {
-      console.error("API: Error sending confirmation email:", confirmationEmailError)
-    } else {
-      console.log("API: Confirmation email sent successfully")
+    if (!confirmationResponse.ok) {
+      console.error("Customer confirmation failed:", await confirmationResponse.text())
     }
 
+    // Return success even if emails fail - we have the data stored
     return res.status(200).json({
       success: true,
       message: "Package request submitted successfully",
-      data,
-      emailStatus: {
-        notificationSent: !notificationEmailError,
-        confirmationSent: !confirmationEmailError
-      }
+      data: packageRequest
     })
 
   } catch (error) {
-    console.error("API: Error submitting package request:", error)
-    
-    // Provide more specific error messages
-    let errorMessage = "Failed to submit package request"
-    if (error instanceof Error) {
-      errorMessage = error.message
-    }
-    
+    console.error("Error in submit-package handler:", error)
     return res.status(500).json({
       success: false,
-      message: errorMessage,
-      error: error instanceof Error ? error.message : "Unknown error"
+      message: "Internal server error",
+      error: error.message
     })
   }
 }
