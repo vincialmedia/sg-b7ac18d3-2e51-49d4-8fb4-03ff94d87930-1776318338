@@ -198,6 +198,18 @@ export default function Home() {
 
   const handleSubmit = () => {
     if (userEmail && getTotalServices() > 0) {
+      // Track HubSpot form submission
+      if (typeof window !== 'undefined' && (window as any).hsq) {
+        (window as any).hsq.push(['identify', {
+          email: userEmail
+        }]);
+        
+        (window as any).hsq.push(['trackEvent', {
+          id: 'package_request_submitted',
+          value: userPoints
+        }]);
+      }
+
       // In a real app, this would send an email to vincent@vincialmedia.com
       console.log("Sending email to vincent@vincialmedia.com with package details:", {
         email: userEmail,
