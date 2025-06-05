@@ -219,8 +219,14 @@ export default function Home() {
         if (result.success) {
           // Track HubSpot form submission
           if (typeof window !== "undefined" && (window as any)._hsq) {
-            const hsq = (window as Window & { _hsq?: { push: (args: any[]) => void }[] })._hsq;
-            if (hsq) {
+            // Define a more specific type for the HubSpot queue
+            type HubSpotCommand = 
+              | ["identify", { email: string }]
+              | ["trackEvent", { id: string; value: number }];
+            
+            const hsq = (window as Window & { _hsq?: { push: (command: HubSpotCommand) => void }[] })._hsq;
+            
+            if (hsq && typeof hsq.push === "function") {
               hsq.push(["identify", {
                 email: userEmail
               }]);
