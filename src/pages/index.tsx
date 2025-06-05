@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
 import Head from "next/head"
-import Script from "next/script"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -8,7 +7,7 @@ import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import TextAvoidance from "@/components/TextAvoidance"
+import { TextAvoidance } from "@/components/TextAvoidance"
 import { 
   Globe, 
   Zap, 
@@ -105,7 +104,6 @@ export default function Home() {
         setTransform(getAvoidanceTransform(ref, intensity))
       }
       updateTransform()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [intensity])
 
     return (
