@@ -1,8 +1,15 @@
-
 export {};
 
 declare global {
   interface Window {
-    _hsq: any[]; // You can refine this type if you know the structure of _hsq
+    /**
+     * HubSpot tracking queue.
+     * Commands are pushed to this array.
+     * Examples:
+     * _hsq.push(['setPath', '/new-page']);
+     * _hsq.push(['identify', { email: 'user@example.com' }]);
+     * _hsq.push(['trackEvent', { id: 'event-id', value: 10 }]);
+     */
+    _hsq: Array<[string, ...unknown[]]>;
   }
 }
