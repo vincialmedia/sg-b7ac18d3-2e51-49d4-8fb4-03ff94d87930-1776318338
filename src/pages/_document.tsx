@@ -14,6 +14,24 @@ export default function Document() {
           async 
           data-softgen-monitoring="true"
         />
+
+        {/* Cookiebot Script */}
+        <script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
+          type="text/javascript"
+          async
+        ></script>
+
+        {/* HubSpot Embed Script */}
+        <script
+          type="text/javascript"
+          id="hs-script-loader"
+          async
+          defer
+          src="//js-eu1.hs-scripts.com/146320474.js"
+        ></script>
       </Head>
       <body className="antialiased">
         <Main />
