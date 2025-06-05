@@ -19,8 +19,8 @@ export default function Document() {
           id="Cookiebot" 
           src="https://consent.cookiebot.com/uc.js" 
           data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07" 
-          type="text/javascript" 
-          async
+          data-blockingmode="auto" 
+          type="text/javascript"
         />
         <script 
           type="text/javascript" 
