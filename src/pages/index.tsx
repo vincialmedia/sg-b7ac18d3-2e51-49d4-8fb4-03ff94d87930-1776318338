@@ -199,12 +199,12 @@ export default function Home() {
   const handleSubmit = () => {
     if (userEmail && getTotalServices() > 0) {
       // Track HubSpot form submission
-      if (typeof window !== 'undefined' && (window as any).hsq) {
-        (window as any).hsq.push(['identify', {
+      if (typeof window !== 'undefined' && (window as any)._hsq) {
+        (window as any)._hsq.push(['identify', {
           email: userEmail
         }]);
         
-        (window as any).hsq.push(['trackEvent', {
+        (window as any)._hsq.push(['trackEvent', {
           id: 'package_request_submitted',
           value: userPoints
         }]);
