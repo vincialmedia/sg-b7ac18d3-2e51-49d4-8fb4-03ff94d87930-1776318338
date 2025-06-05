@@ -28,6 +28,15 @@ import {
 } from "lucide-react"
 // import { supabase } from "@/lib/supabase" // This import is not directly used in this file
 
+// It's better to declare global types in a .d.ts file (e.g., src/types/global.d.ts)
+// /*
+// declare global {
+//   interface Window {
+//     _hsq: any[]; // Array of arrays/objects for HubSpot tracking
+//   }
+// }
+// */
+
 export default function Home() {
   const [userPoints, setUserPoints] = useState(0)
   const [selectedServices, setSelectedServices] = useState<{[key: string]: number}>({})
@@ -227,26 +236,15 @@ export default function Home() {
 
         if (result.success) {
           // Track HubSpot form submission
-          interface WindowWithHsq extends Window {
-            _hsq?: HubSpotCommand[];
-          }
-          type HubSpotIdentifyCommand = ["identify", { email: string }];
-          type HubSpotTrackEventCommand = ["trackEvent", { id: string; value: number }];
-          type HubSpotCommand = HubSpotIdentifyCommand | HubSpotTrackEventCommand;
-          
-          if (typeof window !== "undefined" && (window as WindowWithHsq)._hsq) {
-            const hsq = (window as WindowWithHsq)._hsq;
+          if (typeof window !== "undefined" && window._hsq) {
+            window._hsq.push(["identify", {
+              email: userEmail
+            }]);
             
-            if (hsq && typeof hsq.push === "function") {
-              hsq.push(["identify", {
-                email: userEmail
-              }]);
-              
-              hsq.push(["trackEvent", {
-                id: "package_request_submitted",
-                value: userPoints
-              }]);
-            }
+            window._hsq.push(["trackEvent", {
+              id: "package_request_submitted",
+              value: userPoints
+            }]);
           }
 
           // Close dialog and show success message
@@ -302,9 +300,7 @@ export default function Home() {
       <Script
         id="hs-script-loader"
         src="//js-eu1.hs-scripts.com/146320474.js"
-        strategy="beforeInteractive"
-        async
-        defer
+        strategy="afterInteractive"
       />
       {/* Google Analytics Script Loader */}
       <Script
@@ -676,14 +672,30 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+                  <Dialog 
+                    open={showEmailDialog} 
+                    onOpenChange={(open) => {
+                      if (!open) {
+                        setShowEmailDialog(false)
+                      } else {
+                        setShowEmailDialog(true)
+                      }
+                    }}
+                  >
                     <DialogTrigger asChild>
-                      <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200">
+                      <Button 
+                        size="lg" 
+                        className="w-full bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setShowEmailDialog(true)
+                        }}
+                      >
                         Submit Package Request
                         <ArrowRight className="ml-2" size={20} />
                       </Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent onInteractOutside={(e) => e.preventDefault()}>
                       <DialogHeader>
                         <DialogTitle>Submit Your Package Request</DialogTitle>
                         <DialogDescription>
