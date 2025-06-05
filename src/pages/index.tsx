@@ -32,6 +32,7 @@ export default function Home() {
   const [userEmail, setUserEmail] = useState("")
   const [showEmailDialog, setShowEmailDialog] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [marketingConsent, setMarketingConsent] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [globalMousePosition, setGlobalMousePosition] = useState({ x: 0, y: 0 })
   const [scrollY, setScrollY] = useState(0)
@@ -202,7 +203,8 @@ export default function Home() {
       console.log("Sending email to vincent@vincialmedia.com with package details:", {
         email: userEmail,
         services: selectedServices,
-        points: userPoints
+        points: userPoints,
+        marketingConsent
       })
       setShowEmailDialog(false)
       setShowSuccessMessage(true)
@@ -599,6 +601,18 @@ export default function Home() {
                             value={userEmail}
                             onChange={(e) => setUserEmail(e.target.value)}
                           />
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="marketing"
+                            checked={marketingConsent}
+                            onChange={(e) => setMarketingConsent(e.target.checked)}
+                            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          />
+                          <Label htmlFor="marketing" className="text-sm text-gray-600">
+                            I agree to be contacted for marketing purposes
+                          </Label>
                         </div>
                         <Button 
                           onClick={handleSubmit} 
