@@ -218,12 +218,15 @@ export default function Home() {
 
         if (result.success) {
           // Track HubSpot form submission
-          if (typeof window !== "undefined" && (window as any)._hsq) {
-            type HubSpotIdentifyCommand = ["identify", { email: string }];
-            type HubSpotTrackEventCommand = ["trackEvent", { id: string; value: number }];
-            type HubSpotCommand = HubSpotIdentifyCommand | HubSpotTrackEventCommand;
-            
-            const hsq = (window as Window & { _hsq?: HubSpotCommand[] })._hsq;
+          interface WindowWithHsq extends Window {
+            _hsq?: HubSpotCommand[];
+          }
+          type HubSpotIdentifyCommand = ["identify", { email: string }];
+          type HubSpotTrackEventCommand = ["trackEvent", { id: string; value: number }];
+          type HubSpotCommand = HubSpotIdentifyCommand | HubSpotTrackEventCommand;
+          
+          if (typeof window !== "undefined" && (window as WindowWithHsq)._hsq) {
+            const hsq = (window as WindowWithHsq)._hsq;
             
             if (hsq && typeof hsq.push === "function") {
               hsq.push(["identify", {
