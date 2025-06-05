@@ -200,8 +200,8 @@ export default function Home() {
 
   const handleSubmit = () => {
     if (userEmail && getTotalServices() > 0) {
-      // In a real app, this would send an email
-      console.log("Sending email with package details:", {
+      // In a real app, this would send an email to vincent@vincialmedia.com
+      console.log("Sending email to vincent@vincialmedia.com with package details:", {
         email: userEmail,
         services: selectedServices,
         points: userPoints
@@ -288,7 +288,7 @@ export default function Home() {
                   <TextAvoidance 
                     text="I help businesses grow through strategic web development, marketing automation, and social media excellence."
                     tag="p"
-                    className="text-xl text-slate-600 leading-relaxed"
+                    className="text-xl text-slate-600 leading-relaxed whitespace-pre-wrap break-words"
                     mousePosition={globalMousePosition} 
                     intensity={5}
                   />
@@ -406,7 +406,7 @@ export default function Home() {
                           <ExternalLink size={16} />
                         </Button>
                       </div>
-                      <CardDescription className="text-base">
+                      <CardDescription className="text-base whitespace-pre-wrap break-words">
                         {project.description}
                       </CardDescription>
                     </CardHeader>
@@ -483,7 +483,7 @@ export default function Home() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="p-3 bg-slate-50 rounded-lg">
-                        <p className="text-sm text-slate-700">{service.explanation}</p>
+                        <p className="text-sm text-slate-700 whitespace-pre-wrap break-words">{service.explanation}</p>
                       </div>
                       
                       <ul className="space-y-2">
@@ -686,7 +686,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-slate-100 hover:text-black hover:font-bold transition-all duration-200">
                 <Mail className="mr-2" size={20} />
-                hello@vincialmedia.com
+                vincent@vincialmedia.com
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black hover:font-bold transition-all duration-200">
                 <Phone className="mr-2" size={20} />
