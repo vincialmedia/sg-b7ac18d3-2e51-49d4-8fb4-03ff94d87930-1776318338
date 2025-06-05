@@ -218,33 +218,11 @@ export default function Home() {
 
   return (
     <>
-     <Head>
+      <Head>
         <title>Vincialmedia - Digital Marketing & Web Development Expert</title>
-        <meta
-          name="description"
-          content="Professional website development, marketing automation, and social media services. Transform your digital presence with Vincialmedia."
-        />
+        <meta name="description" content="Professional website development, marketing automation, and social media services. Transform your digital presence with Vincialmedia." />
         <link rel="icon" href="/favicon.ico" />
-
-        {/* HubSpot Script */}
-        <Script
-          id="hubspot-script"
-          src="//js-eu1.hs-scripts.com/146320474.js"
-          type="text/javascript"
-          async
-          defer
-        />
-
-        {/* Cookiebot Script */}
-        <Script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
-          type="text/javascript"
-          strategy="beforeInteractive"
-        />
       </Head>
-    
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden w-full">
         {/* Always Sticky Animated Progress Bar - Inside Main Container */}
