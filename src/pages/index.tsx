@@ -238,7 +238,7 @@ export default function Home() {
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date()),
 
-      gtag('config', 'G-K43H5KD1R1');
+      gtag('config', 'G-K43H5KD1R1'),
       </script>
         <title>Vincialmedia - Digital Marketing & Web Development Expert</title>
         <meta name="description" content="Professional website development, marketing automation, and social media services. Transform your digital presence with Vincialmedia." />
