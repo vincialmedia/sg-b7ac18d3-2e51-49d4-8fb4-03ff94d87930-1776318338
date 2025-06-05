@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, MouseEvent } from "react"
 import Head from "next/head"
 import Script from "next/script"
 import { Button } from "@/components/ui/button"
@@ -198,7 +198,7 @@ export default function Home() {
     return Object.values(selectedServices).reduce((sum, count) => sum + count, 0)
   }
 
-  const handleSubmit = async () => {
+  const handleSubmitClick = async () => {
     if (userEmail && getTotalServices() > 0) {
       try {
         console.log("Submitting form with data:", {
@@ -249,6 +249,7 @@ export default function Home() {
             }
           }
 
+          // Close dialog and show success message
           setShowEmailDialog(false)
           setShowSuccessMessage(true)
           setTimeout(() => setShowSuccessMessage(false), 3000)
@@ -256,6 +257,8 @@ export default function Home() {
           // Reset form
           setUserEmail("")
           setMarketingConsent(false)
+          setSelectedServices({})
+          setUserPoints(0)
         } else {
           console.error("Failed to submit package request:", result.message)
           alert("Failed to submit package request. Please try again.")
@@ -711,7 +714,12 @@ export default function Home() {
                           </Label>
                         </div>
                         <Button 
-                          onClick={handleSubmit} 
+                          type="button"
+                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleSubmitClick();
+                          }}
                           className="w-full hover:text-black hover:font-bold transition-all duration-200"
                           disabled={!userEmail || getTotalServices() === 0}
                         >
