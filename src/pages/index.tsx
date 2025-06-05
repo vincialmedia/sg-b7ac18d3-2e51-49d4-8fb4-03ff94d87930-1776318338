@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import Head from "next/head"
+import Head from "next/head";
+import Script from "next/script";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -230,20 +232,46 @@ export default function Home() {
   return (
     <>
       <Head>
-      <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07" type="text/javascript" async></script>
-      <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/146320474.js"></script>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-K43H5KD1R1"></script>
-      <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date()),
+    <title>Vincialmedia - Digital Marketing & Web Development Expert</title>
+    <meta
+      name="description"
+      content="Professional website development, marketing automation, and social media services. Transform your digital presence with Vincialmedia."
+    />
+    <link rel="icon" href="/favicon.ico" />
 
-      gtag('config', 'G-K43H5KD1R1'),
-      </script>
-        <title>Vincialmedia - Digital Marketing & Web Development Expert</title>
-        <meta name="description" content="Professional website development, marketing automation, and social media services. Transform your digital presence with Vincialmedia." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    {/* Cookiebot Script */}
+    <Script
+      id="Cookiebot"
+      src="https://consent.cookiebot.com/uc.js"
+      data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
+      strategy="beforeInteractive"
+    />
+
+    {/* HubSpot Script */}
+    <Script
+      id="hs-script-loader"
+      src="//js-eu1.hs-scripts.com/146320474.js"
+      strategy="beforeInteractive"
+      async
+      defer
+    />
+
+    {/* Google Analytics Script Loader */}
+    <Script
+      src="https://www.googletagmanager.com/gtag/js?id=G-K43H5KD1R1"
+      strategy="afterInteractive"
+    />
+
+    {/* Google Analytics Init */}
+    <Script id="ga4-init" strategy="afterInteractive">
+      {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-K43H5KD1R1');
+      `}
+    </Script>
+  </Head>
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden w-full">
         {/* Always Sticky Animated Progress Bar - Inside Main Container */}
