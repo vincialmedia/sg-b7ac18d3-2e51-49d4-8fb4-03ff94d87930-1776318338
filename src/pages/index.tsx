@@ -236,7 +236,6 @@ export default function Home() {
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-K43H5KD1R1');
 </script>
         <title>Vincialmedia - Digital Marketing & Web Development Expert</title>
