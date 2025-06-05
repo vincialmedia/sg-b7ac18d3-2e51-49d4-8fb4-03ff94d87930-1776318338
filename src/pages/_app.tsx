@@ -1,27 +1,6 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import Script from 'next/script'
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      {/* HubSpot */}
-      <Script
-        id="hs-script-loader"
-        strategy="afterInteractive"
-        src="//js-eu1.hs-scripts.com/146320474.js"
-      />
-
-      {/* Softgen */}
-      <Script
-        src="https://cdn.softgen.ai/script.js"
-        strategy="afterInteractive"
-        data-softgen-monitoring="true"
-      />
-
-      <Component {...pageProps} />
-    </>
-  )
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
 }
-
-export default MyApp

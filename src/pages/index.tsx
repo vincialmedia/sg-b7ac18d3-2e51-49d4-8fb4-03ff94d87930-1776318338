@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import Head from "next/head"
+import Script from "next/script"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -7,7 +8,7 @@ import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { TextAvoidance } from "@/components/TextAvoidance"
+import TextAvoidance from "@/components/TextAvoidance"
 import { 
   Globe, 
   Zap, 
@@ -223,7 +224,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      {/* Remove the HubSpot script since it's now in _app.tsx */}
+      <Script
+        id="hubspot-script"
+        src="//js-eu1.hs-scripts.com/146320474.js"
+        type="text/javascript"
+        async
+        defer
+      />
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden w-full">
         {/* Always Sticky Animated Progress Bar - Inside Main Container */}

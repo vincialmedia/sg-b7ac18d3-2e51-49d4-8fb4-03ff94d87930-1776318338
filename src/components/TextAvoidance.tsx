@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from "react"
 
 interface TextAvoidanceProps {
@@ -9,7 +8,7 @@ interface TextAvoidanceProps {
   intensity?: number
 }
 
-export function TextAvoidance({
+export default function TextAvoidance({
   text,
   tag = "div",
   className = "",
