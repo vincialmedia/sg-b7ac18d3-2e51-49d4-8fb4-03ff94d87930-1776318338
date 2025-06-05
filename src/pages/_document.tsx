@@ -9,11 +9,6 @@ export default function Document() {
           The Softgen AI monitoring script is essential for core app functionality.
           The application will not function without it.
         */}
-        <script 
-          src="https://cdn.softgen.ai/script.js" 
-          async 
-          data-softgen-monitoring="true"
-        />
         <Script
         id="Cookiebot"
         src="https://consent.cookiebot.com/uc.js"
@@ -25,6 +20,11 @@ export default function Document() {
         src="//js-eu1.hs-scripts.com/146320474.js"
         strategy="afterInteractive"
       />
+        <script 
+          src="https://cdn.softgen.ai/script.js" 
+          async 
+          data-softgen-monitoring="true"
+        />
       </Head>
       <body className="antialiased">
         <Main />
