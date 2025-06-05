@@ -1,5 +1,5 @@
+
 import { Html, Head, Main, NextScript } from 'next/document'
-import Script from 'next/script'
 
 export default function Document() {
   return (
@@ -15,19 +15,19 @@ export default function Document() {
           async 
           data-softgen-monitoring="true"
         />
-        <Script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
-          strategy="beforeInteractive"
+        <script 
+          id="Cookiebot" 
+          src="https://consent.cookiebot.com/uc.js" 
+          data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07" 
+          type="text/javascript" 
           async
         />
-        <Script
-          id="hs-script-loader"
+        <script 
+          type="text/javascript" 
+          id="hs-script-loader" 
+          async 
+          defer 
           src="//js-eu1.hs-scripts.com/146320474.js"
-          strategy="beforeInteractive"
-          async
-          defer
         />
       </Head>
       <body className="antialiased">
