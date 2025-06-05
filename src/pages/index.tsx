@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, MouseEvent } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Head from "next/head"
 import Script from "next/script"
 import { Button } from "@/components/ui/button"
