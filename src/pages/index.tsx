@@ -201,6 +201,13 @@ export default function Home() {
   const handleSubmit = async () => {
     if (userEmail && getTotalServices() > 0) {
       try {
+        console.log("Submitting form with data:", {
+          email: userEmail,
+          services: selectedServices,
+          points: userPoints,
+          marketingConsent
+        })
+
         const response = await fetch("/api/submit-package", {
           method: "POST",
           headers: {
@@ -214,7 +221,9 @@ export default function Home() {
           })
         })
 
+        console.log("Response status:", response.status)
         const result = await response.json()
+        console.log("Response data:", result)
 
         if (result.success) {
           // Track HubSpot form submission
@@ -243,12 +252,24 @@ export default function Home() {
           setShowEmailDialog(false)
           setShowSuccessMessage(true)
           setTimeout(() => setShowSuccessMessage(false), 3000)
+          
+          // Reset form
+          setUserEmail("")
+          setMarketingConsent(false)
         } else {
-          console.error("Failed to submit package request")
+          console.error("Failed to submit package request:", result.message)
+          alert("Failed to submit package request. Please try again.")
         }
       } catch (error) {
         console.error("Error submitting package request:", error)
+        alert("An error occurred while submitting your request. Please try again.")
       }
+    } else {
+      console.log("Form validation failed:", {
+        userEmail,
+        totalServices: getTotalServices()
+      })
+      alert("Please enter your email and select at least one service.")
     }
   }
 
