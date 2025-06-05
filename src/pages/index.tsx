@@ -26,6 +26,7 @@ import {
   Code,
   Gauge
 } from "lucide-react"
+import { supabase } from "@/lib/supabase"
 
 export default function Home() {
   const [userPoints, setUserPoints] = useState(0)
@@ -200,10 +201,10 @@ export default function Home() {
   const handleSubmit = async () => {
     if (userEmail && getTotalServices() > 0) {
       try {
-        const response = await fetch('/api/send-email', {
-          method: 'POST',
+        const response = await fetch("/api/submit-package", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             email: userEmail,
@@ -217,26 +218,26 @@ export default function Home() {
 
         if (result.success) {
           // Track HubSpot form submission
-          if (typeof window !== 'undefined' && (window as unknown as { _hsq?: unknown[] })._hsq) {
-            const hsq = (window as unknown as { _hsq: unknown[] })._hsq;
-            hsq.push(['identify', {
+          if (typeof window !== "undefined" && (window as any)._hsq) {
+            const hsq = (window as any)._hsq
+            hsq.push(["identify", {
               email: userEmail
-            }]);
+            }])
             
-            hsq.push(['trackEvent', {
-              id: 'package_request_submitted',
+            hsq.push(["trackEvent", {
+              id: "package_request_submitted",
               value: userPoints
-            }]);
+            }])
           }
 
           setShowEmailDialog(false)
           setShowSuccessMessage(true)
           setTimeout(() => setShowSuccessMessage(false), 3000)
         } else {
-          console.error('Failed to submit package request')
+          console.error("Failed to submit package request")
         }
       } catch (error) {
-        console.error('Error submitting package request:', error)
+        console.error("Error submitting package request:", error)
       }
     }
   }
