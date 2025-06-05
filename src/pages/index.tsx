@@ -26,7 +26,7 @@ import {
   Code,
   Gauge
 } from "lucide-react"
-import { supabase } from "@/lib/supabase"
+// import { supabase } from "@/lib/supabase" // This import is not directly used in this file
 
 export default function Home() {
   const [userPoints, setUserPoints] = useState(0)
