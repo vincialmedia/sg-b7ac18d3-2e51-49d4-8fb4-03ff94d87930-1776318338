@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from "react"
 
 interface TextAvoidanceProps {
@@ -73,7 +72,7 @@ export default function TextAvoidance({
     setCharacters(updatedChars)
   }, [mousePosition, intensity, characters])
 
-  const Tag = tag as any
+  const Tag = tag as React.ElementType
   const words = text.split(" ")
 
   return (
