@@ -21,6 +21,7 @@ export default function Document() {
           data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07" 
           data-blockingmode="auto" 
           type="text/javascript"
+          async
         />
         <script 
           type="text/javascript" 
