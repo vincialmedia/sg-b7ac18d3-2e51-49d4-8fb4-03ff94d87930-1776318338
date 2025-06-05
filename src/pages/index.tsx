@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
 import Head from "next/head"
-import Script from "next/script"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -224,13 +223,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <Script
-        id="hubspot-script"
-        src="//js-eu1.hs-scripts.com/146320474.js"
-        type="text/javascript"
-        async
-        defer
-      />
+      {/* Remove the HubSpot script since it's now in _app.tsx */}
       
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden w-full">
         {/* Always Sticky Animated Progress Bar - Inside Main Container */}

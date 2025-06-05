@@ -1,6 +1,25 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+import '@/styles/globals.css'
+import type { AppProps } from 'next/app'
+import Script from 'next/script'
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <>
+      <Script
+        id="Cookiebot"
+        src="https://consent.cookiebot.com/uc.js"
+        data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
+        strategy="beforeInteractive"
+      />
+      <Script
+        id="hs-script-loader"
+        src="//js-eu1.hs-scripts.com/146320474.js"
+        strategy="afterInteractive"
+      />
+      <Component {...pageProps} />
+    </>
+  )
 }
+
+export default MyApp
