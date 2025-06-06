@@ -777,7 +777,7 @@ export default function Home() {
                 <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <TrendingUp size={40} />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">300% Average ROI</h3>
+                <h3 className="text-2xl font-bold mb-2">150% Average ROI</h3>
                 <p className="text-slate-300">Proven results that drive growth</p>
               </div>
               <div className="text-center group">
