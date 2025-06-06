@@ -208,71 +208,59 @@ export default function Home() {
   }
 
   const handleSubmitClick = async () => {
-    if (userEmail && getTotalServices() > 0) {
-      try {
-        console.log("Submitting form with data:", {
-          email: userEmail,
-          services: selectedServices,
-          points: userPoints,
-          marketingConsent
-        })
-
-        const response = await fetch("/api/submit-package", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: userEmail,
-            services: selectedServices,
-            points: userPoints,
-            marketingConsent
-          })
-        })
-
-        console.log("Response status:", response.status)
-        const result = await response.json()
-        console.log("Response data:", result)
-
-        if (result.success) {
-          // Track HubSpot form submission
-          if (typeof window !== "undefined" && window._hsq) {
-            window._hsq.push(["identify", {
-              email: userEmail
-            }]);
-            
-            window._hsq.push(["trackEvent", {
-              id: "package_request_submitted",
-              value: userPoints
-            }]);
-          }
-
-          // Close dialog and show success message
-          setShowEmailDialog(false)
-          setShowSuccessMessage(true)
-          setTimeout(() => setShowSuccessMessage(false), 3000)
-          
-          // Reset form
-          setUserEmail("")
-          setMarketingConsent(false)
-          setSelectedServices({})
-          setUserPoints(0)
-        } else {
-          console.error("Failed to submit package request:", result.message)
-          alert("Failed to submit package request. Please try again.")
-        }
-      } catch (error) {
-        console.error("Error submitting package request:", error)
-        alert("An error occurred while submitting your request. Please try again.")
-      }
-    } else {
-      console.log("Form validation failed:", {
-        userEmail,
-        totalServices: getTotalServices()
-      })
-      alert("Please enter your email and select at least one service.")
-    }
+  if (!userEmail || getTotalServices() === 0) {
+    alert("Please enter your email and select at least one service.");
+    return;
   }
+
+  try {
+    const response = await fetch("/api/submit-package", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        services: selectedServices,
+        points: userPoints,
+        marketingConsent,
+      }),
+    });
+
+    console.log("Response status:", response.status);
+
+    let result;
+    try {
+      result = await response.json();
+    } catch (err) {
+      const text = await response.text();
+      console.error("API returned non-JSON:", text);
+      alert("API error. Check logs.");
+      return;
+    }
+
+    console.log("Response data:", result);
+
+    if (result.success) {
+      setShowEmailDialog(false);
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000);
+
+      setUserEmail("");
+      setMarketingConsent(false);
+      setSelectedServices({});
+      setUserPoints(0);
+    } else {
+      console.error("API error:", result.message);
+      alert("Failed to submit package request: " + result.message);
+    }
+
+  } catch (err) {
+    console.error("Network or server error:", err);
+    alert("An error occurred while submitting your request. Please try again.");
+  }
+};
+
 
   const progressPercentage = Math.min((userPoints / 1000) * 100, 100)
   const hasReachedGoal = userPoints >= 1000
