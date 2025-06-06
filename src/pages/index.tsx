@@ -229,17 +229,18 @@ export default function Home() {
 
     console.log("Response status:", response.status);
 
+    const responseText = await response.text();
     let result;
     try {
-      result = await response.json();
-    } catch (err) {
-      const text = await response.text();
-      console.error("API returned non-JSON:", text);
-      alert("API error. Check logs.");
+      result = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error("API returned non-JSON content:", responseText);
+      console.error("JSON parsing error:", parseError);
+      alert("API error: Response was not valid JSON. Check console for details.");
       return;
     }
 
-    console.log("Response data:", result);
+    console.log("Response ", result);
 
     if (result.success) {
       // Track HubSpot form submission
@@ -694,12 +695,12 @@ export default function Home() {
                       </Button>
                     </DialogTrigger>
                     <DialogContent 
-                      onInteractOutside={(e) => {
-                        e.preventDefault()
-                      }}
-                      onEscapeKeyDown={(e) => {
-                        e.preventDefault()
-                      }}
+                      // onInteractOutside={(e) => {
+                      //   e.preventDefault()
+                      // }}
+                      // onEscapeKeyDown={(e) => {
+                      //   e.preventDefault()
+                      // }}
                     >
                       <DialogHeader>
                         <DialogTitle>Submit Your Package Request</DialogTitle>
