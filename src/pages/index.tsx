@@ -175,11 +175,11 @@ export default function Home() {
       link: "crowdhouse.com"
     },
     {
-      title: "Allemann Performance",
-      description: "High-performance automotive website showcasing premium vehicle modifications and performance upgrades with stunning visual design.",
+      title: "Speed Comparer",
+      description: "I built Speed Comparer to over 200'000 Subscribers on YouTube, 30'000 on TikTok and 20'000 on Facebook",
       image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=400&fit=crop",
-      technologies: ["Next.js", "TypeScript", "Framer Motion", "Tailwind CSS"],
-      features: ["Interactive Gallery", "Performance Calculator", "Booking System", "Mobile Optimized"],
+      technologies: ["Final Cut Pro", "Canva", "Photoshop"],
+      features: ["Social Strategy", "Video Shoots", "Photo Shoots", "Analytics"],
       link: "#"
     }
   ]
