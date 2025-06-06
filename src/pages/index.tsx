@@ -169,7 +169,7 @@ export default function Home() {
     {
       title: "Crowdhouse",
       description: "I increased lead conversion at Crowdhouse by implementing targeted marketing automation workflows that personalized user journeys and nurtured prospects through the sales funnel.",
-      image: "/public/vincent-mbkuncn4.jpeg",
+      image: "vincialmedia.com/vincent-mbkuncn4.jpeg",
       technologies: ["Marketing Cloud", "Wordpress", "AMPScript", "Node.js"],
       features: ["Marketing Automation Flows", "Customer Journey", "Performance Analytics"],
       link: "https://crowdhouse.com/"
