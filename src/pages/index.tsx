@@ -167,7 +167,7 @@ export default function Home() {
 
   const portfolioProjects = [
     {
-      title: "Speed Comparer",
+      title: "Crowdhouse",
       description: "I increased lead conversion at Crowdhouse by implementing targeted marketing automation workflows that personalized user journeys and nurtured prospects through the sales funnel.",
       image: "/uploads/vincent.jpeg",
       technologies: ["Marketing Cloud", "Wordpress", "AMPScript", "Node.js"],
