@@ -229,7 +229,18 @@ export default function Home() {
 
       const result = await response.json();
 
-      
+      if (result.success) {
+        // Track HubSpot form submission
+        if (typeof window !== "undefined" && window._hsq) {
+          window._hsq.push(["identify", {
+            email: userEmail
+          }]);
+          
+          window._hsq.push(["trackEvent", {
+            id: "package_request_submitted",
+            value: userPoints
+          }]);
+        }
 
         setShowEmailDialog(false);
         setShowSuccessMessage(true);
