@@ -177,10 +177,10 @@ export default function Home() {
     {
       title: "Speed Comparer",
       description: "I built Speed Comparer to over 200'000 Subscribers on YouTube, 30'000 on TikTok and 20'000 on Facebook",
-      image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=400&fit=crop",
+      image: "/img-2570-mbkvflod.png",
       technologies: ["Final Cut Pro", "Canva", "Photoshop"],
       features: ["Social Strategy", "Video Shoots", "Photo Shoots", "Analytics"],
-      link: "#"
+      link: "https://www.youtube.com/speedcomparer"
     }
   ]
 
