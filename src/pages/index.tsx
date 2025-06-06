@@ -285,10 +285,10 @@ export default function Home() {
       />
       {/* HubSpot Script */}
       <Script
-        id="hs-script-loader"
-        src="//js-eu1.hs-scripts.com/146320474.js"
-        strategy="afterInteractive"
-      />
+  id="hs-script-loader"
+  src="https://js-eu1.hs-scripts.com/146320474.js"
+  strategy="afterInteractive"
+/>
       {/* Google Analytics Script Loader */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-K43H5KD1R1"
