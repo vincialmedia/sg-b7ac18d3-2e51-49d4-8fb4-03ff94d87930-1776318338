@@ -242,6 +242,18 @@ export default function Home() {
     console.log("Response data:", result);
 
     if (result.success) {
+      // Track HubSpot form submission
+      if (typeof window !== "undefined" && window._hsq) {
+        window._hsq.push(["identify", {
+          email: userEmail
+        }]);
+        
+        window._hsq.push(["trackEvent", {
+          id: "package_request_submitted",
+          value: userPoints
+        }]);
+      }
+
       setShowEmailDialog(false);
       setShowSuccessMessage(true);
       setTimeout(() => setShowSuccessMessage(false), 3000);
@@ -663,19 +675,17 @@ export default function Home() {
                   <Dialog 
                     open={showEmailDialog} 
                     onOpenChange={(open) => {
-                      if (!open) {
-                        setShowEmailDialog(false)
-                      } else {
-                        setShowEmailDialog(true)
-                      }
+                      setShowEmailDialog(open)
                     }}
                   >
                     <DialogTrigger asChild>
                       <Button 
+                        type="button"
                         size="lg" 
                         className="w-full bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200"
                         onClick={(e) => {
                           e.preventDefault()
+                          e.stopPropagation()
                           setShowEmailDialog(true)
                         }}
                       >
@@ -683,7 +693,14 @@ export default function Home() {
                         <ArrowRight className="ml-2" size={20} />
                       </Button>
                     </DialogTrigger>
-                    <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+                    <DialogContent 
+                      onInteractOutside={(e) => {
+                        e.preventDefault()
+                      }}
+                      onEscapeKeyDown={(e) => {
+                        e.preventDefault()
+                      }}
+                    >
                       <DialogHeader>
                         <DialogTitle>Submit Your Package Request</DialogTitle>
                         <DialogDescription>
@@ -715,10 +732,10 @@ export default function Home() {
                         </div>
                         <Button 
                           type="button"
-                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            handleSubmitClick();
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            handleSubmitClick()
                           }}
                           className="w-full hover:text-black hover:font-bold transition-all duration-200"
                           disabled={!userEmail || getTotalServices() === 0}
