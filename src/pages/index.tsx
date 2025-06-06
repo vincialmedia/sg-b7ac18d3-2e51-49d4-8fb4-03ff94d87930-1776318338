@@ -278,17 +278,21 @@ export default function Home() {
       {/* ---- SCRIPTS (move OUTSIDE of <Head>) ---- */}
       {/* Cookiebot Script */}
       <Script
-        id="Cookiebot"
-        src="https://consent.cookiebot.com/uc.js"
-        data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
-        strategy="beforeInteractive"
-      />
-      {/* HubSpot Script */}
-      <Script
-  id="hs-script-loader"
-  src="https://js-eu1.hs-scripts.com/146320474.js"
-  strategy="afterInteractive"
+  id="Cookiebot"
+  src="https://consent.cookiebot.com/uc.js"
+  data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
+  strategy="beforeInteractive"
 />
+
+{/* HubSpot script loads AFTER cookie consent */}
+<script
+  type="text/plain"
+  data-cookieconsent="marketing"
+  data-src="https://js-eu1.hs-scripts.com/146320474.js"
+  async
+  defer
+></script>
+
       {/* Google Analytics Script Loader */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-K43H5KD1R1"
