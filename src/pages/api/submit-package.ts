@@ -1,92 +1,60 @@
+// /pages/api/submit-package.ts
 
-import { NextApiRequest, NextApiResponse } from "next"
-import { supabase } from "@/integrations/supabase/client"
+import { NextApiRequest, NextApiResponse } from "next";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false, message: "Method not allowed" })
+    return res.status(405).json({ success: false, message: "Method not allowed" });
   }
 
   try {
-    const { email, services, points, marketingConsent } = req.body
+    const { email, services, points, marketingConsent } = req.body;
 
-    // Store the package request in Supabase
-    const { data: packageRequest, error: dbError } = await supabase
-      .from("package_requests")
-      .insert([
-        {
-          email,
-          services,
-          points,
-          marketing_consent: marketingConsent,
-          status: "pending"
-        }
-      ])
-      .select()
-      .single()
+    // Prepare the email body for admin (you)
+    const servicesList = Object.entries(services)
+      .map(([service, count]) => `${service} x${count}`)
+      .join(", ");
 
-    if (dbError) {
-      console.error("Database error:", dbError)
-      return res.status(500).json({ 
-        success: false, 
-        message: "Failed to store package request",
-        error: dbError.message 
-      })
-    }
+    // Send email to YOU
+    await resend.emails.send({
+      from: "no-reply@vincialmedia.com", // Use your verified domain
+      to: "vincent@vincialmedia.com",
+      subject: "New Package Request Received",
+      html: `
+        <h1>New Package Request</h1>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Services:</b> ${servicesList}</p>
+        <p><b>Points:</b> ${points}</p>
+        <p><b>Marketing Consent:</b> ${marketingConsent ? "Yes" : "No"}</p>
+      `
+    });
 
-    // Send notification email to admin
-    const notificationResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-notification`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`
-        },
-        body: JSON.stringify({
-          to: "vincent@vincialmedia.com", // Admin email
-          subject: "New Package Request - Vincialmedia",
-          packageRequest
-        })
-      }
-    )
+    // Send email to USER
+    await resend.emails.send({
+      from: "no-reply@vincialmedia.com",
+      to: email,
+      subject: "Your order confirmation",
+      html: `
+        <h1>Your Package Request</h1>
+        <p>Thank you for your interest in our services! Here’s what you selected:</p>
+        <ul>
+          ${Object.entries(services)
+            .map(
+              ([service, count]) => `<li><b>${service}</b> x${count}</li>`
+            )
+            .join("")}
+        </ul>
+        <p>Total Points: <b>${points}</b></p>
+        <p>We’ll be in touch soon!</p>
+      `
+    });
 
-    if (!notificationResponse.ok) {
-      console.error("Admin notification failed:", await notificationResponse.text())
-    }
-
-    // Send confirmation email to customer
-    const confirmationResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-customer-confirmation`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`
-        },
-        body: JSON.stringify({
-          packageRequest
-        })
-      }
-    )
-
-    if (!confirmationResponse.ok) {
-      console.error("Customer confirmation failed:", await confirmationResponse.text())
-    }
-
-    // Return success even if emails fail - we have the data stored
-    return res.status(200).json({
-      success: true,
-      message: "Package request submitted successfully",
-      data: packageRequest
-    })
-
+    return res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Error in submit-package handler:", error)
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-      error: error.message
-    })
+    console.error(error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
   }
 }
