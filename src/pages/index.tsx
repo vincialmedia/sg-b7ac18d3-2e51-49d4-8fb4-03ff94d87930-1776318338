@@ -172,12 +172,12 @@ export default function Home() {
       image: "/vincent-mbkuncn4.jpeg",
       technologies: ["Marketing Cloud", "Wordpress", "AMPScript", "Node.js"],
       features: ["Marketing Automation Flows", "Customer Journey", "Performance Analytics"],
-      link: "crowdhouse.com"
+      link: "https://www.crowdhouse.com"
     },
     {
       title: "Speed Comparer",
       description: "I built Speed Comparer to over 200'000 Subscribers on YouTube, 30'000 on TikTok and 20'000 on Facebook",
-      image: "/img-2570-mbkvflod.png",
+      image: "/untitled-design-mbkvnaem.png",
       technologies: ["Final Cut Pro", "Canva", "Photoshop"],
       features: ["Social Strategy", "Video Shoots", "Photo Shoots", "Analytics"],
       link: "https://www.youtube.com/speedcomparer"
