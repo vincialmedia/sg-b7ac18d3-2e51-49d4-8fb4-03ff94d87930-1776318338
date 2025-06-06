@@ -168,11 +168,11 @@ export default function Home() {
   const portfolioProjects = [
     {
       title: "Speed Comparer",
-      description: "A comprehensive speed testing and comparison platform that helps users analyze and optimize their internet connection performance.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-      technologies: ["React", "Node.js", "WebRTC", "Chart.js"],
-      features: ["Real-time Speed Testing", "ISP Comparison", "Historical Data", "Performance Analytics"],
-      link: "#"
+      description: "I increased lead conversion at Crowdhouse by implementing targeted marketing automation workflows that personalized user journeys and nurtured prospects through the sales funnel.",
+      image: "/uploads/vincent.jpeg",
+      technologies: ["Marketing Cloud", "Wordpress", "AMPScript", "Node.js"],
+      features: ["Marketing Automation Flows", "Customer Journey", "Performance Analytics"],
+      link: "https://crowdhouse.com/"
     },
     {
       title: "Allemann Performance",
