@@ -176,7 +176,7 @@ export default function Home() {
     },
     {
       title: "Speed Comparer",
-      description: "I built Speed Comparer to over 200'000 Subscribers on YouTube, 30'000 on TikTok and 20'000 on Facebook",
+      description: "I built Speed Comparer to over 200'000 Subscribers on YouTube, 30'000 on TikTok and 20'000 on Facebook and eventually branching into merchandise.",
       image: "/untitled-design-mbkvnaem.png",
       technologies: ["Final Cut Pro", "Canva", "Photoshop"],
       features: ["Social Strategy", "Video Shoots", "Photo Shoots", "Analytics"],
