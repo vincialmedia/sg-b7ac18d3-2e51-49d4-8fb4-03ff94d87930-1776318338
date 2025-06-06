@@ -169,10 +169,10 @@ export default function Home() {
     {
       title: "Crowdhouse",
       description: "I increased lead conversion at Crowdhouse by implementing targeted marketing automation workflows that personalized user journeys and nurtured prospects through the sales funnel.",
-      image: "vincialmedia.com/vincent-mbkuncn4.jpeg",
+      image: "/vincent-mbkuncn4.jpeg",
       technologies: ["Marketing Cloud", "Wordpress", "AMPScript", "Node.js"],
       features: ["Marketing Automation Flows", "Customer Journey", "Performance Analytics"],
-      link: "https://crowdhouse.com/"
+      link: "crowdhouse.com"
     },
     {
       title: "Allemann Performance",
@@ -488,9 +488,11 @@ export default function Home() {
                     <CardHeader>
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-xl">{project.title}</CardTitle>
-                        <Button variant="ghost" size="sm">
-                          <ExternalLink size={16} />
-                        </Button>
+                        <a href={project.link} target="_blank" rel="noopener noreferrer">
+                          <Button variant="ghost" size="sm">
+                            <ExternalLink size={16} />
+                          </Button>
+                        </a>
                       </div>
                       <CardDescription className="text-base whitespace-pre-wrap break-words">
                         {project.description}
