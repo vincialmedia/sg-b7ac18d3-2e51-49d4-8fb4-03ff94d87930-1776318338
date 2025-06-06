@@ -661,19 +661,30 @@ export default function Home() {
 
                   <Dialog 
                     open={showEmailDialog} 
-                    onOpenChange={setShowEmailDialog}
+                    onOpenChange={(open) => {
+                      setShowEmailDialog(open)
+                      // Prevent URL changes
+                      if (window.history.pushState) {
+                        const newURL = window.location.href.split('?')[0]
+                        window.history.pushState({}, '', newURL)
+                      }
+                    }}
                   >
                     <DialogTrigger asChild>
                       <Button 
                         type="button"
                         size="lg" 
                         className="w-full bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setShowEmailDialog(true)
+                        }}
                       >
                         Submit Package Request
                         <ArrowRight className="ml-2" size={20} />
                       </Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
                       <DialogHeader>
                         <DialogTitle>Submit Your Package Request</DialogTitle>
                         <DialogDescription>
@@ -705,7 +716,10 @@ export default function Home() {
                         </div>
                         <Button 
                           type="button"
-                          onClick={handleSubmitClick}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleSubmitClick()
+                          }}
                           className="w-full hover:text-black hover:font-bold transition-all duration-200"
                           disabled={!userEmail || getTotalServices() === 0}
                         >
