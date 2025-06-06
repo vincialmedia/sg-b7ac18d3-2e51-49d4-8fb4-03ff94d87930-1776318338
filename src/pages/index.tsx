@@ -208,72 +208,58 @@ export default function Home() {
   }
 
   const handleSubmitClick = async () => {
-  if (!userEmail || getTotalServices() === 0) {
-    alert("Please enter your email and select at least one service.");
-    return;
-  }
-
-  try {
-    const response = await fetch("/api/submit-package", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: userEmail,
-        services: selectedServices,
-        points: userPoints,
-        marketingConsent,
-      }),
-    });
-
-    console.log("Response status:", response.status);
-
-    const responseText = await response.text();
-    let result;
-    try {
-      result = JSON.parse(responseText);
-    } catch (parseError) {
-      console.error("API returned non-JSON content:", responseText);
-      console.error("JSON parsing error:", parseError);
-      alert("API error: Response was not valid JSON. Check console for details.");
+    if (!userEmail || getTotalServices() === 0) {
+      alert("Please enter your email and select at least one service.");
       return;
     }
 
-    console.log("Response ", result);
+    try {
+      const response = await fetch("/api/submit-package", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          services: selectedServices,
+          points: userPoints,
+          marketingConsent,
+        }),
+      });
 
-    if (result.success) {
-      // Track HubSpot form submission
-      if (typeof window !== "undefined" && window._hsq) {
-        window._hsq.push(["identify", {
-          email: userEmail
-        }]);
-        
-        window._hsq.push(["trackEvent", {
-          id: "package_request_submitted",
-          value: userPoints
-        }]);
+      const result = await response.json();
+
+      if (result.success) {
+        // Track HubSpot form submission
+        if (typeof window !== "undefined" && window._hsq) {
+          window._hsq.push(["identify", {
+            email: userEmail
+          }]);
+          
+          window._hsq.push(["trackEvent", {
+            id: "package_request_submitted",
+            value: userPoints
+          }]);
+        }
+
+        setShowEmailDialog(false);
+        setShowSuccessMessage(true);
+        setTimeout(() => setShowSuccessMessage(false), 3000);
+
+        // Reset form state
+        setUserEmail("");
+        setMarketingConsent(false);
+        setSelectedServices({});
+        setUserPoints(0);
+      } else {
+        console.error("API error:", result.message);
+        alert("Failed to submit package request: " + result.message);
       }
-
-      setShowEmailDialog(false);
-      setShowSuccessMessage(true);
-      setTimeout(() => setShowSuccessMessage(false), 3000);
-
-      setUserEmail("");
-      setMarketingConsent(false);
-      setSelectedServices({});
-      setUserPoints(0);
-    } else {
-      console.error("API error:", result.message);
-      alert("Failed to submit package request: " + result.message);
+    } catch (error) {
+      console.error("Network or server error:", error);
+      alert("An error occurred while submitting your request. Please try again.");
     }
-
-  } catch (err) {
-    console.error("Network or server error:", err);
-    alert("An error occurred while submitting your request. Please try again.");
-  }
-};
-
+  };
 
   const progressPercentage = Math.min((userPoints / 1000) * 100, 100)
   const hasReachedGoal = userPoints >= 1000
@@ -675,33 +661,19 @@ export default function Home() {
 
                   <Dialog 
                     open={showEmailDialog} 
-                    onOpenChange={(open) => {
-                      setShowEmailDialog(open)
-                    }}
+                    onOpenChange={setShowEmailDialog}
                   >
                     <DialogTrigger asChild>
                       <Button 
                         type="button"
                         size="lg" 
                         className="w-full bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          setShowEmailDialog(true)
-                        }}
                       >
                         Submit Package Request
                         <ArrowRight className="ml-2" size={20} />
                       </Button>
                     </DialogTrigger>
-                    <DialogContent 
-                      // onInteractOutside={(e) => {
-                      //   e.preventDefault()
-                      // }}
-                      // onEscapeKeyDown={(e) => {
-                      //   e.preventDefault()
-                      // }}
-                    >
+                    <DialogContent>
                       <DialogHeader>
                         <DialogTitle>Submit Your Package Request</DialogTitle>
                         <DialogDescription>
@@ -733,11 +705,7 @@ export default function Home() {
                         </div>
                         <Button 
                           type="button"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            handleSubmitClick()
-                          }}
+                          onClick={handleSubmitClick}
                           className="w-full hover:text-black hover:font-bold transition-all duration-200"
                           disabled={!userEmail || getTotalServices() === 0}
                         >
