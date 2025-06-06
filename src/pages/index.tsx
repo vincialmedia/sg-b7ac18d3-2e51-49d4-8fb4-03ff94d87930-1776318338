@@ -208,58 +208,58 @@ export default function Home() {
   }
 
   const handleSubmitClick = async () => {
-    if (!userEmail || getTotalServices() === 0) {
-      alert("Please enter your email and select at least one service.");
-      return;
-    }
+  if (!userEmail || getTotalServices() === 0) {
+    alert("Please enter your email and select at least one service.");
+    return;
+  }
 
-    try {
-      const response = await fetch("/api/submit-package", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: userEmail,
-          services: selectedServices,
-          points: userPoints,
-          marketingConsent,
-        }),
-      });
+  try {
+    const response = await fetch("/api/submit-package", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        services: selectedServices,
+        points: userPoints,
+        marketingConsent,
+      }),
+    });
 
-      const result = await response.json();
+    const result = await response.json();
 
-      if (result.success) {
-        // Track HubSpot form submission
-        if (typeof window !== "undefined" && window._hsq) {
-          window._hsq.push(["identify", {
+    if (result.success) {
+      // ✅ HubSpot IDENTIFY (this works on Free plan)
+      if (typeof window !== "undefined" && window._hsq) {
+        console.log("Pushing HubSpot identify:", userEmail);
+        window._hsq.push([
+          "identify",
+          {
             email: userEmail
-          }]);
-          
-          window._hsq.push(["trackEvent", {
-            id: "package_request_submitted",
-            value: userPoints
-          }]);
-        }
-
-        setShowEmailDialog(false);
-        setShowSuccessMessage(true);
-        setTimeout(() => setShowSuccessMessage(false), 3000);
-
-        // Reset form state
-        setUserEmail("");
-        setMarketingConsent(false);
-        setSelectedServices({});
-        setUserPoints(0);
-      } else {
-        console.error("API error:", result.message);
-        alert("Failed to submit package request: " + result.message);
+          }
+        ]);
       }
-    } catch (error) {
-      console.error("Network or server error:", error);
-      alert("An error occurred while submitting your request. Please try again.");
+
+      setShowEmailDialog(false);
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000);
+
+      // Reset form state
+      setUserEmail("");
+      setMarketingConsent(false);
+      setSelectedServices({});
+      setUserPoints(0);
+    } else {
+      console.error("API error:", result.message);
+      alert("Failed to submit package request: " + result.message);
     }
-  };
+  } catch (error) {
+    console.error("Network or server error:", error);
+    alert("An error occurred while submitting your request. Please try again.");
+  }
+};
+
 
   const progressPercentage = Math.min((userPoints / 1000) * 100, 100)
   const hasReachedGoal = userPoints >= 1000
