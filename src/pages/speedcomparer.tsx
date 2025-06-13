@@ -1,0 +1,46 @@
+
+import React from "react"
+import Head from "next/head"
+
+export default function SpeedComparer() {
+  return (
+    <>
+      <Head>
+        <title>Speed Comparer - Vincialmedia</title>
+        <meta
+          name="description"
+          content="Speed Comparer project showcase"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main className="min-h-screen bg-white">
+        {/* Header */}
+        <header className="bg-slate-50 border-b border-slate-200 py-6">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold text-slate-900">Speed Comparer</h1>
+                <p className="text-slate-600 mt-1">Project Showcase</p>
+              </div>
+              <div className="text-sm text-slate-500">
+                Powered by Vincialmedia
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Iframe Container */}
+        <div className="w-full h-screen">
+          <iframe
+            src="https://sg-3623c4e6-8568-42e9-b244-922b75a2.vercel.app/"
+            className="w-full h-full border-0"
+            title="Speed Comparer Application"
+            loading="lazy"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"
+          />
+        </div>
+      </main>
+    </>
+  )
+}
