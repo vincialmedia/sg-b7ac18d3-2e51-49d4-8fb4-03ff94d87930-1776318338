@@ -2,7 +2,7 @@
 import React from "react"
 import Head from "next/head"
 
-export default function SpeedComparer() {
+export default function DrBoss() {
   return (
     <>
       <Head>
