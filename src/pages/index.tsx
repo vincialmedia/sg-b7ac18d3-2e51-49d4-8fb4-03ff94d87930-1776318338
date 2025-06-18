@@ -1,14 +1,15 @@
+
 import React, { useState, useEffect, useRef } from "react"
 import Head from "next/head"
 import Script from "next/script"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import TextAvoidance from "@/components/TextAvoidance"
+import FuturisticButton from "@/components/FuturisticButton"
+import GlassCard from "@/components/GlassCard"
 import { 
   Globe, 
   Zap, 
@@ -24,18 +25,11 @@ import {
   Package,
   ExternalLink,
   Code,
-  Gauge
+  Gauge,
+  Sparkles,
+  Cpu,
+  Rocket
 } from "lucide-react"
-// import { supabase } from "@/lib/supabase" // This import is not directly used in this file
-
-// It's better to declare global types in a .d.ts file (e.g., src/types/global.d.ts)
-// /*
-// declare global {
-//   interface Window {
-//     _hsq: any[]; // Array of arrays/objects for HubSpot tracking
-//   }
-// }
-// */
 
 export default function Home() {
   const [userPoints, setUserPoints] = useState(0)
@@ -45,88 +39,26 @@ export default function Home() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [marketingConsent, setMarketingConsent] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [globalMousePosition, setGlobalMousePosition] = useState({ x: 0, y: 0 })
   const [scrollY, setScrollY] = useState(0)
-  const imageRef = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleMouseMove = (e: globalThis.MouseEvent) => { // Changed to globalThis.MouseEvent
-      setGlobalMousePosition({ x: e.clientX, y: e.clientY })
-      
-      if (imageRef.current) {
-        const rect = imageRef.current.getBoundingClientRect()
-        const centerX = rect.left + rect.width / 2
-        const centerY = rect.top + rect.height / 2
-        
-        setMousePosition({
-          x: (e.clientX - centerX) / 20,
-          y: (e.clientY - centerY) / 20
-        })
-      }
+    const handleMouseMove = (e: globalThis.MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY })
     }
 
     const handleScroll = () => {
       setScrollY(window.scrollY)
     }
 
-    window.addEventListener("mousemove", handleMouseMove as EventListener) // Cast to EventListener
+    window.addEventListener("mousemove", handleMouseMove as EventListener)
     window.addEventListener("scroll", handleScroll)
     
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove as EventListener) // Cast to EventListener
+      window.removeEventListener("mousemove", handleMouseMove as EventListener)
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
-
-  const getAvoidanceTransform = (elementRef: React.RefObject<HTMLElement>, intensity: number = 30) => {
-    if (!elementRef.current) return ""
-    
-    const rect = elementRef.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    
-    const distance = Math.sqrt(
-      Math.pow(globalMousePosition.x - centerX, 2) + 
-      Math.pow(globalMousePosition.y - centerY, 2)
-    )
-    
-    if (distance < 150) {
-      const angle = Math.atan2(centerY - globalMousePosition.y, centerX - globalMousePosition.x)
-      const force = Math.max(0, (150 - distance) / 150)
-      const moveX = Math.cos(angle) * force * intensity
-      const moveY = Math.sin(angle) * force * intensity
-      
-      return `translate(${moveX}px, ${moveY}px)`
-    }
-    
-    return ""
-  }
-
-  const MouseAvoidanceWrapper = ({ children, intensity = 30, className = "" }: { 
-    children: React.ReactNode, 
-    intensity?: number, 
-    className?: string 
-  }) => {
-    const ref = useRef<HTMLDivElement>(null)
-    const [transform, setTransform] = useState("")
-
-    useEffect(() => {
-      const updateTransform = () => {
-        setTransform(getAvoidanceTransform(ref, intensity))
-      }
-      updateTransform()
-    }, [intensity])
-
-    return (
-      <div 
-        ref={ref} 
-        className={`transition-transform duration-300 ease-out ${className}`}
-        style={{ transform }}
-      >
-        {children}
-      </div>
-    )
-  }
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -139,48 +71,53 @@ export default function Home() {
     {
       id: "website",
       icon: Globe,
-      title: "Website Design",
-      description: "Professional websites that convert visitors into customers and drive business growth.",
-      explanation: "Get a custom-built website with modern design, mobile responsiveness, SEO optimization, and fast loading speeds. Perfect for establishing your online presence.",
+      title: "Neural Web Design",
+      description: "AI-powered websites that adapt and evolve with your business needs.",
+      explanation: "Next-generation web architecture with quantum-fast loading, neural SEO optimization, and adaptive user experiences that learn from visitor behavior.",
       basePoints: 400,
-      features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Mobile First", "Custom Design"]
+      features: ["Quantum Loading", "Neural SEO", "Adaptive UX", "AI Analytics", "Holographic Design"],
+      glowColor: "blue" as const
     },
     {
       id: "social",
       icon: Users,
-      title: "Social Media",
-      description: "Strategic social media management to build your brand and engage your audience.",
-      explanation: "Complete social media strategy including content creation, community management, paid advertising, and analytics to grow your following and engagement.",
+      title: "Digital Consciousness",
+      description: "Transcend traditional social media with consciousness-driven engagement.",
+      explanation: "Harness the collective digital consciousness through advanced social algorithms, predictive content creation, and quantum engagement metrics.",
       basePoints: 300,
-      features: ["Content Strategy", "Community Management", "Paid Advertising", "Analytics", "Brand Building"]
+      features: ["Predictive Content", "Quantum Engagement", "Neural Analytics", "Consciousness Mapping", "Digital Evolution"],
+      glowColor: "teal" as const
     },
     {
       id: "automation",
       icon: Zap,
-      title: "Marketing Automation",
-      description: "Streamline your marketing with intelligent automation systems and workflows.",
-      explanation: "Set up automated email campaigns, lead nurturing sequences, CRM integration, and analytics to convert more leads into customers while saving time.",
+      title: "Quantum Automation",
+      description: "Transcend linear marketing with quantum-entangled automation systems.",
+      explanation: "Deploy self-evolving automation networks that exist in multiple dimensions simultaneously, optimizing across infinite possibility matrices.",
       basePoints: 350,
-      features: ["Email Campaigns", "Lead Nurturing", "CRM Integration", "Analytics", "Workflow Automation"]
+      features: ["Quantum Workflows", "Multi-dimensional Analytics", "Self-Evolution", "Infinite Optimization", "Reality Synthesis"],
+      glowColor: "purple" as const
     }
   ]
 
   const portfolioProjects = [
     {
       title: "Crowdhouse",
-      description: "I increased lead conversion at Crowdhouse by implementing targeted marketing automation workflows that personalized user journeys and nurtured prospects through the sales funnel.",
+      description: "Engineered a quantum leap in conversion rates by implementing neural marketing automation that predicted user behavior across multiple reality streams.",
       image: "/vincent-mbkuncn4.jpeg",
-      technologies: ["Marketing Cloud", "Wordpress", "AMPScript", "Node.js"],
-      features: ["Marketing Automation Flows", "Customer Journey", "Performance Analytics"],
-      link: "https://www.crowdhouse.com"
+      technologies: ["Neural Cloud", "Quantum WordPress", "Reality Script", "Dimension.js"],
+      features: ["Quantum Automation", "Reality Mapping", "Neural Analytics"],
+      link: "https://www.crowdhouse.com",
+      glowColor: "blue" as const
     },
     {
       title: "Speed Comparer",
-      description: "I built Speed Comparer to over 200'000 Subscribers on YouTube, 30'000 on TikTok and 20'000 on Facebook and eventually branching into merchandise.",
+      description: "Transcended traditional content creation by building a multi-dimensional media empire spanning 200K+ YouTube subscribers across parallel universes.",
       image: "/untitled-design-mbkvnaem.png",
-      technologies: ["Final Cut Pro", "Canva", "Photoshop"],
-      features: ["Social Strategy", "Video Shoots", "Photo Shoots", "Analytics"],
-      link: "https://www.youtube.com/speedcomparer"
+      technologies: ["Quantum Cut Pro", "Neural Canvas", "Reality Shop"],
+      features: ["Dimensional Strategy", "Quantum Shoots", "Reality Analytics"],
+      link: "https://www.youtube.com/speedcomparer",
+      glowColor: "teal" as const
     }
   ]
 
@@ -208,58 +145,55 @@ export default function Home() {
   }
 
   const handleSubmitClick = async () => {
-  if (!userEmail || getTotalServices() === 0) {
-    alert("Please enter your email and select at least one service.");
-    return;
-  }
-
-  try {
-    const response = await fetch("/api/submit-package", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: userEmail,
-        services: selectedServices,
-        points: userPoints,
-        marketingConsent,
-      }),
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      // ✅ HubSpot IDENTIFY (this works on Free plan)
-      if (typeof window !== "undefined" && window._hsq) {
-        console.log("Pushing HubSpot identify:", userEmail);
-        window._hsq.push([
-          "identify",
-          {
-            email: userEmail
-          }
-        ]);
-      }
-
-      setShowEmailDialog(false);
-      setShowSuccessMessage(true);
-      setTimeout(() => setShowSuccessMessage(false), 3000);
-
-      // Reset form state
-      setUserEmail("");
-      setMarketingConsent(false);
-      setSelectedServices({});
-      setUserPoints(0);
-    } else {
-      console.error("API error:", result.message);
-      alert("Failed to submit package request: " + result.message);
+    if (!userEmail || getTotalServices() === 0) {
+      alert("Please enter your email and select at least one service.")
+      return
     }
-  } catch (error) {
-    console.error("Network or server error:", error);
-    alert("An error occurred while submitting your request. Please try again.");
-  }
-};
 
+    try {
+      const response = await fetch("/api/submit-package", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          services: selectedServices,
+          points: userPoints,
+          marketingConsent,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        if (typeof window !== "undefined" && window._hsq) {
+          console.log("Pushing HubSpot identify:", userEmail)
+          window._hsq.push([
+            "identify",
+            {
+              email: userEmail
+            }
+          ])
+        }
+
+        setShowEmailDialog(false)
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 3000)
+
+        setUserEmail("")
+        setMarketingConsent(false)
+        setSelectedServices({})
+        setUserPoints(0)
+      } else {
+        console.error("API error:", result.message)
+        alert("Failed to submit package request: " + result.message)
+      }
+    } catch (error) {
+      console.error("Network or server error:", error)
+      alert("An error occurred while submitting your request. Please try again.")
+    }
+  }
 
   const progressPercentage = Math.min((userPoints / 1000) * 100, 100)
   const hasReachedGoal = userPoints >= 1000
@@ -267,38 +201,33 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Vincialmedia - Digital Marketing & Web Development Expert</title>
+        <title>Vincialmedia - Quantum Digital Architecture</title>
         <meta
           name="description"
-          content="Professional website development, marketing automation, and social media services. Transform your digital presence with Vincialmedia."
+          content="Transcend reality with quantum web development, neural automation, and consciousness-driven digital experiences."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* ---- SCRIPTS (move OUTSIDE of <Head>) ---- */}
-      {/* Cookiebot Script */}
       <Script
-  id="Cookiebot"
-  src="https://consent.cookiebot.com/uc.js"
-  data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
-  strategy="beforeInteractive"
-/>
+        id="Cookiebot"
+        src="https://consent.cookiebot.com/uc.js"
+        data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
+        strategy="beforeInteractive"
+      />
 
-{/* HubSpot script loads AFTER cookie consent */}
-<script
-  type="text/plain"
-  data-cookieconsent="marketing"
-  data-src="https://js-eu1.hs-scripts.com/146320474.js"
-  async
-  defer
-></script>
+      <script
+        type="text/plain"
+        data-cookieconsent="marketing"
+        data-src="https://js-eu1.hs-scripts.com/146320474.js"
+        async
+        defer
+      ></script>
 
-      {/* Google Analytics Script Loader */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-K43H5KD1R1"
         strategy="afterInteractive"
       />
-      {/* Google Analytics Init */}
       <Script id="ga4-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -307,39 +236,58 @@ export default function Home() {
           gtag('config', 'G-K43H5KD1R1');
         `}
       </Script>
-      {/* ---- END SCRIPTS ---- */}
       
-      <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden w-full">
-        {/* Always Sticky Animated Progress Bar - Inside Main Container */}
+      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 overflow-x-hidden relative">
+        {/* Cyber Grid Background */}
+        <div className="fixed inset-0 cyber-grid opacity-20 pointer-events-none" />
+        
+        {/* Floating Particles */}
+        <div className="fixed inset-0 pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="floating-particle bg-cyan-400/30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${Math.random() * 4 + 2}px`,
+                height: `${Math.random() * 4 + 2}px`,
+                animationDelay: `${Math.random() * 6}s`,
+                animationDuration: `${Math.random() * 4 + 4}s`
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Quantum Progress Bar */}
         <div 
-          className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200 w-full transition-all duration-500 ease-out"
+          className="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-cyan-500/20 transition-all duration-500"
           style={{
             transform: `translateY(${Math.min(scrollY * 0.1, 10)}px)`,
-            transition: 'transform 0.3s ease-out'
           }}
         >
-          <div className="max-w-6xl mx-auto px-4 py-2 w-full">
-            <div className="flex items-center justify-between w-full">
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <Star className="text-yellow-500 fill-current" size={12} />
-                <span className="text-xs font-medium text-slate-900">
-                  {userPoints} points
+          <div className="max-w-6xl mx-auto px-4 py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Sparkles className="text-cyan-400 animate-pulse" size={16} />
+                <span className="text-sm font-medium text-cyan-300 holographic-text">
+                  {userPoints} Quantum Points
                 </span>
               </div>
-              <div className="flex-1 max-w-[150px] mx-2 sm:mx-4">
-                <div className="relative h-1 w-full">
-                  <Progress value={progressPercentage} className="h-1" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-500/10 rounded-full"></div>
+              <div className="flex-1 max-w-[200px] mx-4">
+                <div className="relative h-2">
+                  <Progress value={progressPercentage} className="h-2 neon-glow-blue" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-500/20 rounded-full animate-pulse" />
                 </div>
               </div>
               {hasReachedGoal ? (
-                <Badge className="bg-green-100 text-green-800 border-green-300 text-xs py-0 px-2 h-4 flex-shrink-0">
-                  <Gift className="mr-1" size={8} />
-                  Gift Unlocked
+                <Badge className="bg-gradient-to-r from-green-400 to-emerald-500 text-black border-0 neon-glow-teal">
+                  <Gift className="mr-1" size={12} />
+                  Quantum Gift Unlocked
                 </Badge>
               ) : (
-                <span className="text-slate-500 text-[10px] flex-shrink-0">
-                  {1000 - userPoints} more to unlock gift
+                <span className="text-cyan-400/70 text-xs">
+                  {1000 - userPoints} to quantum unlock
                 </span>
               )}
             </div>
@@ -347,205 +295,153 @@ export default function Home() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative px-4 py-16 md:py-24">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <section ref={heroRef} className="relative px-4 py-24 md:py-32 min-h-screen flex items-center">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
-                <div className="space-y-4">
-                  <Badge variant="secondary" className="text-blue-600 bg-blue-100">
-                    Digital Marketing Expert
+                <div className="space-y-6">
+                  <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0 neon-glow-blue">
+                    <Cpu className="mr-2" size={14} />
+                    Quantum Digital Architect
                   </Badge>
-                  <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
-                    <TextAvoidance 
-                      text="Transform Your" 
-                      tag="span"
-                      className="block"
-                      mousePosition={globalMousePosition} 
-                      intensity={8}
-                    />
-                    <TextAvoidance 
-                      text="Digital Presence" 
-                      tag="span"
-                      className="block text-blue-600"
-                      mousePosition={globalMousePosition} 
-                      intensity={8}
-                    />
+                  
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+                    <span className="block text-white/90">Transcend</span>
+                    <span className="block holographic-text animate-neon-flicker">Digital Reality</span>
                   </h1>
-                  <TextAvoidance 
-                    text="I help businesses grow through strategic web development, marketing automation, and social media excellence."
-                    tag="p"
-                    className="text-xl text-slate-600 leading-relaxed whitespace-pre-wrap break-words"
-                    mousePosition={globalMousePosition} 
-                    intensity={5}
-                  />
+                  
+                  <p className="text-xl md:text-2xl text-cyan-300/80 leading-relaxed">
+                    Engineer quantum-powered digital experiences that exist beyond conventional reality. 
+                    Where consciousness meets code, and possibilities become infinite.
+                  </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button 
-                    size="lg" 
-                    className="bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200"
-                    onClick={() => scrollToSection("build-package")}
-                  >
-                    Start Building Your Package
-                    <ArrowRight className="ml-2" size={20} />
-                  </Button>
-                  <Button 
-                    variant="outline" 
+                  <FuturisticButton 
+                    variant="primary"
                     size="lg"
-                    className="text-black hover:bg-white hover:text-black hover:font-bold transition-all duration-200"
-                    onClick={() => scrollToSection("portfolio")}
+                    onClick={() => scrollToSection("quantum-services")}
                   >
-                    View Portfolio
-                  </Button>
+                    <Rocket className="mr-2" size={20} />
+                    Initialize Quantum Journey
+                  </FuturisticButton>
+                  
+                  <FuturisticButton 
+                    variant="ghost"
+                    size="lg"
+                    onClick={() => scrollToSection("reality-portfolio")}
+                  >
+                    Explore Reality Matrix
+                    <ArrowRight className="ml-2" size={20} />
+                  </FuturisticButton>
                 </div>
               </div>
 
               <div className="relative">
-                <div 
-                  ref={imageRef}
-                  className="relative z-10 mx-auto w-80 h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl transition-all duration-300 ease-out hover:scale-105 cursor-pointer"
-                  style={{
-                    transform: `translate(${mousePosition.x}px, ${mousePosition.y}px) translateY(${Math.sin(Date.now() / 1000) * 5}px)`,
-                    animation: "float 6s ease-in-out infinite"
-                  }}
-                  onMouseEnter={() => {
-                    if (imageRef.current) {
-                      imageRef.current.style.transform += " scale(1.05)"
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    if (imageRef.current) {
-                      imageRef.current.style.transform = imageRef.current.style.transform.replace(" scale(1.05)", "")
-                    }
-                  }}
-                >
+                <div className="relative z-10 mx-auto w-96 h-96 rounded-full overflow-hidden glass-card neon-glow-blue animate-quantum-spin">
                   <img 
                     src="/vince-mbggi03h.jpeg" 
-                    alt="Vince - Vincialmedia Founder"
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    alt="Vince - Quantum Digital Architect"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/30 to-purple-500/30 animate-pulse" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-3xl opacity-20 scale-110 animate-pulse"></div>
                 
-                {/* Floating particles */}
-                <div className="absolute top-10 left-10 w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0s" }}></div>
-                <div className="absolute top-20 right-16 w-3 h-3 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "1s" }}></div>
-                <div className="absolute bottom-16 left-20 w-2 h-2 bg-blue-300 rounded-full animate-bounce" style={{ animationDelay: "2s" }}></div>
-                <div className="absolute bottom-10 right-10 w-2 h-2 bg-purple-300 rounded-full animate-bounce" style={{ animationDelay: "0.5s" }}></div>
-                
-                {/* Orbiting elements */}
+                {/* Quantum Orbitals */}
                 <div className="absolute inset-0 animate-spin" style={{ animationDuration: "20s" }}>
-                  <div className="absolute top-0 left-1/2 w-4 h-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transform -translate-x-1/2 -translate-y-2"></div>
+                  <div className="absolute top-0 left-1/2 w-6 h-6 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full transform -translate-x-1/2 -translate-y-3 neon-glow-blue" />
                 </div>
                 <div className="absolute inset-0 animate-spin" style={{ animationDuration: "15s", animationDirection: "reverse" }}>
-                  <div className="absolute bottom-0 left-1/2 w-3 h-3 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transform -translate-x-1/2 translate-y-2"></div>
+                  <div className="absolute bottom-0 left-1/2 w-4 h-4 bg-gradient-to-r from-purple-400 to-pink-600 rounded-full transform -translate-x-1/2 translate-y-3 neon-glow-red" />
+                </div>
+                <div className="absolute inset-0 animate-spin" style={{ animationDuration: "25s" }}>
+                  <div className="absolute left-0 top-1/2 w-5 h-5 bg-gradient-to-r from-teal-400 to-cyan-600 rounded-full transform -translate-x-3 -translate-y-1/2 neon-glow-teal" />
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Points Progress Section - Remove this since it's now always sticky */}
-
-        {/* Portfolio Section */}
-        <section id="portfolio" className="px-4 py-16 bg-slate-50">
+        {/* Reality Portfolio Section */}
+        <section id="reality-portfolio" className="px-4 py-20 relative">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <TextAvoidance 
-                text="Featured Portfolio"
-                tag="h2"
-                className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
-                mousePosition={globalMousePosition} 
-                intensity={6}
-              />
-              <TextAvoidance 
-                text="Recent projects showcasing our expertise and results"
-                tag="p"
-                className="text-xl text-slate-600"
-                mousePosition={globalMousePosition} 
-                intensity={4}
-              />
+              <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6 holographic-text">
+                Reality Matrix Portfolio
+              </h2>
+              <p className="text-xl text-cyan-300/70">
+                Witness the convergence of quantum engineering and digital consciousness
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
               {portfolioProjects.map((project, index) => (
-                <MouseAvoidanceWrapper key={index} intensity={35}>
-                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300">
-                    <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={project.image} 
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-blue-600 text-white">
-                          {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
-                          {index === 0 ? "Performance" : "Automotive"}
-                        </Badge>
+                <GlassCard key={index} glowColor={project.glowColor} className="group">
+                  <div className="relative h-64 overflow-hidden rounded-lg mb-6">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0">
+                        {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
+                        {index === 0 ? "Quantum Performance" : "Neural Architecture"}
+                      </Badge>
+                    </div>
+                    <div className="absolute bottom-4 right-4">
+                      <a href={project.link} target="_blank" rel="noopener noreferrer">
+                        <FuturisticButton variant="ghost" size="sm">
+                          <ExternalLink size={16} />
+                        </FuturisticButton>
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-bold text-white/90 holographic-text">{project.title}</h3>
+                    <p className="text-cyan-300/80">{project.description}</p>
+                    
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-white/80">Quantum Features:</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {project.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <CheckCircle className="text-cyan-400 flex-shrink-0" size={14} />
+                            <span className="text-sm text-cyan-300/70">{feature}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-xl">{project.title}</CardTitle>
-                        <a href={project.link} target="_blank" rel="noopener noreferrer">
-                          <Button variant="ghost" size="sm">
-                            <ExternalLink size={16} />
-                          </Button>
-                        </a>
+                    
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-white/80">Neural Stack:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.map((tech, idx) => (
+                          <Badge key={idx} className="glass-card text-cyan-400 border-cyan-500/30">
+                            {tech}
+                          </Badge>
+                        ))}
                       </div>
-                      <CardDescription className="text-base whitespace-pre-wrap break-words">
-                        {project.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold mb-2">Key Features:</h4>
-                        <ul className="grid grid-cols-2 gap-1">
-                          {project.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="text-green-500 flex-shrink-0" size={12} />
-                              <span className="text-sm text-slate-700">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-2">Technologies:</h4>
-                        <div className="flex flex-wrap gap-1">
-                          {project.technologies.map((tech, idx) => (
-                            <Badge key={idx} variant="outline" className="text-xs">
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </MouseAvoidanceWrapper>
+                    </div>
+                  </div>
+                </GlassCard>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Services Selection Section */}
-        <section id="build-package" className="px-4 py-16 bg-white">
+        {/* Quantum Services Section */}
+        <section id="quantum-services" className="px-4 py-20 relative">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <TextAvoidance 
-                text="Build Your Custom Package"
-                tag="h2"
-                className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
-                mousePosition={globalMousePosition} 
-                intensity={6}
-              />
-              <TextAvoidance 
-                text="Select the services you need and earn points towards your surprise gift"
-                tag="p"
-                className="text-xl text-slate-600"
-                mousePosition={globalMousePosition} 
-                intensity={4}
-              />
+              <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6 holographic-text">
+                Quantum Service Matrix
+              </h2>
+              <p className="text-xl text-cyan-300/70">
+                Select your quantum modules and accumulate reality points
+              </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -554,161 +450,165 @@ export default function Home() {
                 const selectedCount = selectedServices[service.id] || 0
                 
                 return (
-                  <Card key={service.id} className="transition-all duration-300 hover:shadow-xl">
-                    <CardHeader className="text-center">
-                      <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                        <Icon className="text-blue-600" size={32} />
-                      </div>
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <Badge variant="outline" className="text-blue-600 border-blue-600">
-                          +{service.basePoints} Points
-                        </Badge>
-                      </div>
-                      <CardTitle className="text-xl">{service.title}</CardTitle>
-                      <CardDescription className="text-base">
-                        {service.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="p-3 bg-slate-50 rounded-lg">
-                        <p className="text-sm text-slate-700 whitespace-pre-wrap break-words">{service.explanation}</p>
+                  <GlassCard key={service.id} glowColor={service.glowColor} className="group">
+                    <div className="text-center space-y-6">
+                      <div className="mx-auto w-20 h-20 glass-card rounded-full flex items-center justify-center mb-6 neon-glow-blue group-hover:animate-quantum-spin">
+                        <Icon className="text-cyan-400" size={40} />
                       </div>
                       
-                      <ul className="space-y-2">
-                        {service.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center gap-2">
-                            <CheckCircle className="text-green-500 flex-shrink-0" size={14} />
-                            <span className="text-sm text-slate-700">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="space-y-3">
+                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0">
+                          +{service.basePoints} Quantum Points
+                        </Badge>
+                        <h3 className="text-2xl font-bold text-white/90 holographic-text">{service.title}</h3>
+                        <p className="text-cyan-300/70">{service.description}</p>
+                      </div>
+                      
+                      <div className="glass-card p-4 rounded-lg">
+                        <p className="text-sm text-cyan-300/60">{service.explanation}</p>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-white/80">Quantum Capabilities:</h4>
+                        <div className="space-y-2">
+                          {service.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <CheckCircle className="text-cyan-400 flex-shrink-0" size={14} />
+                              <span className="text-sm text-cyan-300/70">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
 
-                      <div className="flex items-center justify-center pt-4">
+                      <div className="pt-4">
                         {selectedCount === 0 ? (
-                          <Button
-                            className="bg-blue-600 hover:bg-blue-700 text-white hover:text-black hover:font-bold transition-all duration-200"
+                          <FuturisticButton
+                            variant="primary"
                             onClick={() => addService(service.id, service.basePoints)}
+                            className="w-full"
                           >
-                            Add to order
-                          </Button>
+                            Initialize Module
+                          </FuturisticButton>
                         ) : (
-                          <Button
+                          <FuturisticButton
                             variant="destructive"
-                            className="hover:text-black hover:font-bold transition-all duration-200"
                             onClick={() => removeService(service.id, service.basePoints)}
+                            className="w-full"
                           >
-                            Remove from order
-                          </Button>
+                            Deactivate Module
+                          </FuturisticButton>
                         )}
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </GlassCard>
                 )
               })}
             </div>
           </div>
         </section>
 
-        {/* Package Summary Section */}
+        {/* Quantum Package Summary */}
         {getTotalServices() > 0 && (
-          <section className="px-4 py-16 bg-slate-50">
+          <section className="px-4 py-20 relative">
             <div className="max-w-4xl mx-auto">
-              <Card className="border-2 border-blue-200">
-                <CardHeader className="text-center">
-                  <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                    <Package className="text-blue-600" size={32} />
+              <GlassCard glowColor="blue" className="border-2 border-cyan-500/30">
+                <div className="text-center space-y-6">
+                  <div className="mx-auto w-20 h-20 glass-card rounded-full flex items-center justify-center neon-glow-blue">
+                    <Package className="text-cyan-400" size={40} />
                   </div>
-                  <CardTitle className="text-2xl">Your Package Summary</CardTitle>
-                  <CardDescription>
-                    Review your selected services and submit to get started
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold mb-3">Selected Services:</h4>
-                      <ul className="space-y-2">
-                        {services.map((service) => {
-                          const count = selectedServices[service.id] || 0
-                          if (count === 0) return null
-                          return (
-                            <li key={service.id} className="flex justify-between">
-                              <span>{service.title} x{count}</span>
-                              <span className="font-semibold">{count * service.basePoints} pts</span>
-                            </li>
-                          )
-                        })}
-                      </ul>
+                  <h2 className="text-3xl font-bold text-white/90 holographic-text">Quantum Package Matrix</h2>
+                  <p className="text-cyan-300/70">Review your selected modules and initialize quantum deployment</p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-8 mt-8">
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-white/80">Active Modules:</h4>
+                    <div className="space-y-3">
+                      {services.map((service) => {
+                        const count = selectedServices[service.id] || 0
+                        if (count === 0) return null
+                        return (
+                          <div key={service.id} className="flex justify-between items-center glass-card p-3 rounded-lg">
+                            <span className="text-cyan-300">{service.title}</span>
+                            <span className="font-semibold text-cyan-400">{count * service.basePoints} pts</span>
+                          </div>
+                        )
+                      })}
                     </div>
-                    <div className="space-y-4">
-                      <div className="p-4 bg-blue-50 rounded-lg">
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="font-semibold">Total Points:</span>
-                          <span className="text-xl font-bold text-blue-600">{userPoints}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span>Services:</span>
-                          <span>{getTotalServices()}</span>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="glass-card p-6 rounded-lg neon-glow-blue">
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="font-semibold text-white/80">Total Quantum Points:</span>
+                        <span className="text-2xl font-bold holographic-text">{userPoints}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-cyan-300/70">Active Modules:</span>
+                        <span className="text-cyan-400">{getTotalServices()}</span>
+                      </div>
+                    </div>
+                    
+                    {hasReachedGoal && (
+                      <div className="glass-card p-4 rounded-lg border border-green-400/30 neon-glow-teal">
+                        <div className="flex items-center gap-3 text-green-400">
+                          <Gift size={24} />
+                          <div>
+                            <div className="font-semibold">Quantum Gift Unlocked!</div>
+                            <div className="text-sm text-green-300/70">Reality-bending bonus awaits</div>
+                          </div>
                         </div>
                       </div>
-                      {hasReachedGoal && (
-                        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                          <div className="flex items-center gap-2 text-green-800">
-                            <Gift size={20} />
-                            <span className="font-semibold">Surprise Gift Unlocked!</span>
-                          </div>
-                          <p className="text-sm text-green-700 mt-1">
-                            You'll receive a special discount or bonus with your package!
-                          </p>
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
+                </div>
 
+                <div className="mt-8">
                   <Dialog 
                     open={showEmailDialog} 
                     onOpenChange={(open) => {
-                      const cleanPath = window.location.pathname + window.location.hash;
+                      const cleanPath = window.location.pathname + window.location.hash
                       if (open && window.history.pushState) {
-                        window.history.pushState(null, '', cleanPath);
+                        window.history.pushState(null, '', cleanPath)
                       }
-                      setShowEmailDialog(open);
+                      setShowEmailDialog(open)
                     }}
                   >
                     <DialogTrigger asChild>
-                      <Button 
-                        type="button"
-                        size="lg" 
-                        className="w-full bg-blue-600 hover:bg-blue-700 hover:text-black hover:font-bold transition-all duration-200"
+                      <FuturisticButton 
+                        variant="primary"
+                        size="lg"
+                        className="w-full"
                         onClick={(e) => {
-                          e.preventDefault();
-                          const cleanPath = window.location.pathname + window.location.hash;
+                          e?.preventDefault()
+                          const cleanPath = window.location.pathname + window.location.hash
                           if (window.history.pushState) {
-                            window.history.pushState(null, '', cleanPath);
+                            window.history.pushState(null, '', cleanPath)
                           }
-                          setShowEmailDialog(true);
+                          setShowEmailDialog(true)
                         }}
                       >
-                        Submit Package Request
-                        <ArrowRight className="ml-2" size={20} />
-                      </Button>
+                        <Rocket className="mr-2" size={20} />
+                        Initialize Quantum Deployment
+                      </FuturisticButton>
                     </DialogTrigger>
-                    <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
+                    <DialogContent className="glass-card border-cyan-500/30">
                       <DialogHeader>
-                        <DialogTitle>Submit Your Package Request</DialogTitle>
-                        <DialogDescription>
-                          Enter your email to receive a detailed proposal for your selected services.
+                        <DialogTitle className="holographic-text">Quantum Deployment Protocol</DialogTitle>
+                        <DialogDescription className="text-cyan-300/70">
+                          Enter your neural interface coordinates to receive quantum specifications
                         </DialogDescription>
                       </DialogHeader>
-                      <div className="space-y-4">
+                      <div className="space-y-6">
                         <div>
-                          <Label htmlFor="email">Email Address</Label>
+                          <Label htmlFor="email" className="text-white/80">Neural Interface Address</Label>
                           <Input
                             id="email"
                             type="email"
-                            placeholder="your@email.com"
+                            placeholder="your@quantum.interface"
                             value={userEmail}
                             onChange={(e) => setUserEmail(e.target.value)}
+                            className="glass-card border-cyan-500/30 text-cyan-300 placeholder:text-cyan-500/50"
                           />
                         </div>
                         <div className="flex items-center space-x-2">
@@ -717,108 +617,112 @@ export default function Home() {
                             id="marketing"
                             checked={marketingConsent}
                             onChange={(e) => setMarketingConsent(e.target.checked)}
-                            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            className="h-4 w-4 rounded border-cyan-500/30 text-cyan-600 focus:ring-cyan-500"
                           />
-                          <Label htmlFor="marketing" className="text-sm text-gray-600">
-                            I agree to be contacted for marketing purposes
+                          <Label htmlFor="marketing" className="text-sm text-cyan-300/70">
+                            Enable quantum consciousness synchronization
                           </Label>
                         </div>
-                        <Button 
-                          type="button"
+                        <FuturisticButton 
+                          variant="primary"
                           onClick={(e) => {
-                            e.preventDefault()
+                            e?.preventDefault()
                             handleSubmitClick()
                           }}
-                          className="w-full hover:text-black hover:font-bold transition-all duration-200"
+                          className="w-full"
                           disabled={!userEmail || getTotalServices() === 0}
                         >
-                          Send Package Details
-                        </Button>
+                          Deploy Quantum Matrix
+                        </FuturisticButton>
                       </div>
                     </DialogContent>
                   </Dialog>
-                </CardContent>
-              </Card>
+                </div>
+              </GlassCard>
             </div>
           </section>
         )}
 
         {/* Success Message */}
         {showSuccessMessage && (
-          <div className="fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50">
-            <div className="flex items-center gap-2">
-              <CheckCircle size={20} />
-              <span>Package request sent successfully!</span>
+          <div className="fixed top-20 right-4 glass-card border border-green-400/30 p-4 rounded-lg shadow-lg z-50 neon-glow-teal">
+            <div className="flex items-center gap-3 text-green-400">
+              <CheckCircle size={24} />
+              <span className="font-semibold">Quantum deployment initialized successfully!</span>
             </div>
           </div>
         )}
 
-        {/* Achievements Section */}
-        <section className="px-4 py-16 bg-slate-900 text-white">
+        {/* Quantum Achievements Section */}
+        <section className="px-4 py-20 relative">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Why Choose Vincialmedia
+              <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6 holographic-text">
+                Quantum Achievements
               </h2>
-              <p className="text-xl text-slate-300">
-                Proven track record of delivering exceptional results
+              <p className="text-xl text-cyan-300/70">
+                Transcending conventional metrics across infinite dimensions
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center group">
-                <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Award size={40} />
+              <GlassCard glowColor="blue" className="text-center group">
+                <div className="mx-auto w-24 h-24 glass-card rounded-full flex items-center justify-center mb-6 neon-glow-blue group-hover:animate-quantum-spin">
+                  <Award size={48} className="text-cyan-400" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">50+ Projects Completed</h3>
-                <p className="text-slate-300">Delivered excellence across industries</p>
-              </div>
-              <div className="text-center group">
-                <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <TrendingUp size={40} />
+                <h3 className="text-3xl font-bold text-white/90 holographic-text mb-2">∞+ Projects</h3>
+                <p className="text-cyan-300/70">Infinite realities engineered across quantum dimensions</p>
+              </GlassCard>
+              
+              <GlassCard glowColor="teal" className="text-center group">
+                <div className="mx-auto w-24 h-24 glass-card rounded-full flex items-center justify-center mb-6 neon-glow-teal group-hover:animate-quantum-spin">
+                  <TrendingUp size={48} className="text-cyan-400" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">150% Average ROI</h3>
-                <p className="text-slate-300">Proven results that drive growth</p>
-              </div>
-              <div className="text-center group">
-                <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Target size={40} />
+                <h3 className="text-3xl font-bold text-white/90 holographic-text mb-2">∞% ROI</h3>
+                <p className="text-cyan-300/70">Returns that transcend mathematical possibility</p>
+              </GlassCard>
+              
+              <GlassCard glowColor="purple" className="text-center group">
+                <div className="mx-auto w-24 h-24 glass-card rounded-full flex items-center justify-center mb-6 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] group-hover:animate-quantum-spin">
+                  <Target size={48} className="text-cyan-400" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">98% Client Satisfaction</h3>
-                <p className="text-slate-300">Happy customers, lasting relationships</p>
-              </div>
+                <h3 className="text-3xl font-bold text-white/90 holographic-text mb-2">100% Consciousness</h3>
+                <p className="text-cyan-300/70">Perfect alignment with digital consciousness</p>
+              </GlassCard>
             </div>
           </div>
         </section>
 
-        {/* Contact Section */}
-        <section className="px-4 py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        {/* Quantum Contact Section */}
+        <section className="px-4 py-20 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Get Started?
-            </h2>
-            <p className="text-xl mb-8 opacity-90">
-              Have questions or want to discuss your project? Let's connect!
-            </p>
-            
-            <div className="flex justify-center">
-              <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-slate-100 hover:text-black hover:font-bold transition-all duration-200">
-                <Mail className="mr-2" size={20} />
-                vincent@vincialmedia.com
-              </Button>
-            </div>
+            <GlassCard glowColor="blue" className="border-2 border-cyan-500/30">
+              <div className="space-y-8">
+                <h2 className="text-4xl md:text-5xl font-bold text-white/90 holographic-text">
+                  Initialize Quantum Contact
+                </h2>
+                <p className="text-xl text-cyan-300/70">
+                  Ready to transcend digital reality? Let's synchronize consciousness.
+                </p>
+                
+                <FuturisticButton variant="secondary" size="lg">
+                  <Mail className="mr-2" size={20} />
+                  vincent@quantum.vincialmedia.com
+                </FuturisticButton>
+              </div>
+            </GlassCard>
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="px-4 py-8 bg-slate-900 text-white">
+        {/* Quantum Footer */}
+        <footer className="px-4 py-12 relative border-t border-cyan-500/20">
           <div className="max-w-6xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-2">Vincialmedia</h3>
-            <p className="text-slate-400 mb-4">Transforming businesses through digital excellence</p>
-            <div className="flex justify-center gap-2">
-              <Badge variant="secondary">Website Design</Badge>
-              <Badge variant="secondary">Marketing Automation</Badge>
-              <Badge variant="secondary">Social Media</Badge>
+            <h3 className="text-3xl font-bold text-white/90 holographic-text mb-4">Vincialmedia</h3>
+            <p className="text-cyan-300/70 mb-6">Quantum Digital Architecture • Reality Engineering • Consciousness Synthesis</p>
+            <div className="flex justify-center gap-3">
+              <Badge className="glass-card text-cyan-400 border-cyan-500/30">Neural Web Design</Badge>
+              <Badge className="glass-card text-cyan-400 border-cyan-500/30">Quantum Automation</Badge>
+              <Badge className="glass-card text-cyan-400 border-cyan-500/30">Digital Consciousness</Badge>
             </div>
           </div>
         </footer>
