@@ -258,27 +258,28 @@ export default function Home() {
             transform: `translateY(${Math.min(scrollY * 0.1, 10)}px)`,
           }}
         >
-          <div className="max-w-6xl mx-auto px-4 py-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Sparkles className="text-cyan-400 animate-pulse" size={16} />
-                <span className="text-sm font-medium text-cyan-300 holographic-text">
-                  {userPoints} Project Points
+          <div className="max-w-6xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
+            <div className="flex items-center justify-between gap-2 sm:gap-4">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Sparkles className="text-cyan-400 animate-pulse" size={14} />
+                <span className="text-xs sm:text-sm font-medium text-cyan-300 holographic-text">
+                  {userPoints} Points
                 </span>
               </div>
-              <div className="flex-1 max-w-[200px] mx-4">
-                <div className="relative h-2">
-                  <Progress value={progressPercentage} className="h-2 neon-glow-blue" />
+              <div className="flex-1 max-w-[120px] sm:max-w-[200px] mx-2 sm:mx-4">
+                <div className="relative h-1.5 sm:h-2">
+                  <Progress value={progressPercentage} className="h-1.5 sm:h-2 neon-glow-blue" />
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-500/20 rounded-full animate-pulse" />
                 </div>
               </div>
               {hasReachedGoal ? (
-                <Badge className="bg-gradient-to-r from-green-400 to-emerald-500 text-black border-0 neon-glow-teal">
-                  <Gift className="mr-1" size={12} />
-                  Bonus Unlocked
+                <Badge className="bg-gradient-to-r from-green-400 to-emerald-500 text-black border-0 neon-glow-teal text-xs">
+                  <Gift className="mr-1" size={10} />
+                  <span className="hidden sm:inline">Bonus Unlocked</span>
+                  <span className="sm:hidden">Bonus</span>
                 </Badge>
               ) : (
-                <span className="text-cyan-400/70 text-xs">
+                <span className="text-cyan-400/70 text-xs hidden sm:inline">
                   {1000 - userPoints} to unlock bonus
                 </span>
               )}
@@ -287,32 +288,33 @@ export default function Home() {
         </div>
 
         {/* Hero Section */}
-        <section ref={heroRef} className="relative px-4 py-24 md:py-32 min-h-screen flex items-center">
+        <section ref={heroRef} className="relative px-4 py-16 md:py-24 lg:py-32 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
-                <div className="space-y-6">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+              <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
+                <div className="space-y-4 lg:space-y-6">
                   <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0 neon-glow-blue">
                     <Cpu className="mr-2" size={14} />
                     Advanced Digital Architect
                   </Badge>
                   
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
                     <span className="block text-white/90">Transform</span>
                     <span className="block holographic-text animate-neon-flicker">Digital Excellence</span>
                   </h1>
                   
-                  <p className="text-xl md:text-2xl text-cyan-300/80 leading-relaxed">
+                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-cyan-300/80 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                     Engineer cutting-edge digital experiences that push beyond conventional boundaries. 
                     Where innovation meets execution, and possibilities become reality.
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                   <FuturisticButton 
                     variant="primary"
                     size="lg"
                     onClick={() => scrollToSection("services")}
+                    className="w-full sm:w-auto"
                   >
                     <Rocket className="mr-2" size={20} />
                     Start Your Journey
@@ -322,6 +324,7 @@ export default function Home() {
                     variant="ghost"
                     size="lg"
                     onClick={() => scrollToSection("portfolio")}
+                    className="w-full sm:w-auto"
                   >
                     View Portfolio
                     <ArrowRight className="ml-2" size={20} />
@@ -329,8 +332,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="relative">
-                <div className="relative z-10 mx-auto w-96 h-96 rounded-full overflow-hidden glass-card neon-glow-blue">
+              <div className="order-1 lg:order-2 relative w-full flex justify-center lg:justify-end">
+                <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden glass-card neon-glow-blue">
                   <Image 
                     src="/vince-mbggi03h.jpeg" 
                     alt="Vince - Advanced Digital Architect"
@@ -341,15 +344,15 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20" />
                 </div>
                 
-                {/* Subtle Orbital Elements */}
-                <div className="absolute inset-0 animate-spin" style={{ animationDuration: "60s" }}>
-                  <div className="absolute top-0 left-1/2 w-4 h-4 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full transform -translate-x-1/2 -translate-y-3 neon-glow-blue opacity-60" />
+                {/* Subtle Orbital Elements - Hidden on mobile for cleaner look */}
+                <div className="hidden lg:block absolute inset-0 animate-spin" style={{ animationDuration: "120s" }}>
+                  <div className="absolute top-0 left-1/2 w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full transform -translate-x-1/2 -translate-y-3 neon-glow-blue opacity-40" />
                 </div>
-                <div className="absolute inset-0 animate-spin" style={{ animationDuration: "45s", animationDirection: "reverse" }}>
-                  <div className="absolute bottom-0 left-1/2 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-600 rounded-full transform -translate-x-1/2 translate-y-3 neon-glow-red opacity-60" />
+                <div className="hidden lg:block absolute inset-0 animate-spin" style={{ animationDuration: "90s", animationDirection: "reverse" }}>
+                  <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-600 rounded-full transform -translate-x-1/2 translate-y-3 neon-glow-red opacity-40" />
                 </div>
-                <div className="absolute inset-0 animate-spin" style={{ animationDuration: "75s" }}>
-                  <div className="absolute left-0 top-1/2 w-3 h-3 bg-gradient-to-r from-teal-400 to-cyan-600 rounded-full transform -translate-x-3 -translate-y-1/2 neon-glow-teal opacity-60" />
+                <div className="hidden lg:block absolute inset-0 animate-spin" style={{ animationDuration: "150s" }}>
+                  <div className="absolute left-0 top-1/2 w-2 h-2 bg-gradient-to-r from-teal-400 to-cyan-600 rounded-full transform -translate-x-3 -translate-y-1/2 neon-glow-teal opacity-40" />
                 </div>
               </div>
             </div>
@@ -429,59 +432,60 @@ export default function Home() {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="px-4 py-20 relative">
+        <section id="services" className="px-4 py-16 md:py-20 relative">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6 holographic-text">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/90 mb-4 md:mb-6 holographic-text">
                 Service Portfolio
               </h2>
-              <p className="text-xl text-cyan-300/70">
+              <p className="text-lg md:text-xl text-cyan-300/70">
                 Select your services and build your project package
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {services.map((service) => {
                 const Icon = service.icon
                 const selectedCount = selectedServices[service.id] || 0
                 
                 return (
                   <GlassCard key={service.id} glowColor={service.glowColor} className="group">
-                    <div className="text-center space-y-6">
-                      <div className="mx-auto w-20 h-20 glass-card rounded-full flex items-center justify-center mb-6 neon-glow-blue group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="text-cyan-400" size={40} />
+                    <div className="text-center space-y-4 md:space-y-6">
+                      <div className="mx-auto w-16 h-16 md:w-20 md:h-20 glass-card rounded-full flex items-center justify-center mb-4 md:mb-6 neon-glow-blue group-hover:scale-110 transition-transform duration-300">
+                        <Icon className="text-cyan-400" size={32} />
                       </div>
                       
-                      <div className="space-y-3">
-                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0">
+                      <div className="space-y-2 md:space-y-3">
+                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0 text-xs">
                           +{service.basePoints} Points
                         </Badge>
-                        <h3 className="text-2xl font-bold text-white/90 holographic-text">{service.title}</h3>
-                        <p className="text-cyan-300/70">{service.description}</p>
+                        <h3 className="text-xl md:text-2xl font-bold text-white/90 holographic-text">{service.title}</h3>
+                        <p className="text-sm md:text-base text-cyan-300/70">{service.description}</p>
                       </div>
                       
-                      <div className="glass-card p-4 rounded-lg">
-                        <p className="text-sm text-cyan-300/60">{service.explanation}</p>
+                      <div className="glass-card p-3 md:p-4 rounded-lg">
+                        <p className="text-xs md:text-sm text-cyan-300/60">{service.explanation}</p>
                       </div>
                       
-                      <div className="space-y-3">
-                        <h4 className="font-semibold text-white/80">Core Capabilities:</h4>
-                        <div className="space-y-2">
+                      <div className="space-y-2 md:space-y-3">
+                        <h4 className="font-semibold text-white/80 text-sm md:text-base">Core Capabilities:</h4>
+                        <div className="space-y-1 md:space-y-2">
                           {service.features.map((feature, idx) => (
                             <div key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="text-cyan-400 flex-shrink-0" size={14} />
-                              <span className="text-sm text-cyan-300/70">{feature}</span>
+                              <CheckCircle className="text-cyan-400 flex-shrink-0" size={12} />
+                              <span className="text-xs md:text-sm text-cyan-300/70">{feature}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      <div className="pt-4">
+                      <div className="pt-3 md:pt-4">
                         {selectedCount === 0 ? (
                           <FuturisticButton
                             variant="primary"
                             onClick={() => addService(service.id, service.basePoints)}
                             className="w-full"
+                            size="md"
                           >
                             Add Service
                           </FuturisticButton>
@@ -490,6 +494,7 @@ export default function Home() {
                             variant="destructive"
                             onClick={() => removeService(service.id, service.basePoints)}
                             className="w-full"
+                            size="md"
                           >
                             Remove Service
                           </FuturisticButton>
