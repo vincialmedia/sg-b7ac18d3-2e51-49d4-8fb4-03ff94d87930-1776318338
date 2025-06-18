@@ -628,8 +628,7 @@ export default function Home() {
                         </div>
                         <FuturisticButton 
                           variant="primary"
-                          onClick={(e) => {
-                            // e is now correctly typed due to FuturisticButton update
+                          onClick={() => {
                             handleSubmitClick();
                           }}
                           className="w-full"

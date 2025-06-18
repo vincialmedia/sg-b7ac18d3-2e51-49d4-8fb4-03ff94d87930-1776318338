@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react"
-import { Button, ButtonProps } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface FuturisticButtonProps {
   children: React.ReactNode;
