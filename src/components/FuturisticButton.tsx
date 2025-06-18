@@ -1,16 +1,15 @@
-
 import React, { useRef, useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
+import { Button, ButtonProps } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 interface FuturisticButtonProps {
-  children: React.ReactNode
-  className?: string
-  variant?: "primary" | "secondary" | "ghost" | "destructive"
-  size?: "sm" | "md" | "lg"
-  onClick?: () => void
-  disabled?: boolean
-  type?: "button" | "submit" | "reset"
+  children: React.ReactNode;
+  className?: string;
+  variant?: "primary" | "secondary" | "ghost" | "destructive";
+  size?: "sm" | "md" | "lg";
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 export default function FuturisticButton({

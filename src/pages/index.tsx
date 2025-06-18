@@ -1,20 +1,19 @@
-
-import React, { useState, useEffect, useRef } from "react"
-import Head from "next/head"
-import Script from "next/script"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import FuturisticButton from "@/components/FuturisticButton"
-import GlassCard from "@/components/GlassCard"
+import React, { useState, useEffect, useRef } from "react";
+import Head from "next/head";
+import Script from "next/script";
+import Image from "next/image"; // Import Next Image
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import FuturisticButton from "@/components/FuturisticButton";
+import GlassCard from "@/components/GlassCard";
 import { 
   Globe, 
   Zap, 
   Users, 
-  Star, 
+  // Star, // Removed unused import
   ArrowRight, 
   CheckCircle, 
   Mail, 
@@ -29,36 +28,36 @@ import {
   Sparkles,
   Cpu,
   Rocket
-} from "lucide-react"
+} from "lucide-react";
 
 export default function Home() {
-  const [userPoints, setUserPoints] = useState(0)
-  const [selectedServices, setSelectedServices] = useState<{[key: string]: number}>({})
-  const [userEmail, setUserEmail] = useState("")
-  const [showEmailDialog, setShowEmailDialog] = useState(false)
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-  const [marketingConsent, setMarketingConsent] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [scrollY, setScrollY] = useState(0)
-  const heroRef = useRef<HTMLDivElement>(null)
+  const [userPoints, setUserPoints] = useState(0);
+  const [selectedServices, setSelectedServices] = useState<{[key: string]: number}>({});
+  const [userEmail, setUserEmail] = useState("");
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 }); // Removed unused state
+  const [scrollY, setScrollY] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleMouseMove = (e: globalThis.MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
+    // const handleMouseMove = (e: globalThis.MouseEvent) => { // Removed unused handler
+    //   setMousePosition({ x: e.clientX, y: e.clientY });
+    // };
 
     const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
+      setScrollY(window.scrollY);
+    };
 
-    window.addEventListener("mousemove", handleMouseMove as EventListener)
-    window.addEventListener("scroll", handleScroll)
+    // window.addEventListener("mousemove", handleMouseMove as EventListener); // Removed unused listener
+    window.addEventListener("scroll", handleScroll);
     
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove as EventListener)
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      // window.removeEventListener("mousemove", handleMouseMove as EventListener); // Removed unused listener
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -339,9 +338,11 @@ export default function Home() {
 
               <div className="relative">
                 <div className="relative z-10 mx-auto w-96 h-96 rounded-full overflow-hidden glass-card neon-glow-blue animate-quantum-spin">
-                  <img 
+                  <Image 
                     src="/vince-mbggi03h.jpeg" 
                     alt="Vince - Quantum Digital Architect"
+                    width={384} // w-96 is 384px
+                    height={384} // h-96 is 384px
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/30 to-purple-500/30 animate-pulse" />
@@ -378,10 +379,12 @@ export default function Home() {
               {portfolioProjects.map((project, index) => (
                 <GlassCard key={index} glowColor={project.glowColor} className="group">
                   <div className="relative h-64 overflow-hidden rounded-lg mb-6">
-                    <img 
+                    <Image 
                       src={project.image} 
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      layout="fill"
+                      objectFit="cover"
+                      className="transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute top-4 left-4">
@@ -626,8 +629,8 @@ export default function Home() {
                         <FuturisticButton 
                           variant="primary"
                           onClick={(e) => {
-                            e?.preventDefault()
-                            handleSubmitClick()
+                            // e is now correctly typed due to FuturisticButton update
+                            handleSubmitClick();
                           }}
                           className="w-full"
                           disabled={!userEmail || getTotalServices() === 0}
