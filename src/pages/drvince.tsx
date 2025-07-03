@@ -2,7 +2,7 @@ import React from "react"
 import Head from "next/head"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { Cpu } from "lucide-react"
+import { Sparkles } from "lucide-react"
 
 export default function DrVince() {
   return (
@@ -65,7 +65,7 @@ export default function DrVince() {
               {/* Branding */}
               <div className="flex items-center gap-2">
                 <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0 neon-glow-blue text-xs">
-                  <Cpu className="mr-1" size={10} />
+                  <Sparkles className="mr-1" size={10} />
                   Vincialmedia
                 </Badge>
               </div>
