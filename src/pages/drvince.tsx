@@ -1,4 +1,3 @@
-
 import React from "react"
 import Head from "next/head"
 import Image from "next/image"
@@ -58,7 +57,7 @@ export default function DrVince() {
                 
                 {/* Title Section */}
                 <div>
-                  <h1 className="text-xl font-bold text-white/90 holographic-text">Dr. Vince</h1>
+                  <h1 className="text-xl font-bold text-white/90 holographic-text">Vincialmedia</h1>
                   <p className="text-sm text-cyan-300/70">Project Showcase</p>
                 </div>
               </div>
