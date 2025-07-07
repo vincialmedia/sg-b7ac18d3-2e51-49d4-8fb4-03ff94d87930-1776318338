@@ -216,7 +216,7 @@ export default function Home() {
             <div className="flex items-center justify-between gap-2 sm:gap-4">
               <div className="flex items-center gap-2 sm:gap-3">
                 <Sparkles className="text-black" size={16} />
-                <span className="text-sm font-medium text-black whitespace-nowrap">
+                <span className="text-sm font-medium text-black">
                   {userPoints} Points
                 </span>
               </div>
@@ -224,12 +224,12 @@ export default function Home() {
                 <Progress value={progressPercentage} className="h-2" />
               </div>
               {hasReachedGoal ? (
-                <Badge className="bg-black text-white border-0 whitespace-nowrap">
+                <Badge className="bg-black text-white border-0">
                   <Gift className="mr-1" size={12} />
                   Bonus Unlocked
                 </Badge>
               ) : (
-                <span className="text-gray-600 text-sm hidden sm:inline whitespace-nowrap">
+                <span className="text-gray-600 text-sm hidden sm:inline">
                   {1000 - userPoints} to unlock bonus
                 </span>
               )}
@@ -240,7 +240,7 @@ export default function Home() {
         {/* Hero Section */}
         <section ref={heroRef} className="relative px-4 py-20 md:py-32 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="w-full sm:max-w-[90%] md:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16">
+            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16">
               <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                 <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
                   <div className="space-y-4 lg:space-y-6">
@@ -300,7 +300,7 @@ export default function Home() {
         {/* Portfolio Section */}
         <section id="portfolio" className="px-4 py-20 relative bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full sm:max-w-[90%] md:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
                   Featured Portfolio
@@ -373,7 +373,7 @@ export default function Home() {
         {/* Services Section */}
         <section id="services" className="px-4 py-20 relative">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full sm:max-w-[90%] md:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6">
                   Service Portfolio
@@ -392,11 +392,11 @@ export default function Home() {
                     <div key={service.id} className="w-full bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
                       <div className="text-center space-y-4 sm:space-y-6 flex-1 flex flex-col">
                         <div className="mx-auto w-16 sm:w-20 h-16 sm:h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-105 transition-transform duration-300">
-                          <Icon className="text-black" size={24} sm:size={32} />
+                          <Icon className="text-black" size={32} />
                         </div>
                         
                         <div className="space-y-2 sm:space-y-3">
-                          <Badge className="bg-black text-white border-0 text-xs whitespace-nowrap">
+                          <Badge className="bg-black text-white border-0 text-xs">
                             +{service.basePoints} Points
                           </Badge>
                           <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black break-words">{service.title}</h3>
@@ -450,7 +450,7 @@ export default function Home() {
         {getTotalServices() > 0 && (
           <section className="px-4 py-20 relative bg-gray-50">
             <div className="max-w-7xl mx-auto">
-              <div className="w-full sm:max-w-[90%] md:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+              <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
                 <div className="text-center space-y-6 mb-8">
                   <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center">
                     <Package className="text-black" size={40} />
@@ -592,7 +592,7 @@ export default function Home() {
         {/* Achievements Section */}
         <section className="px-4 py-20 relative">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full sm:max-w-[90%] md:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
                   Track Record
@@ -634,7 +634,7 @@ export default function Home() {
         {/* Contact Section */}
         <section className="px-4 py-20 relative bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full sm:max-w-[90%] md:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 text-center">
+            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 text-center">
               <div className="space-y-8">
                 <h2 className="text-4xl md:text-5xl font-bold text-black">
                   Get In Touch
@@ -655,7 +655,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="px-4 py-12 relative border-t border-gray-200">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full sm:max-w-[90%] md:max-w-[80%] mx-auto text-center">
+            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto text-center">
               <h3 className="text-3xl font-bold text-black mb-4">Vincialmedia</h3>
               <p className="text-gray-600 mb-6">Advanced Digital Architecture • Performance Engineering • Strategic Innovation</p>
               <div className="flex justify-center gap-3 flex-wrap">
