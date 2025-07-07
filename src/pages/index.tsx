@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import FuturisticButton from "@/components/FuturisticButton";
-import GlassCard from "@/components/GlassCard";
 import { 
   Globe, 
   Zap, 
@@ -229,57 +228,32 @@ export default function Home() {
         `}
       </Script>
       
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 overflow-x-hidden relative">
-        {/* Cyber Grid Background */}
-        <div className="fixed inset-0 cyber-grid opacity-20 pointer-events-none" />
-        
-        {/* Floating Particles */}
-        <div className="fixed inset-0 pointer-events-none">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="floating-particle bg-cyan-400/30"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 4 + 2}px`,
-                height: `${Math.random() * 4 + 2}px`,
-                animationDelay: `${Math.random() * 6}s`,
-                animationDuration: `${Math.random() * 4 + 4}s`
-              }}
-            />
-          ))}
-        </div>
-
+      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 overflow-x-hidden">
         {/* Progress Bar */}
         <div 
-          className="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-cyan-500/20 transition-all duration-500"
+          className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 transition-all duration-300"
           style={{
-            transform: `translateY(${Math.min(scrollY * 0.1, 10)}px)`,
+            transform: `translateY(${Math.min(scrollY * 0.05, 5)}px)`,
           }}
         >
-          <div className="max-w-6xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
-            <div className="flex items-center justify-between gap-2 sm:gap-4">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <Sparkles className="text-cyan-400 animate-pulse" size={14} />
-                <span className="text-xs sm:text-sm font-medium text-cyan-300 holographic-text">
+          <div className="max-w-7xl mx-auto px-4 py-3">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Sparkles className="text-cyan-400" size={16} />
+                <span className="text-sm font-medium text-cyan-300">
                   {userPoints} Points
                 </span>
               </div>
-              <div className="flex-1 max-w-[120px] sm:max-w-[200px] mx-2 sm:mx-4">
-                <div className="relative h-1.5 sm:h-2">
-                  <Progress value={progressPercentage} className="h-1.5 sm:h-2 neon-glow-blue" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-500/20 rounded-full animate-pulse" />
-                </div>
+              <div className="flex-1 max-w-xs mx-4">
+                <Progress value={progressPercentage} className="h-2" />
               </div>
               {hasReachedGoal ? (
-                <Badge className="bg-gradient-to-r from-green-400 to-emerald-500 text-black border-0 neon-glow-teal text-xs">
-                  <Gift className="mr-1" size={10} />
-                  <span className="hidden sm:inline">Bonus Unlocked</span>
-                  <span className="sm:hidden">Bonus</span>
+                <Badge className="bg-gradient-to-r from-green-400 to-emerald-500 text-black border-0">
+                  <Gift className="mr-1" size={12} />
+                  Bonus Unlocked
                 </Badge>
               ) : (
-                <span className="text-cyan-400/70 text-xs hidden sm:inline">
+                <span className="text-cyan-400/70 text-sm hidden sm:inline">
                   {1000 - userPoints} to unlock bonus
                 </span>
               )}
@@ -288,71 +262,62 @@ export default function Home() {
         </div>
 
         {/* Hero Section */}
-        <section ref={heroRef} className="relative px-4 py-16 md:py-24 lg:py-32 min-h-screen flex items-center">
+        <section ref={heroRef} className="relative px-4 py-20 md:py-32 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-              <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
-                <div className="space-y-4 lg:space-y-6">
-                  <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0 neon-glow-blue">
-                    <Cpu className="mr-2" size={14} />
-                    Advanced Digital Architect
-                  </Badge>
-                  
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                    <span className="block text-white/90">Transform</span>
-                    <span className="block holographic-text animate-neon-flicker">Digital Excellence</span>
-                  </h1>
-                  
-                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-cyan-300/80 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                    Engineer cutting-edge digital experiences that push beyond conventional boundaries. 
-                    Where innovation meets execution, and possibilities become reality.
-                  </p>
+            <div className="max-w-[80%] mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 md:p-12 lg:p-16 shadow-2xl">
+              <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
+                  <div className="space-y-4 lg:space-y-6">
+                    <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0">
+                      <Cpu className="mr-2" size={14} />
+                      Advanced Digital Architect
+                    </Badge>
+                    
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
+                      <span className="block text-white/90">Transform</span>
+                      <span className="block bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Digital Excellence</span>
+                    </h1>
+                    
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                      Engineer cutting-edge digital experiences that push beyond conventional boundaries. 
+                      Where innovation meets execution, and possibilities become reality.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+                    <FuturisticButton 
+                      variant="primary"
+                      size="lg"
+                      onClick={() => scrollToSection("services")}
+                      className="w-full sm:w-auto"
+                    >
+                      <Rocket className="mr-2" size={20} />
+                      Start Your Journey
+                    </FuturisticButton>
+                    
+                    <FuturisticButton 
+                      variant="ghost"
+                      size="lg"
+                      onClick={() => scrollToSection("portfolio")}
+                      className="w-full sm:w-auto"
+                    >
+                      View Portfolio
+                      <ArrowRight className="ml-2" size={20} />
+                    </FuturisticButton>
+                  </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                  <FuturisticButton 
-                    variant="primary"
-                    size="lg"
-                    onClick={() => scrollToSection("services")}
-                    className="w-full sm:w-auto"
-                  >
-                    <Rocket className="mr-2" size={20} />
-                    Start Your Journey
-                  </FuturisticButton>
-                  
-                  <FuturisticButton 
-                    variant="ghost"
-                    size="lg"
-                    onClick={() => scrollToSection("portfolio")}
-                    className="w-full sm:w-auto"
-                  >
-                    View Portfolio
-                    <ArrowRight className="ml-2" size={20} />
-                  </FuturisticButton>
-                </div>
-              </div>
-
-              <div className="order-1 lg:order-2 relative w-full flex justify-center lg:justify-end">
-                <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden glass-card neon-glow-blue">
-                  <Image 
-                    src="/vince-mbggi03h.jpeg" 
-                    alt="Vince - Advanced Digital Architect"
-                    width={384}
-                    height={384}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20" />
-                </div>
-                
-                {/* Subtle Orbital Elements - Hidden on mobile for cleaner look */}
-                <div className="hidden lg:block absolute inset-0 animate-spin" style={{ animationDuration: "120s" }}>
-                  <div className="absolute top-0 left-1/2 w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full transform -translate-x-1/2 -translate-y-3 neon-glow-blue opacity-40" />
-                </div>
-                <div className="hidden lg:block absolute inset-0 animate-spin" style={{ animationDuration: "90s", animationDirection: "reverse" }}>
-                  <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-600 rounded-full transform -translate-x-1/2 translate-y-3 neon-glow-red opacity-40" />
-                </div>
-                <div className="hidden lg:block absolute inset-0 animate-spin" style={{ animationDuration: "150s" }}>
-                  <div className="absolute left-0 top-1/2 w-2 h-2 bg-gradient-to-r from-teal-400 to-cyan-600 rounded-full transform -translate-x-3 -translate-y-1/2 neon-glow-teal opacity-40" />
+                <div className="order-1 lg:order-2 relative w-full flex justify-center lg:justify-end">
+                  <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden bg-slate-700/50 backdrop-blur-sm border border-slate-600/50 shadow-xl">
+                    <Image 
+                      src="/vince-mbggi03h.jpeg" 
+                      alt="Vince - Advanced Digital Architect"
+                      width={384}
+                      height={384}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-purple-500/10" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -361,149 +326,153 @@ export default function Home() {
 
         {/* Portfolio Section */}
         <section id="portfolio" className="px-4 py-20 relative">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6 holographic-text">
-                Featured Portfolio
-              </h2>
-              <p className="text-xl text-cyan-300/70">
-                Witness the convergence of advanced engineering and digital innovation
-              </p>
-            </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-[80%] mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 md:p-12 shadow-2xl">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6">
+                  Featured Portfolio
+                </h2>
+                <p className="text-xl text-slate-300">
+                  Witness the convergence of advanced engineering and digital innovation
+                </p>
+              </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {portfolioProjects.map((project, index) => (
-                <GlassCard key={index} glowColor={project.glowColor} className="group">
-                  <div className="relative h-64 overflow-hidden rounded-lg mb-6">
-                    <Image 
-                      src={project.image} 
-                      alt={project.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0">
-                        {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
-                        {index === 0 ? "High Performance" : "Advanced Architecture"}
-                      </Badge>
-                    </div>
-                    <div className="absolute bottom-4 right-4">
-                      <a href={project.link} target="_blank" rel="noopener noreferrer">
-                        <FuturisticButton variant="ghost" size="sm">
-                          <ExternalLink size={16} />
-                        </FuturisticButton>
-                      </a>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h3 className="text-2xl font-bold text-white/90 holographic-text">{project.title}</h3>
-                    <p className="text-cyan-300/80">{project.description}</p>
-                    
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-white/80">Key Features:</h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        {project.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center gap-2">
-                            <CheckCircle className="text-cyan-400 flex-shrink-0" size={14} />
-                            <span className="text-sm text-cyan-300/70">{feature}</span>
-                          </div>
-                        ))}
+              <div className="grid md:grid-cols-2 gap-8">
+                {portfolioProjects.map((project, index) => (
+                  <div key={index} className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                    <div className="relative h-64 overflow-hidden rounded-lg mb-6">
+                      <Image 
+                        src={project.image} 
+                        alt={project.title}
+                        layout="fill"
+                        objectFit="cover"
+                        className="transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0">
+                          {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
+                          {index === 0 ? "High Performance" : "Advanced Architecture"}
+                        </Badge>
+                      </div>
+                      <div className="absolute bottom-4 right-4">
+                        <a href={project.link} target="_blank" rel="noopener noreferrer">
+                          <FuturisticButton variant="ghost" size="sm">
+                            <ExternalLink size={16} />
+                          </FuturisticButton>
+                        </a>
                       </div>
                     </div>
                     
-                    <div className="space-y-2">
-                      <h4 className="font-semibold text-white/80">Tech Stack:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, idx) => (
-                          <Badge key={idx} className="glass-card text-cyan-400 border-cyan-500/30">
-                            {tech}
-                          </Badge>
-                        ))}
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-white/90">{project.title}</h3>
+                      <p className="text-slate-300">{project.description}</p>
+                      
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-white/80">Key Features:</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {project.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <CheckCircle className="text-cyan-400 flex-shrink-0" size={14} />
+                              <span className="text-sm text-slate-300">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-white/80">Tech Stack:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {project.technologies.map((tech, idx) => (
+                            <Badge key={idx} className="bg-slate-600/50 text-cyan-400 border-slate-500/50">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </GlassCard>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* Services Section */}
-        <section id="services" className="px-4 py-16 md:py-20 relative">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/90 mb-4 md:mb-6 holographic-text">
-                Service Portfolio
-              </h2>
-              <p className="text-lg md:text-xl text-cyan-300/70">
-                Select your services and build your project package
-              </p>
-            </div>
+        <section id="services" className="px-4 py-20 relative">
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-[80%] mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 md:p-12 shadow-2xl">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/90 mb-6">
+                  Service Portfolio
+                </h2>
+                <p className="text-lg md:text-xl text-slate-300">
+                  Select your services and build your project package
+                </p>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {services.map((service) => {
-                const Icon = service.icon
-                const selectedCount = selectedServices[service.id] || 0
-                
-                return (
-                  <GlassCard key={service.id} glowColor={service.glowColor} className="group">
-                    <div className="text-center space-y-4 md:space-y-6">
-                      <div className="mx-auto w-16 h-16 md:w-20 md:h-20 glass-card rounded-full flex items-center justify-center mb-4 md:mb-6 neon-glow-blue group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="text-cyan-400" size={32} />
-                      </div>
-                      
-                      <div className="space-y-2 md:space-y-3">
-                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0 text-xs">
-                          +{service.basePoints} Points
-                        </Badge>
-                        <h3 className="text-xl md:text-2xl font-bold text-white/90 holographic-text">{service.title}</h3>
-                        <p className="text-sm md:text-base text-cyan-300/70">{service.description}</p>
-                      </div>
-                      
-                      <div className="glass-card p-3 md:p-4 rounded-lg">
-                        <p className="text-xs md:text-sm text-cyan-300/60">{service.explanation}</p>
-                      </div>
-                      
-                      <div className="space-y-2 md:space-y-3">
-                        <h4 className="font-semibold text-white/80 text-sm md:text-base">Core Capabilities:</h4>
-                        <div className="space-y-1 md:space-y-2">
-                          {service.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="text-cyan-400 flex-shrink-0" size={12} />
-                              <span className="text-xs md:text-sm text-cyan-300/70">{feature}</span>
-                            </div>
-                          ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {services.map((service) => {
+                  const Icon = service.icon
+                  const selectedCount = selectedServices[service.id] || 0
+                  
+                  return (
+                    <div key={service.id} className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                      <div className="text-center space-y-6">
+                        <div className="mx-auto w-20 h-20 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                          <Icon className="text-cyan-400" size={32} />
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0 text-xs">
+                            +{service.basePoints} Points
+                          </Badge>
+                          <h3 className="text-xl md:text-2xl font-bold text-white/90">{service.title}</h3>
+                          <p className="text-sm md:text-base text-slate-300">{service.description}</p>
+                        </div>
+                        
+                        <div className="bg-slate-600/30 backdrop-blur-sm p-4 rounded-lg border border-slate-500/30">
+                          <p className="text-xs md:text-sm text-slate-300">{service.explanation}</p>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <h4 className="font-semibold text-white/80 text-sm md:text-base">Core Capabilities:</h4>
+                          <div className="space-y-2">
+                            {service.features.map((feature, idx) => (
+                              <div key={idx} className="flex items-center gap-2">
+                                <CheckCircle className="text-cyan-400 flex-shrink-0" size={12} />
+                                <span className="text-xs md:text-sm text-slate-300">{feature}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="pt-4">
+                          {selectedCount === 0 ? (
+                            <FuturisticButton
+                              variant="primary"
+                              onClick={() => addService(service.id, service.basePoints)}
+                              className="w-full"
+                              size="md"
+                            >
+                              Add Service
+                            </FuturisticButton>
+                          ) : (
+                            <FuturisticButton
+                              variant="destructive"
+                              onClick={() => removeService(service.id, service.basePoints)}
+                              className="w-full"
+                              size="md"
+                            >
+                              Remove Service
+                            </FuturisticButton>
+                          )}
                         </div>
                       </div>
-
-                      <div className="pt-3 md:pt-4">
-                        {selectedCount === 0 ? (
-                          <FuturisticButton
-                            variant="primary"
-                            onClick={() => addService(service.id, service.basePoints)}
-                            className="w-full"
-                            size="md"
-                          >
-                            Add Service
-                          </FuturisticButton>
-                        ) : (
-                          <FuturisticButton
-                            variant="destructive"
-                            onClick={() => removeService(service.id, service.basePoints)}
-                            className="w-full"
-                            size="md"
-                          >
-                            Remove Service
-                          </FuturisticButton>
-                        )}
-                      </div>
                     </div>
-                  </GlassCard>
-                )
-              })}
+                  )
+                })}
+              </div>
             </div>
           </div>
         </section>
@@ -511,17 +480,17 @@ export default function Home() {
         {/* Package Summary */}
         {getTotalServices() > 0 && (
           <section className="px-4 py-20 relative">
-            <div className="max-w-4xl mx-auto">
-              <GlassCard glowColor="blue" className="border-2 border-cyan-500/30">
-                <div className="text-center space-y-6">
-                  <div className="mx-auto w-20 h-20 glass-card rounded-full flex items-center justify-center neon-glow-blue">
+            <div className="max-w-7xl mx-auto">
+              <div className="max-w-[80%] mx-auto bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-cyan-500/30 p-8 md:p-12 shadow-2xl">
+                <div className="text-center space-y-6 mb-8">
+                  <div className="mx-auto w-20 h-20 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center">
                     <Package className="text-cyan-400" size={40} />
                   </div>
-                  <h2 className="text-3xl font-bold text-white/90 holographic-text">Project Package</h2>
-                  <p className="text-cyan-300/70">Review your selected services and start your project</p>
+                  <h2 className="text-3xl font-bold text-white/90">Project Package</h2>
+                  <p className="text-slate-300">Review your selected services and start your project</p>
                 </div>
                 
-                <div className="grid md:grid-cols-2 gap-8 mt-8">
+                <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-4">
                     <h4 className="font-semibold text-white/80">Selected Services:</h4>
                     <div className="space-y-3">
@@ -529,8 +498,8 @@ export default function Home() {
                         const count = selectedServices[service.id] || 0
                         if (count === 0) return null
                         return (
-                          <div key={service.id} className="flex justify-between items-center glass-card p-3 rounded-lg">
-                            <span className="text-cyan-300">{service.title}</span>
+                          <div key={service.id} className="flex justify-between items-center bg-slate-600/30 backdrop-blur-sm p-3 rounded-lg border border-slate-500/30">
+                            <span className="text-slate-300">{service.title}</span>
                             <span className="font-semibold text-cyan-400">{count * service.basePoints} pts</span>
                           </div>
                         )
@@ -539,19 +508,19 @@ export default function Home() {
                   </div>
                   
                   <div className="space-y-4">
-                    <div className="glass-card p-6 rounded-lg neon-glow-blue">
+                    <div className="bg-slate-600/30 backdrop-blur-sm p-6 rounded-lg border border-slate-500/30">
                       <div className="flex justify-between items-center mb-3">
                         <span className="font-semibold text-white/80">Total Points:</span>
-                        <span className="text-2xl font-bold holographic-text">{userPoints}</span>
+                        <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{userPoints}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-cyan-300/70">Services:</span>
+                        <span className="text-slate-300">Services:</span>
                         <span className="text-cyan-400">{getTotalServices()}</span>
                       </div>
                     </div>
                     
                     {hasReachedGoal && (
-                      <div className="glass-card p-4 rounded-lg border border-green-400/30 neon-glow-teal">
+                      <div className="bg-slate-600/30 backdrop-blur-sm p-4 rounded-lg border border-green-400/30">
                         <div className="flex items-center gap-3 text-green-400">
                           <Gift size={24} />
                           <div>
@@ -593,10 +562,10 @@ export default function Home() {
                         Start Project
                       </FuturisticButton>
                     </DialogTrigger>
-                    <DialogContent className="glass-card border-cyan-500/30">
+                    <DialogContent className="bg-slate-800/95 backdrop-blur-sm border-cyan-500/30">
                       <DialogHeader>
-                        <DialogTitle className="holographic-text">Project Inquiry</DialogTitle>
-                        <DialogDescription className="text-cyan-300/70">
+                        <DialogTitle className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Project Inquiry</DialogTitle>
+                        <DialogDescription className="text-slate-300">
                           Enter your contact details to receive project specifications
                         </DialogDescription>
                       </DialogHeader>
@@ -609,7 +578,7 @@ export default function Home() {
                             placeholder="your@email.com"
                             value={userEmail}
                             onChange={(e) => setUserEmail(e.target.value)}
-                            className="glass-card border-cyan-500/30 text-cyan-300 placeholder:text-cyan-500/50"
+                            className="bg-slate-700/50 border-slate-600/50 text-slate-200 placeholder:text-slate-400"
                           />
                         </div>
                         <div className="flex items-center space-x-2">
@@ -618,9 +587,9 @@ export default function Home() {
                             id="marketing"
                             checked={marketingConsent}
                             onChange={(e) => setMarketingConsent(e.target.checked)}
-                            className="h-4 w-4 rounded border-cyan-500/30 text-cyan-600 focus:ring-cyan-500"
+                            className="h-4 w-4 rounded border-slate-600/50 text-cyan-600 focus:ring-cyan-500"
                           />
-                          <Label htmlFor="marketing" className="text-sm text-cyan-300/70">
+                          <Label htmlFor="marketing" className="text-sm text-slate-300">
                             Subscribe to project updates and insights
                           </Label>
                         </div>
@@ -638,14 +607,14 @@ export default function Home() {
                     </DialogContent>
                   </Dialog>
                 </div>
-              </GlassCard>
+              </div>
             </div>
-          </section>
+          </div>
         )}
 
         {/* Success Message */}
         {showSuccessMessage && (
-          <div className="fixed top-20 right-4 glass-card border border-green-400/30 p-4 rounded-lg shadow-lg z-50 neon-glow-teal">
+          <div className="fixed top-20 right-4 bg-slate-800/95 backdrop-blur-sm border border-green-400/30 p-4 rounded-lg shadow-lg z-50">
             <div className="flex items-center gap-3 text-green-400">
               <CheckCircle size={24} />
               <span className="font-semibold">Project inquiry submitted successfully!</span>
@@ -655,53 +624,55 @@ export default function Home() {
 
         {/* Achievements Section */}
         <section className="px-4 py-20 relative">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6 holographic-text">
-                Track Record
-              </h2>
-              <p className="text-xl text-cyan-300/70">
-                Delivering exceptional results across diverse digital projects
-              </p>
-            </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-[80%] mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 md:p-12 shadow-2xl">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6">
+                  Track Record
+                </h2>
+                <p className="text-xl text-slate-300">
+                  Delivering exceptional results across diverse digital projects
+                </p>
+              </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              <GlassCard glowColor="blue" className="text-center group">
-                <div className="mx-auto w-24 h-24 glass-card rounded-full flex items-center justify-center mb-6 neon-glow-blue group-hover:scale-110 transition-transform duration-300">
-                  <Award size={48} className="text-cyan-400" />
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <div className="mx-auto w-24 h-24 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                    <Award size={48} className="text-cyan-400" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-white/90 mb-2">50+ Projects</h3>
+                  <p className="text-slate-300">Successfully delivered across multiple industries</p>
                 </div>
-                <h3 className="text-3xl font-bold text-white/90 holographic-text mb-2">50+ Projects</h3>
-                <p className="text-cyan-300/70">Successfully delivered across multiple industries</p>
-              </GlassCard>
-              
-              <GlassCard glowColor="teal" className="text-center group">
-                <div className="mx-auto w-24 h-24 glass-card rounded-full flex items-center justify-center mb-6 neon-glow-teal group-hover:scale-110 transition-transform duration-300">
-                  <TrendingUp size={48} className="text-cyan-400" />
+                
+                <div className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <div className="mx-auto w-24 h-24 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                    <TrendingUp size={48} className="text-cyan-400" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-white/90 mb-2">300% Avg ROI</h3>
+                  <p className="text-slate-300">Measurable returns on digital investments</p>
                 </div>
-                <h3 className="text-3xl font-bold text-white/90 holographic-text mb-2">300% Avg ROI</h3>
-                <p className="text-cyan-300/70">Measurable returns on digital investments</p>
-              </GlassCard>
-              
-              <GlassCard glowColor="purple" className="text-center group">
-                <div className="mx-auto w-24 h-24 glass-card rounded-full flex items-center justify-center mb-6 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] group-hover:scale-110 transition-transform duration-300">
-                  <Target size={48} className="text-cyan-400" />
+                
+                <div className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <div className="mx-auto w-24 h-24 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                    <Target size={48} className="text-cyan-400" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-white/90 mb-2">100% Satisfaction</h3>
+                  <p className="text-slate-300">Committed to exceeding client expectations</p>
                 </div>
-                <h3 className="text-3xl font-bold text-white/90 holographic-text mb-2">100% Satisfaction</h3>
-                <p className="text-cyan-300/70">Committed to exceeding client expectations</p>
-              </GlassCard>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Contact Section */}
         <section className="px-4 py-20 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <GlassCard glowColor="blue" className="border-2 border-cyan-500/30">
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-[80%] mx-auto bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-cyan-500/30 p-8 md:p-12 text-center shadow-2xl">
               <div className="space-y-8">
-                <h2 className="text-4xl md:text-5xl font-bold text-white/90 holographic-text">
+                <h2 className="text-4xl md:text-5xl font-bold text-white/90">
                   Get In Touch
                 </h2>
-                <p className="text-xl text-cyan-300/70">
+                <p className="text-xl text-slate-300">
                   Ready to transform your digital presence? Let's discuss your project.
                 </p>
                 
@@ -710,19 +681,21 @@ export default function Home() {
                   vincent@vincialmedia.com
                 </FuturisticButton>
               </div>
-            </GlassCard>
+            </div>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="px-4 py-12 relative border-t border-cyan-500/20">
-          <div className="max-w-6xl mx-auto text-center">
-            <h3 className="text-3xl font-bold text-white/90 holographic-text mb-4">Vincialmedia</h3>
-            <p className="text-cyan-300/70 mb-6">Advanced Digital Architecture • Performance Engineering • Strategic Innovation</p>
-            <div className="flex justify-center gap-3">
-              <Badge className="glass-card text-cyan-400 border-cyan-500/30">Advanced Web Design</Badge>
-              <Badge className="glass-card text-cyan-400 border-cyan-500/30">Smart Automation</Badge>
-              <Badge className="glass-card text-cyan-400 border-cyan-500/30">Digital Strategy</Badge>
+        <footer className="px-4 py-12 relative border-t border-slate-700/50">
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-[80%] mx-auto text-center">
+              <h3 className="text-3xl font-bold text-white/90 mb-4">Vincialmedia</h3>
+              <p className="text-slate-300 mb-6">Advanced Digital Architecture • Performance Engineering • Strategic Innovation</p>
+              <div className="flex justify-center gap-3 flex-wrap">
+                <Badge className="bg-slate-700/50 text-cyan-400 border-slate-600/50">Advanced Web Design</Badge>
+                <Badge className="bg-slate-700/50 text-cyan-400 border-slate-600/50">Smart Automation</Badge>
+                <Badge className="bg-slate-700/50 text-cyan-400 border-slate-600/50">Digital Strategy</Badge>
+              </div>
             </div>
           </div>
         </footer>
