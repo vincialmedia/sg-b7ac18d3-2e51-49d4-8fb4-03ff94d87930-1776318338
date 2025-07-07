@@ -389,8 +389,8 @@ export default function Home() {
                   const selectedCount = selectedServices[service.id] || 0
                   
                   return (
-                    <div key={service.id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
-                      <div className="text-center space-y-6">
+                    <div key={service.id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
+                      <div className="text-center space-y-6 flex-1 flex flex-col">
                         <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
                           <Icon className="text-black" size={32} />
                         </div>
@@ -407,7 +407,7 @@ export default function Home() {
                           <p className="text-xs md:text-sm text-gray-600">{service.explanation}</p>
                         </div>
                         
-                        <div className="space-y-3">
+                        <div className="space-y-3 flex-1">
                           <h4 className="font-semibold text-black text-sm md:text-base">Core Capabilities:</h4>
                           <div className="space-y-2">
                             {service.features.map((feature, idx) => (
@@ -419,7 +419,7 @@ export default function Home() {
                           </div>
                         </div>
 
-                        <div className="pt-4">
+                        <div className="pt-4 mt-auto">
                           {selectedCount === 0 ? (
                             <Button
                               onClick={() => addService(service.id, service.basePoints)}
