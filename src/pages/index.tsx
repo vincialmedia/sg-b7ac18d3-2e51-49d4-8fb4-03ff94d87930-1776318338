@@ -344,9 +344,8 @@ export default function Home() {
                       <Image 
                         src={project.image} 
                         alt={project.title}
-                        layout="fill"
-                        objectFit="cover"
-                        className="transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute top-4 left-4">
@@ -609,7 +608,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         )}
 
         {/* Success Message */}
