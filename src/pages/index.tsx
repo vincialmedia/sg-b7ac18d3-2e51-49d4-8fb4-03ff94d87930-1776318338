@@ -273,7 +273,7 @@ export default function Home() {
                       variant="outline"
                       size="lg"
                       onClick={() => scrollToSection("portfolio")}
-                      className="w-full sm:w-auto border-black text-black hover:bg-gray-50"
+                      className="w-full sm:w-auto bg-white border-black text-black hover:bg-gray-50"
                     >
                       View Portfolio
                       <ArrowRight className="ml-2" size={20} />
@@ -329,7 +329,7 @@ export default function Home() {
                       </div>
                       <div className="absolute bottom-4 right-4">
                         <a href={project.link} target="_blank" rel="noopener noreferrer">
-                          <Button variant="outline" size="sm" className="bg-white/90 border-white text-black hover:bg-white">
+                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-white/90">
                             <ExternalLink size={16} />
                           </Button>
                         </a>
@@ -643,7 +643,7 @@ export default function Home() {
                   Ready to transform your digital presence? Let's discuss your project.
                 </p>
                 
-                <Button variant="outline" size="lg" className="border-black text-black hover:bg-gray-50">
+                <Button variant="outline" size="lg" className="bg-white border-black text-black hover:bg-gray-50">
                   <Mail className="mr-2" size={20} />
                   vincent@vincialmedia.com
                 </Button>
