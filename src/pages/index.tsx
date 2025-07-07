@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import FuturisticButton from "@/components/FuturisticButton";
+import { Button } from "@/components/ui/button";
 import { 
   Globe, 
   Zap, 
@@ -67,7 +67,6 @@ export default function Home() {
       explanation: "Next-generation web architecture with lightning-fast loading, intelligent SEO optimization, and adaptive user experiences that learn from visitor behavior.",
       basePoints: 400,
       features: ["Lightning Speed", "Smart SEO", "Adaptive UX", "AI Analytics", "Modern Design"],
-      glowColor: "blue" as const
     },
     {
       id: "social",
@@ -77,7 +76,6 @@ export default function Home() {
       explanation: "Harness advanced social algorithms, predictive content creation, and intelligent engagement metrics to maximize your digital presence.",
       basePoints: 300,
       features: ["Predictive Content", "Smart Engagement", "Advanced Analytics", "Audience Mapping", "Digital Growth"],
-      glowColor: "teal" as const
     },
     {
       id: "automation",
@@ -87,7 +85,6 @@ export default function Home() {
       explanation: "Deploy self-optimizing automation networks that continuously learn and adapt, maximizing efficiency across all your digital touchpoints.",
       basePoints: 350,
       features: ["Smart Workflows", "Multi-channel Analytics", "Self-Optimization", "Performance Tracking", "System Integration"],
-      glowColor: "purple" as const
     }
   ]
 
@@ -99,7 +96,6 @@ export default function Home() {
       technologies: ["Cloud Infrastructure", "Advanced WordPress", "Custom Scripts", "Modern JS"],
       features: ["Smart Automation", "Performance Mapping", "Advanced Analytics"],
       link: "https://www.crowdhouse.com",
-      glowColor: "blue" as const
     },
     {
       title: "Speed Comparer",
@@ -108,7 +104,6 @@ export default function Home() {
       technologies: ["Video Production", "Design Suite", "E-commerce"],
       features: ["Content Strategy", "Professional Production", "Performance Analytics"],
       link: "https://www.youtube.com/speedcomparer",
-      glowColor: "teal" as const
     }
   ]
 
@@ -228,19 +223,14 @@ export default function Home() {
         `}
       </Script>
       
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 overflow-x-hidden">
+      <main className="min-h-screen bg-white overflow-x-hidden">
         {/* Progress Bar */}
-        <div 
-          className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 transition-all duration-300"
-          style={{
-            transform: `translateY(${Math.min(scrollY * 0.05, 5)}px)`,
-          }}
-        >
+        <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 transition-all duration-300">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <Sparkles className="text-cyan-400" size={16} />
-                <span className="text-sm font-medium text-cyan-300">
+                <Sparkles className="text-black" size={16} />
+                <span className="text-sm font-medium text-black">
                   {userPoints} Points
                 </span>
               </div>
@@ -248,12 +238,12 @@ export default function Home() {
                 <Progress value={progressPercentage} className="h-2" />
               </div>
               {hasReachedGoal ? (
-                <Badge className="bg-gradient-to-r from-green-400 to-emerald-500 text-black border-0">
+                <Badge className="bg-black text-white border-0">
                   <Gift className="mr-1" size={12} />
                   Bonus Unlocked
                 </Badge>
               ) : (
-                <span className="text-cyan-400/70 text-sm hidden sm:inline">
+                <span className="text-gray-600 text-sm hidden sm:inline">
                   {1000 - userPoints} to unlock bonus
                 </span>
               )}
@@ -264,51 +254,49 @@ export default function Home() {
         {/* Hero Section */}
         <section ref={heroRef} className="relative px-4 py-20 md:py-32 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="max-w-[80%] mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 md:p-12 lg:p-16 shadow-2xl">
+            <div className="max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-8 md:p-12 lg:p-16 shadow-lg">
               <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                 <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
                   <div className="space-y-4 lg:space-y-6">
-                    <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0">
+                    <Badge className="bg-black text-white border-0">
                       <Cpu className="mr-2" size={14} />
                       Advanced Digital Architect
                     </Badge>
                     
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                      <span className="block text-white/90">Transform</span>
-                      <span className="block bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Digital Excellence</span>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-black">
+                      Transform Digital Excellence
                     </h1>
                     
-                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                       Engineer cutting-edge digital experiences that push beyond conventional boundaries. 
                       Where innovation meets execution, and possibilities become reality.
                     </p>
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                    <FuturisticButton 
-                      variant="primary"
+                    <Button 
                       size="lg"
                       onClick={() => scrollToSection("services")}
-                      className="w-full sm:w-auto"
+                      className="w-full sm:w-auto bg-black text-white hover:bg-gray-800"
                     >
                       <Rocket className="mr-2" size={20} />
                       Start Your Journey
-                    </FuturisticButton>
+                    </Button>
                     
-                    <FuturisticButton 
-                      variant="ghost"
+                    <Button 
+                      variant="outline"
                       size="lg"
                       onClick={() => scrollToSection("portfolio")}
-                      className="w-full sm:w-auto"
+                      className="w-full sm:w-auto border-black text-black hover:bg-gray-50"
                     >
                       View Portfolio
                       <ArrowRight className="ml-2" size={20} />
-                    </FuturisticButton>
+                    </Button>
                   </div>
                 </div>
 
                 <div className="order-1 lg:order-2 relative w-full flex justify-center lg:justify-end">
-                  <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden bg-slate-700/50 backdrop-blur-sm border border-slate-600/50 shadow-xl">
+                  <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border border-gray-200 shadow-lg">
                     <Image 
                       src="/vince-mbggi03h.jpeg" 
                       alt="Vince - Advanced Digital Architect"
@@ -316,7 +304,6 @@ export default function Home() {
                       height={384}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-purple-500/10" />
                   </div>
                 </div>
               </div>
@@ -325,21 +312,21 @@ export default function Home() {
         </section>
 
         {/* Portfolio Section */}
-        <section id="portfolio" className="px-4 py-20 relative">
+        <section id="portfolio" className="px-4 py-20 relative bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            <div className="max-w-[80%] mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 md:p-12 shadow-2xl">
+            <div className="max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-8 md:p-12 shadow-lg">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
                   Featured Portfolio
                 </h2>
-                <p className="text-xl text-slate-300">
+                <p className="text-xl text-gray-600">
                   Witness the convergence of advanced engineering and digital innovation
                 </p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
                 {portfolioProjects.map((project, index) => (
-                  <div key={index} className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
                     <div className="relative h-64 overflow-hidden rounded-lg mb-6">
                       <Image 
                         src={project.image} 
@@ -349,41 +336,41 @@ export default function Home() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute top-4 left-4">
-                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0">
+                        <Badge className="bg-black text-white border-0">
                           {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
                           {index === 0 ? "High Performance" : "Advanced Architecture"}
                         </Badge>
                       </div>
                       <div className="absolute bottom-4 right-4">
                         <a href={project.link} target="_blank" rel="noopener noreferrer">
-                          <FuturisticButton variant="ghost" size="sm">
+                          <Button variant="outline" size="sm" className="bg-white/90 border-white text-black hover:bg-white">
                             <ExternalLink size={16} />
-                          </FuturisticButton>
+                          </Button>
                         </a>
                       </div>
                     </div>
                     
                     <div className="space-y-4">
-                      <h3 className="text-2xl font-bold text-white/90">{project.title}</h3>
-                      <p className="text-slate-300">{project.description}</p>
+                      <h3 className="text-2xl font-bold text-black">{project.title}</h3>
+                      <p className="text-gray-600">{project.description}</p>
                       
                       <div className="space-y-3">
-                        <h4 className="font-semibold text-white/80">Key Features:</h4>
+                        <h4 className="font-semibold text-black">Key Features:</h4>
                         <div className="grid grid-cols-2 gap-2">
                           {project.features.map((feature, idx) => (
                             <div key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="text-cyan-400 flex-shrink-0" size={14} />
-                              <span className="text-sm text-slate-300">{feature}</span>
+                              <CheckCircle className="text-black flex-shrink-0" size={14} />
+                              <span className="text-sm text-gray-600">{feature}</span>
                             </div>
                           ))}
                         </div>
                       </div>
                       
                       <div className="space-y-2">
-                        <h4 className="font-semibold text-white/80">Tech Stack:</h4>
+                        <h4 className="font-semibold text-black">Tech Stack:</h4>
                         <div className="flex flex-wrap gap-2">
                           {project.technologies.map((tech, idx) => (
-                            <Badge key={idx} className="bg-slate-600/50 text-cyan-400 border-slate-500/50">
+                            <Badge key={idx} className="bg-gray-100 text-black border-gray-200">
                               {tech}
                             </Badge>
                           ))}
@@ -400,12 +387,12 @@ export default function Home() {
         {/* Services Section */}
         <section id="services" className="px-4 py-20 relative">
           <div className="max-w-7xl mx-auto">
-            <div className="max-w-[80%] mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 md:p-12 shadow-2xl">
+            <div className="max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-8 md:p-12 shadow-lg">
               <div className="text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/90 mb-6">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6">
                   Service Portfolio
                 </h2>
-                <p className="text-lg md:text-xl text-slate-300">
+                <p className="text-lg md:text-xl text-gray-600">
                   Select your services and build your project package
                 </p>
               </div>
@@ -416,31 +403,31 @@ export default function Home() {
                   const selectedCount = selectedServices[service.id] || 0
                   
                   return (
-                    <div key={service.id} className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                    <div key={service.id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
                       <div className="text-center space-y-6">
-                        <div className="mx-auto w-20 h-20 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
-                          <Icon className="text-cyan-400" size={32} />
+                        <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                          <Icon className="text-black" size={32} />
                         </div>
                         
                         <div className="space-y-3">
-                          <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black border-0 text-xs">
+                          <Badge className="bg-black text-white border-0 text-xs">
                             +{service.basePoints} Points
                           </Badge>
-                          <h3 className="text-xl md:text-2xl font-bold text-white/90">{service.title}</h3>
-                          <p className="text-sm md:text-base text-slate-300">{service.description}</p>
+                          <h3 className="text-xl md:text-2xl font-bold text-black">{service.title}</h3>
+                          <p className="text-sm md:text-base text-gray-600">{service.description}</p>
                         </div>
                         
-                        <div className="bg-slate-600/30 backdrop-blur-sm p-4 rounded-lg border border-slate-500/30">
-                          <p className="text-xs md:text-sm text-slate-300">{service.explanation}</p>
+                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                          <p className="text-xs md:text-sm text-gray-600">{service.explanation}</p>
                         </div>
                         
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-white/80 text-sm md:text-base">Core Capabilities:</h4>
+                          <h4 className="font-semibold text-black text-sm md:text-base">Core Capabilities:</h4>
                           <div className="space-y-2">
                             {service.features.map((feature, idx) => (
                               <div key={idx} className="flex items-center gap-2">
-                                <CheckCircle className="text-cyan-400 flex-shrink-0" size={12} />
-                                <span className="text-xs md:text-sm text-slate-300">{feature}</span>
+                                <CheckCircle className="text-black flex-shrink-0" size={12} />
+                                <span className="text-xs md:text-sm text-gray-600">{feature}</span>
                               </div>
                             ))}
                           </div>
@@ -448,23 +435,20 @@ export default function Home() {
 
                         <div className="pt-4">
                           {selectedCount === 0 ? (
-                            <FuturisticButton
-                              variant="primary"
+                            <Button
                               onClick={() => addService(service.id, service.basePoints)}
-                              className="w-full"
-                              size="md"
+                              className="w-full bg-black text-white hover:bg-gray-800"
                             >
                               Add Service
-                            </FuturisticButton>
+                            </Button>
                           ) : (
-                            <FuturisticButton
+                            <Button
                               variant="destructive"
                               onClick={() => removeService(service.id, service.basePoints)}
                               className="w-full"
-                              size="md"
                             >
                               Remove Service
-                            </FuturisticButton>
+                            </Button>
                           )}
                         </div>
                       </div>
@@ -478,28 +462,28 @@ export default function Home() {
 
         {/* Package Summary */}
         {getTotalServices() > 0 && (
-          <section className="px-4 py-20 relative">
+          <section className="px-4 py-20 relative bg-gray-50">
             <div className="max-w-7xl mx-auto">
-              <div className="max-w-[80%] mx-auto bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-cyan-500/30 p-8 md:p-12 shadow-2xl">
+              <div className="max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-8 md:p-12 shadow-lg">
                 <div className="text-center space-y-6 mb-8">
-                  <div className="mx-auto w-20 h-20 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center">
-                    <Package className="text-cyan-400" size={40} />
+                  <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center">
+                    <Package className="text-black" size={40} />
                   </div>
-                  <h2 className="text-3xl font-bold text-white/90">Project Package</h2>
-                  <p className="text-slate-300">Review your selected services and start your project</p>
+                  <h2 className="text-3xl font-bold text-black">Project Package</h2>
+                  <p className="text-gray-600">Review your selected services and start your project</p>
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-white/80">Selected Services:</h4>
+                    <h4 className="font-semibold text-black">Selected Services:</h4>
                     <div className="space-y-3">
                       {services.map((service) => {
                         const count = selectedServices[service.id] || 0
                         if (count === 0) return null
                         return (
-                          <div key={service.id} className="flex justify-between items-center bg-slate-600/30 backdrop-blur-sm p-3 rounded-lg border border-slate-500/30">
-                            <span className="text-slate-300">{service.title}</span>
-                            <span className="font-semibold text-cyan-400">{count * service.basePoints} pts</span>
+                          <div key={service.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
+                            <span className="text-gray-600">{service.title}</span>
+                            <span className="font-semibold text-black">{count * service.basePoints} pts</span>
                           </div>
                         )
                       })}
@@ -507,24 +491,24 @@ export default function Home() {
                   </div>
                   
                   <div className="space-y-4">
-                    <div className="bg-slate-600/30 backdrop-blur-sm p-6 rounded-lg border border-slate-500/30">
+                    <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
                       <div className="flex justify-between items-center mb-3">
-                        <span className="font-semibold text-white/80">Total Points:</span>
-                        <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{userPoints}</span>
+                        <span className="font-semibold text-black">Total Points:</span>
+                        <span className="text-2xl font-bold text-black">{userPoints}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-300">Services:</span>
-                        <span className="text-cyan-400">{getTotalServices()}</span>
+                        <span className="text-gray-600">Services:</span>
+                        <span className="text-black">{getTotalServices()}</span>
                       </div>
                     </div>
                     
                     {hasReachedGoal && (
-                      <div className="bg-slate-600/30 backdrop-blur-sm p-4 rounded-lg border border-green-400/30">
-                        <div className="flex items-center gap-3 text-green-400">
+                      <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <div className="flex items-center gap-3 text-green-800">
                           <Gift size={24} />
                           <div>
                             <div className="font-semibold">Bonus Package Unlocked!</div>
-                            <div className="text-sm text-green-300/70">Additional value included</div>
+                            <div className="text-sm text-green-600">Additional value included</div>
                           </div>
                         </div>
                       </div>
@@ -544,10 +528,9 @@ export default function Home() {
                     }}
                   >
                     <DialogTrigger asChild>
-                      <FuturisticButton 
-                        variant="primary"
+                      <Button 
                         size="lg"
-                        className="w-full"
+                        className="w-full bg-black text-white hover:bg-gray-800"
                         onClick={(e) => {
                           e?.preventDefault()
                           const cleanPath = window.location.pathname + window.location.hash
@@ -559,25 +542,25 @@ export default function Home() {
                       >
                         <Rocket className="mr-2" size={20} />
                         Start Project
-                      </FuturisticButton>
+                      </Button>
                     </DialogTrigger>
-                    <DialogContent className="bg-slate-800/95 backdrop-blur-sm border-cyan-500/30">
+                    <DialogContent className="bg-white border-gray-200">
                       <DialogHeader>
-                        <DialogTitle className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Project Inquiry</DialogTitle>
-                        <DialogDescription className="text-slate-300">
+                        <DialogTitle className="text-black">Project Inquiry</DialogTitle>
+                        <DialogDescription className="text-gray-600">
                           Enter your contact details to receive project specifications
                         </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-6">
                         <div>
-                          <Label htmlFor="email" className="text-white/80">Email Address</Label>
+                          <Label htmlFor="email" className="text-black">Email Address</Label>
                           <Input
                             id="email"
                             type="email"
                             placeholder="your@email.com"
                             value={userEmail}
                             onChange={(e) => setUserEmail(e.target.value)}
-                            className="bg-slate-700/50 border-slate-600/50 text-slate-200 placeholder:text-slate-400"
+                            className="bg-white border-gray-200 text-black placeholder:text-gray-400"
                           />
                         </div>
                         <div className="flex items-center space-x-2">
@@ -586,22 +569,21 @@ export default function Home() {
                             id="marketing"
                             checked={marketingConsent}
                             onChange={(e) => setMarketingConsent(e.target.checked)}
-                            className="h-4 w-4 rounded border-slate-600/50 text-cyan-600 focus:ring-cyan-500"
+                            className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                           />
-                          <Label htmlFor="marketing" className="text-sm text-slate-300">
+                          <Label htmlFor="marketing" className="text-sm text-gray-600">
                             Subscribe to project updates and insights
                           </Label>
                         </div>
-                        <FuturisticButton 
-                          variant="primary"
+                        <Button 
                           onClick={() => {
                             handleSubmitClick();
                           }}
-                          className="w-full"
+                          className="w-full bg-black text-white hover:bg-gray-800"
                           disabled={!userEmail || getTotalServices() === 0}
                         >
                           Submit Inquiry
-                        </FuturisticButton>
+                        </Button>
                       </div>
                     </DialogContent>
                   </Dialog>
@@ -613,8 +595,8 @@ export default function Home() {
 
         {/* Success Message */}
         {showSuccessMessage && (
-          <div className="fixed top-20 right-4 bg-slate-800/95 backdrop-blur-sm border border-green-400/30 p-4 rounded-lg shadow-lg z-50">
-            <div className="flex items-center gap-3 text-green-400">
+          <div className="fixed top-20 right-4 bg-white border border-green-200 p-4 rounded-lg shadow-lg z-50">
+            <div className="flex items-center gap-3 text-green-800">
               <CheckCircle size={24} />
               <span className="font-semibold">Project inquiry submitted successfully!</span>
             </div>
@@ -624,39 +606,39 @@ export default function Home() {
         {/* Achievements Section */}
         <section className="px-4 py-20 relative">
           <div className="max-w-7xl mx-auto">
-            <div className="max-w-[80%] mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 md:p-12 shadow-2xl">
+            <div className="max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-8 md:p-12 shadow-lg">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-white/90 mb-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
                   Track Record
                 </h2>
-                <p className="text-xl text-slate-300">
+                <p className="text-xl text-gray-600">
                   Delivering exceptional results across diverse digital projects
                 </p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 group">
-                  <div className="mx-auto w-24 h-24 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
-                    <Award size={48} className="text-cyan-400" />
+                <div className="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-all duration-300 group">
+                  <div className="mx-auto w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                    <Award size={48} className="text-black" />
                   </div>
-                  <h3 className="text-3xl font-bold text-white/90 mb-2">50+ Projects</h3>
-                  <p className="text-slate-300">Successfully delivered across multiple industries</p>
+                  <h3 className="text-3xl font-bold text-black mb-2">50+ Projects</h3>
+                  <p className="text-gray-600">Successfully delivered across multiple industries</p>
                 </div>
                 
-                <div className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 group">
-                  <div className="mx-auto w-24 h-24 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
-                    <TrendingUp size={48} className="text-cyan-400" />
+                <div className="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-all duration-300 group">
+                  <div className="mx-auto w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                    <TrendingUp size={48} className="text-black" />
                   </div>
-                  <h3 className="text-3xl font-bold text-white/90 mb-2">300% Avg ROI</h3>
-                  <p className="text-slate-300">Measurable returns on digital investments</p>
+                  <h3 className="text-3xl font-bold text-black mb-2">300% Avg ROI</h3>
+                  <p className="text-gray-600">Measurable returns on digital investments</p>
                 </div>
                 
-                <div className="bg-slate-700/30 backdrop-blur-sm rounded-xl border border-slate-600/50 p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 group">
-                  <div className="mx-auto w-24 h-24 bg-slate-600/50 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
-                    <Target size={48} className="text-cyan-400" />
+                <div className="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-all duration-300 group">
+                  <div className="mx-auto w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                    <Target size={48} className="text-black" />
                   </div>
-                  <h3 className="text-3xl font-bold text-white/90 mb-2">100% Satisfaction</h3>
-                  <p className="text-slate-300">Committed to exceeding client expectations</p>
+                  <h3 className="text-3xl font-bold text-black mb-2">100% Satisfaction</h3>
+                  <p className="text-gray-600">Committed to exceeding client expectations</p>
                 </div>
               </div>
             </div>
@@ -664,36 +646,36 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section className="px-4 py-20 relative">
+        <section className="px-4 py-20 relative bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            <div className="max-w-[80%] mx-auto bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-cyan-500/30 p-8 md:p-12 text-center shadow-2xl">
+            <div className="max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-8 md:p-12 text-center shadow-lg">
               <div className="space-y-8">
-                <h2 className="text-4xl md:text-5xl font-bold text-white/90">
+                <h2 className="text-4xl md:text-5xl font-bold text-black">
                   Get In Touch
                 </h2>
-                <p className="text-xl text-slate-300">
+                <p className="text-xl text-gray-600">
                   Ready to transform your digital presence? Let's discuss your project.
                 </p>
                 
-                <FuturisticButton variant="secondary" size="lg">
+                <Button variant="outline" size="lg" className="border-black text-black hover:bg-gray-50">
                   <Mail className="mr-2" size={20} />
                   vincent@vincialmedia.com
-                </FuturisticButton>
+                </Button>
               </div>
             </div>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="px-4 py-12 relative border-t border-slate-700/50">
+        <footer className="px-4 py-12 relative border-t border-gray-200">
           <div className="max-w-7xl mx-auto">
             <div className="max-w-[80%] mx-auto text-center">
-              <h3 className="text-3xl font-bold text-white/90 mb-4">Vincialmedia</h3>
-              <p className="text-slate-300 mb-6">Advanced Digital Architecture • Performance Engineering • Strategic Innovation</p>
+              <h3 className="text-3xl font-bold text-black mb-4">Vincialmedia</h3>
+              <p className="text-gray-600 mb-6">Advanced Digital Architecture • Performance Engineering • Strategic Innovation</p>
               <div className="flex justify-center gap-3 flex-wrap">
-                <Badge className="bg-slate-700/50 text-cyan-400 border-slate-600/50">Advanced Web Design</Badge>
-                <Badge className="bg-slate-700/50 text-cyan-400 border-slate-600/50">Smart Automation</Badge>
-                <Badge className="bg-slate-700/50 text-cyan-400 border-slate-600/50">Digital Strategy</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Advanced Web Design</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Smart Automation</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Digital Strategy</Badge>
               </div>
             </div>
           </div>
