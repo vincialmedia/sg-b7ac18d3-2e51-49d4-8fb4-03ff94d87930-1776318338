@@ -48,47 +48,47 @@ export default function Home() {
     {
       id: "website",
       icon: Globe,
-      title: "Advanced Web Design",
-      description: "AI-powered websites that adapt and evolve with your business needs.",
-      explanation: "Next-generation web architecture with lightning-fast loading, intelligent SEO optimization, and adaptive user experiences that learn from visitor behavior.",
+      title: "Fortschrittliches Webdesign",
+      description: "KI-gestützte Websites, die sich an Ihre Geschäftsanforderungen anpassen und weiterentwickeln.",
+      explanation: "Nächste Generation von Web-Architektur mit blitzschnellen Ladezeiten, intelligenter SEO-Optimierung und adaptiven Benutzererfahrungen, die aus dem Besucherverhalten lernen.",
       basePoints: 400,
-      features: ["Lightning Speed", "Smart SEO", "Adaptive UX", "AI Analytics", "Modern Design"],
+      features: ["Blitzgeschwindigkeit", "Intelligente SEO", "Adaptive UX", "KI-Analytik", "Modernes Design"],
     },
     {
       id: "social",
       icon: Users,
-      title: "Digital Strategy",
-      description: "Transform traditional social media with data-driven engagement strategies.",
-      explanation: "Harness advanced social algorithms, predictive content creation, and intelligent engagement metrics to maximize your digital presence.",
+      title: "Digitale Strategie",
+      description: "Transformieren Sie traditionelle soziale Medien mit datengetriebenen Engagement-Strategien.",
+      explanation: "Nutzen Sie fortschrittliche Social-Media-Algorithmen, prädiktive Content-Erstellung und intelligente Engagement-Metriken, um Ihre digitale Präsenz zu maximieren.",
       basePoints: 300,
-      features: ["Predictive Content", "Smart Engagement", "Advanced Analytics", "Audience Mapping", "Digital Growth"],
+      features: ["Prädiktiver Content", "Intelligentes Engagement", "Erweiterte Analytik", "Zielgruppen-Mapping", "Digitales Wachstum"],
     },
     {
       id: "automation",
       icon: Zap,
-      title: "Smart Automation",
-      description: "Streamline your marketing with intelligent automation systems.",
-      explanation: "Deploy self-optimizing automation networks that continuously learn and adapt, maximizing efficiency across all your digital touchpoints.",
+      title: "Intelligente Automatisierung",
+      description: "Optimieren Sie Ihr Marketing mit intelligenten Automatisierungssystemen.",
+      explanation: "Setzen Sie selbstoptimierende Automatisierungsnetzwerke ein, die kontinuierlich lernen und sich anpassen und die Effizienz über alle Ihre digitalen Berührungspunkte maximieren.",
       basePoints: 350,
-      features: ["Smart Workflows", "Multi-channel Analytics", "Self-Optimization", "Performance Tracking", "System Integration"],
+      features: ["Intelligente Workflows", "Multi-Channel-Analytik", "Selbstoptimierung", "Performance-Tracking", "Systemintegration"],
     }
   ]
 
   const portfolioProjects = [
     {
       title: "Crowdhouse",
-      description: "Engineered a significant boost in conversion rates by implementing intelligent marketing automation that predicted user behavior patterns.",
+      description: "Deutliche Steigerung der Konversionsraten durch Implementierung intelligenter Marketing-Automatisierung, die Nutzerverhaltensmuster vorhersagt.",
       image: "/vincent-mbkuncn4.jpeg",
-      technologies: ["Cloud Infrastructure", "Advanced WordPress", "Custom Scripts", "Modern JS"],
-      features: ["Smart Automation", "Performance Mapping", "Advanced Analytics"],
+      technologies: ["Cloud-Infrastruktur", "Fortgeschrittenes WordPress", "Custom Scripts", "Modernes JS"],
+      features: ["Intelligente Automatisierung", "Performance-Mapping", "Erweiterte Analytik"],
       link: "https://www.crowdhouse.com",
     },
     {
       title: "Speed Comparer",
-      description: "Built a comprehensive media empire spanning 200K+ YouTube subscribers through strategic content creation and audience engagement.",
+      description: "Aufbau eines umfassenden Medienimperiums mit über 200.000 YouTube-Abonnenten durch strategische Content-Erstellung und Zielgruppenengagement.",
       image: "/untitled-design-mbkvnaem.png",
-      technologies: ["Video Production", "Design Suite", "E-commerce"],
-      features: ["Content Strategy", "Professional Production", "Performance Analytics"],
+      technologies: ["Video-Produktion", "Design Suite", "E-Commerce"],
+      features: ["Content-Strategie", "Professionelle Produktion", "Performance-Analytik"],
       link: "https://www.youtube.com/speedcomparer",
     }
   ]
@@ -118,7 +118,7 @@ export default function Home() {
 
   const handleSubmitClick = async () => {
     if (!userEmail || getTotalServices() === 0) {
-      alert("Please enter your email and select at least one service.")
+      alert("Bitte geben Sie Ihre E-Mail-Adresse ein und wählen Sie mindestens einen Service aus.")
       return
     }
 
@@ -159,11 +159,11 @@ export default function Home() {
         setUserPoints(0)
       } else {
         console.error("API error:", result.message)
-        alert("Failed to submit package request: " + result.message)
+        alert("Paket-Anfrage konnte nicht übermittelt werden: " + result.message)
       }
     } catch (error) {
       console.error("Network or server error:", error)
-      alert("An error occurred while submitting your request. Please try again.")
+      alert("Ein Fehler ist beim Übermitteln Ihrer Anfrage aufgetreten. Bitte versuchen Sie es erneut.")
     }
   }
 
@@ -173,10 +173,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Vincialmedia - Advanced Digital Architecture</title>
+        <title>Vincialmedia - Fortschrittliche Digitale Architektur</title>
         <meta
           name="description"
-          content="Transform your digital presence with advanced web development, intelligent automation, and data-driven digital experiences."
+          content="Transformieren Sie Ihre digitale Präsenz mit fortschrittlicher Webentwicklung, intelligenter Automatisierung und datengetriebenen digitalen Erfahrungen."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -217,7 +217,7 @@ export default function Home() {
               <div className="flex items-center gap-2 sm:gap-3">
                 <Sparkles className="text-black" size={16} />
                 <span className="text-sm font-medium text-black">
-                  {userPoints} Points
+                  {userPoints} Punkte
                 </span>
               </div>
               <div className="flex-1 max-w-[120px] sm:max-w-xs mx-2 sm:mx-4">
@@ -226,11 +226,11 @@ export default function Home() {
               {hasReachedGoal ? (
                 <Badge className="bg-black text-white border-0">
                   <Gift className="mr-1" size={12} />
-                  Bonus Unlocked
+                  Bonus freigeschaltet
                 </Badge>
               ) : (
                 <span className="text-gray-600 text-sm hidden sm:inline">
-                  {1000 - userPoints} to unlock bonus
+                  {1000 - userPoints} bis Bonus freigeschaltet
                 </span>
               )}
             </div>
@@ -246,16 +246,16 @@ export default function Home() {
                   <div className="space-y-4 lg:space-y-6">
                     <Badge className="bg-black text-white border-0">
                       <Cpu className="mr-2" size={14} />
-                      Advanced Digital Architect
+                      Fortschrittlicher Digitaler Architekt
                     </Badge>
                     
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-black">
-                      Transform Digital Excellence
+                      Digitale Exzellenz Transformieren
                     </h1>
                     
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                      Engineer cutting-edge digital experiences that push beyond conventional boundaries. 
-                      Where innovation meets execution, and possibilities become reality.
+                      Entwickeln Sie hochmoderne digitale Erfahrungen, die über konventionelle Grenzen hinausgehen. 
+                      Wo Innovation auf Umsetzung trifft und Möglichkeiten Realität werden.
                     </p>
                   </div>
 
@@ -266,7 +266,7 @@ export default function Home() {
                       className="w-full sm:w-auto bg-black text-white hover:bg-gray-800"
                     >
                       <Rocket className="mr-2" size={20} />
-                      Start Your Journey
+                      Ihre Reise beginnen
                     </Button>
                     
                     <Button 
@@ -275,7 +275,7 @@ export default function Home() {
                       onClick={() => scrollToSection("portfolio")}
                       className="w-full sm:w-auto bg-white border-black text-black hover:bg-gray-50"
                     >
-                      View Portfolio
+                      Portfolio ansehen
                       <ArrowRight className="ml-2" size={20} />
                     </Button>
                   </div>
@@ -285,7 +285,7 @@ export default function Home() {
                   <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border border-gray-200">
                     <Image 
                       src="/vince-mbggi03h.jpeg" 
-                      alt="Vince - Advanced Digital Architect"
+                      alt="Vince - Fortschrittlicher Digitaler Architekt"
                       width={384}
                       height={384}
                       className="w-full h-full object-cover"
@@ -303,10 +303,10 @@ export default function Home() {
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
-                  Featured Portfolio
+                  Ausgewähltes Portfolio
                 </h2>
                 <p className="text-xl text-gray-600">
-                  Witness the convergence of advanced engineering and digital innovation
+                  Erleben Sie die Verschmelzung von fortschrittlicher Technik und digitaler Innovation
                 </p>
               </div>
 
@@ -324,7 +324,7 @@ export default function Home() {
                       <div className="absolute top-4 left-4">
                         <Badge className="bg-black text-white border-0">
                           {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
-                          {index === 0 ? "High Performance" : "Advanced Architecture"}
+                          {index === 0 ? "Hochperformant" : "Fortschrittliche Architektur"}
                         </Badge>
                       </div>
                       <div className="absolute bottom-4 right-4">
@@ -341,7 +341,7 @@ export default function Home() {
                       <p className="text-gray-600">{project.description}</p>
                       
                       <div className="space-y-3">
-                        <h4 className="font-semibold text-black">Key Features:</h4>
+                        <h4 className="font-semibold text-black">Hauptmerkmale:</h4>
                         <div className="grid grid-cols-2 gap-2">
                           {project.features.map((feature, idx) => (
                             <div key={idx} className="flex items-center gap-2">
@@ -376,10 +376,10 @@ export default function Home() {
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6">
-                  Service Portfolio
+                  Service-Portfolio
                 </h2>
                 <p className="text-lg md:text-xl text-gray-600">
-                  Select your services and build your project package
+                  Wählen Sie Ihre Services aus und erstellen Sie Ihr Projektpaket
                 </p>
               </div>
 
@@ -397,7 +397,7 @@ export default function Home() {
                         
                         <div className="space-y-2 sm:space-y-3">
                           <Badge className="bg-black text-white border-0 text-xs">
-                            +{service.basePoints} Points
+                            +{service.basePoints} Punkte
                           </Badge>
                           <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black break-words">{service.title}</h3>
                           <p className="text-sm md:text-base text-gray-600">{service.description}</p>
@@ -408,7 +408,7 @@ export default function Home() {
                         </div>
                         
                         <div className="space-y-2 sm:space-y-3 flex-1">
-                          <h4 className="font-semibold text-black text-sm md:text-base">Core Capabilities:</h4>
+                          <h4 className="font-semibold text-black text-sm md:text-base">Kernkompetenzen:</h4>
                           <div className="space-y-2">
                             {service.features.map((feature, idx) => (
                               <div key={idx} className="flex items-center gap-2">
@@ -425,7 +425,7 @@ export default function Home() {
                               onClick={() => addService(service.id, service.basePoints)}
                               className="w-full bg-black text-white hover:bg-gray-800"
                             >
-                              Add Service
+                              Service hinzufügen
                             </Button>
                           ) : (
                             <Button
@@ -433,7 +433,7 @@ export default function Home() {
                               onClick={() => removeService(service.id, service.basePoints)}
                               className="w-full"
                             >
-                              Remove Service
+                              Service entfernen
                             </Button>
                           )}
                         </div>
@@ -455,13 +455,13 @@ export default function Home() {
                   <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center">
                     <Package className="text-black" size={40} />
                   </div>
-                  <h2 className="text-3xl font-bold text-black">Project Package</h2>
-                  <p className="text-gray-600">Review your selected services and start your project</p>
+                  <h2 className="text-3xl font-bold text-black">Projektpaket</h2>
+                  <p className="text-gray-600">Überprüfen Sie Ihre ausgewählten Services und starten Sie Ihr Projekt</p>
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-black">Selected Services:</h4>
+                    <h4 className="font-semibold text-black">Ausgewählte Services:</h4>
                     <div className="space-y-3">
                       {services.map((service) => {
                         const count = selectedServices[service.id] || 0
@@ -469,7 +469,7 @@ export default function Home() {
                         return (
                           <div key={service.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
                             <span className="text-gray-600">{service.title}</span>
-                            <span className="font-semibold text-black">{count * service.basePoints} pts</span>
+                            <span className="font-semibold text-black">{count * service.basePoints} Pkt</span>
                           </div>
                         )
                       })}
@@ -479,7 +479,7 @@ export default function Home() {
                   <div className="space-y-4">
                     <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
                       <div className="flex justify-between items-center mb-3">
-                        <span className="font-semibold text-black">Total Points:</span>
+                        <span className="font-semibold text-black">Gesamtpunkte:</span>
                         <span className="text-2xl font-bold text-black">{userPoints}</span>
                       </div>
                       <div className="flex justify-between items-center">
@@ -493,8 +493,8 @@ export default function Home() {
                         <div className="flex items-center gap-3 text-green-800">
                           <Gift size={24} />
                           <div>
-                            <div className="font-semibold">Bonus Package Unlocked!</div>
-                            <div className="text-sm text-green-600">Additional value included</div>
+                            <div className="font-semibold">Bonuspaket freigeschaltet!</div>
+                            <div className="text-sm text-green-600">Zusätzlicher Wert inklusive</div>
                           </div>
                         </div>
                       </div>
@@ -527,23 +527,23 @@ export default function Home() {
                         }}
                       >
                         <Rocket className="mr-2" size={20} />
-                        Start Project
+                        Projekt starten
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="bg-white border-gray-200">
                       <DialogHeader>
-                        <DialogTitle className="text-black">Project Inquiry</DialogTitle>
+                        <DialogTitle className="text-black">Projektanfrage</DialogTitle>
                         <DialogDescription className="text-gray-600">
-                          Enter your contact details to receive project specifications
+                          Geben Sie Ihre Kontaktdaten ein, um Projektspezifikationen zu erhalten
                         </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-6">
                         <div>
-                          <Label htmlFor="email" className="text-black">Email Address</Label>
+                          <Label htmlFor="email" className="text-black">E-Mail-Adresse</Label>
                           <Input
                             id="email"
                             type="email"
-                            placeholder="your@email.com"
+                            placeholder="ihre@email.com"
                             value={userEmail}
                             onChange={(e) => setUserEmail(e.target.value)}
                             className="bg-white border-gray-200 text-black placeholder:text-gray-400"
@@ -558,7 +558,7 @@ export default function Home() {
                             className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                           />
                           <Label htmlFor="marketing" className="text-sm text-gray-600">
-                            Subscribe to project updates and insights
+                            Projekt-Updates und Insights abonnieren
                           </Label>
                         </div>
                         <Button 
@@ -568,7 +568,7 @@ export default function Home() {
                           className="w-full bg-black text-white hover:bg-gray-800"
                           disabled={!userEmail || getTotalServices() === 0}
                         >
-                          Submit Inquiry
+                          Anfrage senden
                         </Button>
                       </div>
                     </DialogContent>
@@ -584,7 +584,7 @@ export default function Home() {
           <div className="fixed top-20 right-4 bg-white border border-green-200 p-4 rounded-lg shadow-md z-50">
             <div className="flex items-center gap-3 text-green-800">
               <CheckCircle size={24} />
-              <span className="font-semibold">Project inquiry submitted successfully!</span>
+              <span className="font-semibold">Projektanfrage erfolgreich übermittelt!</span>
             </div>
           </div>
         )}
@@ -595,10 +595,10 @@ export default function Home() {
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
-                  Track Record
+                  Erfolgsbilanz
                 </h2>
                 <p className="text-xl text-gray-600">
-                  Delivering exceptional results across diverse digital projects
+                  Außergewöhnliche Ergebnisse in verschiedenen digitalen Projekten
                 </p>
               </div>
 
@@ -607,24 +607,24 @@ export default function Home() {
                   <div className="mx-auto w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
                     <Award size={48} className="text-black" />
                   </div>
-                  <h3 className="text-3xl font-bold text-black mb-2">50+ Projects</h3>
-                  <p className="text-gray-600">Successfully delivered across multiple industries</p>
+                  <h3 className="text-3xl font-bold text-black mb-2">50+ Projekte</h3>
+                  <p className="text-gray-600">Erfolgreich umgesetzt in verschiedenen Branchen</p>
                 </div>
                 
                 <div className="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-all duration-300 group">
                   <div className="mx-auto w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
                     <TrendingUp size={48} className="text-black" />
                   </div>
-                  <h3 className="text-3xl font-bold text-black mb-2">300% Avg ROI</h3>
-                  <p className="text-gray-600">Measurable returns on digital investments</p>
+                  <h3 className="text-3xl font-bold text-black mb-2">300% Ø ROI</h3>
+                  <p className="text-gray-600">Messbare Renditen auf digitale Investitionen</p>
                 </div>
                 
                 <div className="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-all duration-300 group">
                   <div className="mx-auto w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
                     <Target size={48} className="text-black" />
                   </div>
-                  <h3 className="text-3xl font-bold text-black mb-2">100% Satisfaction</h3>
-                  <p className="text-gray-600">Committed to exceeding client expectations</p>
+                  <h3 className="text-3xl font-bold text-black mb-2">100% Zufriedenheit</h3>
+                  <p className="text-gray-600">Verpflichtet, Kundenerwartungen zu übertreffen</p>
                 </div>
               </div>
             </div>
@@ -637,10 +637,10 @@ export default function Home() {
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 text-center">
               <div className="space-y-8">
                 <h2 className="text-4xl md:text-5xl font-bold text-black">
-                  Get In Touch
+                  Kontakt aufnehmen
                 </h2>
                 <p className="text-xl text-gray-600">
-                  Ready to transform your digital presence? Let's discuss your project.
+                  Bereit, Ihre digitale Präsenz zu transformieren? Lassen Sie uns über Ihr Projekt sprechen.
                 </p>
                 
                 <Button variant="outline" size="lg" className="bg-white border-black text-black hover:bg-gray-50">
@@ -657,11 +657,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto text-center">
               <h3 className="text-3xl font-bold text-black mb-4">Vincialmedia</h3>
-              <p className="text-gray-600 mb-6">Advanced Digital Architecture • Performance Engineering • Strategic Innovation</p>
+              <p className="text-gray-600 mb-6">Fortschrittliche Digitale Architektur • Performance Engineering • Strategische Innovation</p>
               <div className="flex justify-center gap-3 flex-wrap">
-                <Badge className="bg-gray-100 text-black border-gray-200">Advanced Web Design</Badge>
-                <Badge className="bg-gray-100 text-black border-gray-200">Smart Automation</Badge>
-                <Badge className="bg-gray-100 text-black border-gray-200">Digital Strategy</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Fortschrittliches Webdesign</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Intelligente Automatisierung</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Digitale Strategie</Badge>
               </div>
             </div>
           </div>
