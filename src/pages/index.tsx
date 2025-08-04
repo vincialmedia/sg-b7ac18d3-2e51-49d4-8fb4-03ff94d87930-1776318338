@@ -8,25 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { 
-  Globe, 
-  Zap, 
-  Users, 
-  ArrowRight, 
-  CheckCircle, 
-  Mail, 
-  Award,
-  TrendingUp,
-  Target,
-  Gift,
-  Package,
-  ExternalLink,
-  Code,
-  Gauge,
-  Sparkles,
-  Cpu,
-  Rocket
-} from "lucide-react";
+import { Globe, Zap, Users, ArrowRight, CheckCircle, Mail, Award, TrendingUp, Target, Gift, Package, ExternalLink, Code, Gauge, Sparkles, Cpu, Rocket } from "lucide-react";
 
 export default function Home() {
   const [userPoints, setUserPoints] = useState(0);
@@ -38,11 +20,11 @@ export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   const services = [
     {
@@ -72,7 +54,7 @@ export default function Home() {
       basePoints: 350,
       features: ["Intelligente Workflows", "Multi-Channel-Analytik", "Selbstoptimierung", "Performance-Tracking", "Systemintegration"],
     }
-  ]
+  ];
 
   const portfolioProjects = [
     {
@@ -91,115 +73,86 @@ export default function Home() {
       features: ["Content-Strategie", "Professionelle Produktion", "Performance-Analytik"],
       link: "https://www.youtube.com/speedcomparer",
     }
-  ]
+  ];
 
   const addService = (serviceId: string, points: number) => {
-    setSelectedServices(prev => ({
-      ...prev,
-      [serviceId]: 1
-    }))
-    setUserPoints(prev => prev + points)
-  }
+    setSelectedServices(prev => ({ ...prev, [serviceId]: 1 }));
+    setUserPoints(prev => prev + points);
+  };
 
   const removeService = (serviceId: string, points: number) => {
     if (selectedServices[serviceId] > 0) {
       setSelectedServices(prev => {
-        const newServices = { ...prev }
-        delete newServices[serviceId]
-        return newServices
-      })
-      setUserPoints(prev => prev - points)
+        const newServices = { ...prev };
+        delete newServices[serviceId];
+        return newServices;
+      });
+      setUserPoints(prev => prev - points);
     }
-  }
+  };
 
   const getTotalServices = () => {
-    return Object.values(selectedServices).reduce((sum, count) => sum + count, 0)
-  }
+    return Object.values(selectedServices).reduce((sum, count) => sum + count, 0);
+  };
 
   const handleSubmitClick = async () => {
     if (!userEmail || getTotalServices() === 0) {
-      alert("Bitte geben Sie Ihre E-Mail-Adresse ein und wählen Sie mindestens einen Service aus.")
-      return
+      alert("Bitte geben Sie Ihre E-Mail-Adresse ein und wählen Sie mindestens einen Service aus.");
+      return;
     }
 
     try {
       const response = await fetch("/api/submit-package", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: userEmail,
           services: selectedServices,
           points: userPoints,
           marketingConsent,
         }),
-      })
+      });
 
-      const result = await response.json()
+      const result = await response.json();
 
       if (result.success) {
         if (typeof window !== "undefined" && window._hsq) {
-          console.log("Pushing HubSpot identify:", userEmail)
-          window._hsq.push([
-            "identify",
-            {
-              email: userEmail
-            }
-          ])
+          console.log("Pushing HubSpot identify:", userEmail);
+          window._hsq.push(["identify", { email: userEmail }]);
         }
 
-        setShowEmailDialog(false)
-        setShowSuccessMessage(true)
-        setTimeout(() => setShowSuccessMessage(false), 3000)
+        setShowEmailDialog(false);
+        setShowSuccessMessage(true);
+        setTimeout(() => setShowSuccessMessage(false), 3000);
 
-        setUserEmail("")
-        setMarketingConsent(false)
-        setSelectedServices({})
-        setUserPoints(0)
+        setUserEmail("");
+        setMarketingConsent(false);
+        setSelectedServices({});
+        setUserPoints(0);
       } else {
-        console.error("API error:", result.message)
-        alert("Paket-Anfrage konnte nicht übermittelt werden: " + result.message)
+        console.error("API error:", result.message);
+        alert("Paket-Anfrage konnte nicht übermittelt werden: " + result.message);
       }
     } catch (error) {
-      console.error("Network or server error:", error)
-      alert("Ein Fehler ist beim Übermitteln Ihrer Anfrage aufgetreten. Bitte versuchen Sie es erneut.")
+      console.error("Network or server error:", error);
+      alert("Ein Fehler ist beim Übermitteln Ihrer Anfrage aufgetreten. Bitte versuchen Sie es erneut.");
     }
-  }
+  };
 
-  const progressPercentage = Math.min((userPoints / 1000) * 100, 100)
-  const hasReachedGoal = userPoints >= 1000
+  const progressPercentage = Math.min((userPoints / 1000) * 100, 100);
+  const hasReachedGoal = userPoints >= 1000;
 
   return (
     <>
       <Head>
         <title>Vincialmedia - Fortschrittliche Digitale Architektur</title>
-        <meta
-          name="description"
-          content="Transformieren Sie Ihre digitale Präsenz mit fortschrittlicher Webentwicklung, intelligenter Automatisierung und datengetriebenen digitalen Erfahrungen."
-        />
+        <meta name="description" content="Transformieren Sie Ihre digitale Präsenz mit fortschrittlicher Webentwicklung, intelligenter Automatisierung und datengetriebenen digitalen Erfahrungen." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Script
-        id="Cookiebot"
-        src="https://consent.cookiebot.com/uc.js"
-        data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07"
-        strategy="beforeInteractive"
-      />
-
-      <script
-        type="text/plain"
-        data-cookieconsent="marketing"
-        data-src="https://js-eu1.hs-scripts.com/146320474.js"
-        async
-        defer
-      ></script>
-
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-K43H5KD1R1"
-        strategy="afterInteractive"
-      />
+      <Script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="093175ce-ab1b-45f1-b766-f12aa6311a07" strategy="beforeInteractive" />
+      <script type="text/plain" data-cookieconsent="marketing" data-src="https://js-eu1.hs-scripts.com/146320474.js" async defer></script>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-K43H5KD1R1" strategy="afterInteractive" />
       <Script id="ga4-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -216,9 +169,7 @@ export default function Home() {
             <div className="flex items-center justify-between gap-2 sm:gap-4">
               <div className="flex items-center gap-2 sm:gap-3">
                 <Sparkles className="text-black" size={16} />
-                <span className="text-sm font-medium text-black">
-                  {userPoints} Punkte
-                </span>
+                <span className="text-sm font-medium text-black">{userPoints} Punkte</span>
               </div>
               <div className="flex-1 max-w-[120px] sm:max-w-xs mx-2 sm:mx-4">
                 <Progress value={progressPercentage} className="h-2" />
@@ -229,9 +180,7 @@ export default function Home() {
                   Bonus freigeschaltet
                 </Badge>
               ) : (
-                <span className="text-gray-600 text-sm hidden sm:inline">
-                  {1000 - userPoints} bis Bonus freigeschaltet
-                </span>
+                <span className="text-gray-600 text-sm hidden sm:inline">{1000 - userPoints} bis Bonus freigeschaltet</span>
               )}
             </div>
           </div>
@@ -244,7 +193,7 @@ export default function Home() {
               <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                 <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
                   <div className="space-y-4 lg:space-y-6">
-                    <Badge className="bg-black text-white border-0">
+                    <Badge className="bg-black text-white border-0 inline-flex items-center">
                       <Cpu className="mr-2" size={14} />
                       Fortschrittlicher Digitaler Architekt
                     </Badge>
@@ -260,21 +209,12 @@ export default function Home() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                    <Button 
-                      size="lg"
-                      onClick={() => scrollToSection("services")}
-                      className="w-full sm:w-auto bg-black text-white hover:bg-gray-800"
-                    >
+                    <Button size="lg" onClick={() => scrollToSection("services")} className="w-full sm:w-auto bg-black text-white hover:bg-gray-800 inline-flex items-center justify-center">
                       <Rocket className="mr-2" size={20} />
                       Ihre Reise beginnen
                     </Button>
                     
-                    <Button 
-                      variant="outline"
-                      size="lg"
-                      onClick={() => scrollToSection("portfolio")}
-                      className="w-full sm:w-auto bg-white border-black text-black hover:bg-gray-50"
-                    >
+                    <Button variant="outline" size="lg" onClick={() => scrollToSection("portfolio")} className="w-full sm:w-auto bg-white border-black text-black hover:bg-gray-50 inline-flex items-center justify-center">
                       Portfolio ansehen
                       <ArrowRight className="ml-2" size={20} />
                     </Button>
@@ -283,13 +223,7 @@ export default function Home() {
 
                 <div className="order-1 lg:order-2 relative w-full flex justify-center lg:justify-end">
                   <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border border-gray-200">
-                    <Image 
-                      src="/vince-mbggi03h.jpeg" 
-                      alt="Vince - Fortschrittlicher Digitaler Architekt"
-                      width={384}
-                      height={384}
-                      className="w-full h-full object-cover"
-                    />
+                    <Image src="/vince-mbggi03h.jpeg" alt="Vince - Fortschrittlicher Digitaler Architekt" width={384} height={384} className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -302,34 +236,25 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
-                  Ausgewähltes Portfolio
-                </h2>
-                <p className="text-xl text-gray-600">
-                  Erleben Sie die Verschmelzung von fortschrittlicher Technik und digitaler Innovation
-                </p>
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Ausgewähltes Portfolio</h2>
+                <p className="text-xl text-gray-600">Erleben Sie die Verschmelzung von fortschrittlicher Technik und digitaler Innovation</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
                 {portfolioProjects.map((project, index) => (
                   <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
                     <div className="relative h-64 overflow-hidden rounded-lg mb-6">
-                      <Image 
-                        src={project.image} 
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute top-4 left-4">
-                        <Badge className="bg-black text-white border-0">
+                        <Badge className="bg-black text-white border-0 inline-flex items-center">
                           {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
                           {index === 0 ? "Hochperformant" : "Fortschrittliche Architektur"}
                         </Badge>
                       </div>
                       <div className="absolute bottom-4 right-4">
                         <a href={project.link} target="_blank" rel="noopener noreferrer">
-                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-white/90">
+                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-white/90 inline-flex items-center justify-center">
                             <ExternalLink size={16} />
                           </Button>
                         </a>
@@ -356,9 +281,7 @@ export default function Home() {
                         <h4 className="font-semibold text-black">Tech Stack:</h4>
                         <div className="flex flex-wrap gap-2">
                           {project.technologies.map((tech, idx) => (
-                            <Badge key={idx} className="bg-gray-100 text-black border-gray-200">
-                              {tech}
-                            </Badge>
+                            <Badge key={idx} className="bg-gray-100 text-black border-gray-200">{tech}</Badge>
                           ))}
                         </div>
                       </div>
@@ -375,18 +298,14 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6">
-                  Service-Portfolio
-                </h2>
-                <p className="text-lg md:text-xl text-gray-600">
-                  Wählen Sie Ihre Services aus und erstellen Sie Ihr Projektpaket
-                </p>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6">Service-Portfolio</h2>
+                <p className="text-lg md:text-xl text-gray-600">Wählen Sie Ihre Services aus und erstellen Sie Ihr Projektpaket</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {services.map((service) => {
-                  const Icon = service.icon
-                  const selectedCount = selectedServices[service.id] || 0
+                  const Icon = service.icon;
+                  const selectedCount = selectedServices[service.id] || 0;
                   
                   return (
                     <div key={service.id} className="w-full bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
@@ -396,7 +315,7 @@ export default function Home() {
                         </div>
                         
                         <div className="space-y-2 sm:space-y-3">
-                          <Badge className="bg-black text-white border-0 text-xs">
+                          <Badge className="bg-black text-white border-0 text-xs inline-flex items-center">
                             +{service.basePoints} Punkte
                           </Badge>
                           <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black break-words">{service.title}</h3>
@@ -421,25 +340,18 @@ export default function Home() {
 
                         <div className="pt-4 mt-auto">
                           {selectedCount === 0 ? (
-                            <Button
-                              onClick={() => addService(service.id, service.basePoints)}
-                              className="w-full bg-black text-white hover:bg-gray-800"
-                            >
+                            <Button onClick={() => addService(service.id, service.basePoints)} className="w-full bg-black text-white hover:bg-gray-800">
                               Service hinzufügen
                             </Button>
                           ) : (
-                            <Button
-                              variant="destructive"
-                              onClick={() => removeService(service.id, service.basePoints)}
-                              className="w-full"
-                            >
+                            <Button variant="destructive" onClick={() => removeService(service.id, service.basePoints)} className="w-full">
                               Service entfernen
                             </Button>
                           )}
                         </div>
                       </div>
                     </div>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -464,14 +376,14 @@ export default function Home() {
                     <h4 className="font-semibold text-black">Ausgewählte Services:</h4>
                     <div className="space-y-3">
                       {services.map((service) => {
-                        const count = selectedServices[service.id] || 0
-                        if (count === 0) return null
+                        const count = selectedServices[service.id] || 0;
+                        if (count === 0) return null;
                         return (
                           <div key={service.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
                             <span className="text-gray-600">{service.title}</span>
                             <span className="font-semibold text-black">{count * service.basePoints} Pkt</span>
                           </div>
-                        )
+                        );
                       })}
                     </div>
                   </div>
@@ -503,29 +415,22 @@ export default function Home() {
                 </div>
 
                 <div className="mt-8">
-                  <Dialog 
-                    open={showEmailDialog} 
-                    onOpenChange={(open) => {
-                      const cleanPath = window.location.pathname + window.location.hash
-                      if (open && window.history.pushState) {
-                        window.history.pushState(null, '', cleanPath)
-                      }
-                      setShowEmailDialog(open)
-                    }}
-                  >
+                  <Dialog open={showEmailDialog} onOpenChange={(open) => {
+                    const cleanPath = window.location.pathname + window.location.hash;
+                    if (open && window.history.pushState) {
+                      window.history.pushState(null, '', cleanPath);
+                    }
+                    setShowEmailDialog(open);
+                  }}>
                     <DialogTrigger asChild>
-                      <Button 
-                        size="lg"
-                        className="w-full bg-black text-white hover:bg-gray-800"
-                        onClick={(e) => {
-                          e?.preventDefault()
-                          const cleanPath = window.location.pathname + window.location.hash
-                          if (window.history.pushState) {
-                            window.history.pushState(null, '', cleanPath)
-                          }
-                          setShowEmailDialog(true)
-                        }}
-                      >
+                      <Button size="lg" className="w-full bg-black text-white hover:bg-gray-800 inline-flex items-center justify-center" onClick={(e) => {
+                        e?.preventDefault();
+                        const cleanPath = window.location.pathname + window.location.hash;
+                        if (window.history.pushState) {
+                          window.history.pushState(null, '', cleanPath);
+                        }
+                        setShowEmailDialog(true);
+                      }}>
                         <Rocket className="mr-2" size={20} />
                         Projekt starten
                       </Button>
@@ -540,34 +445,13 @@ export default function Home() {
                       <div className="space-y-6">
                         <div>
                           <Label htmlFor="email" className="text-black">E-Mail-Adresse</Label>
-                          <Input
-                            id="email"
-                            type="email"
-                            placeholder="ihre@email.com"
-                            value={userEmail}
-                            onChange={(e) => setUserEmail(e.target.value)}
-                            className="bg-white border-gray-200 text-black placeholder:text-gray-400"
-                          />
+                          <Input id="email" type="email" placeholder="ihre@email.com" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} className="bg-white border-gray-200 text-black placeholder:text-gray-400" />
                         </div>
                         <div className="flex items-center space-x-2">
-                          <input
-                            type="checkbox"
-                            id="marketing"
-                            checked={marketingConsent}
-                            onChange={(e) => setMarketingConsent(e.target.checked)}
-                            className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-                          />
-                          <Label htmlFor="marketing" className="text-sm text-gray-600">
-                            Projekt-Updates und Insights abonnieren
-                          </Label>
+                          <input type="checkbox" id="marketing" checked={marketingConsent} onChange={(e) => setMarketingConsent(e.target.checked)} className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black" />
+                          <Label htmlFor="marketing" className="text-sm text-gray-600">Projekt-Updates und Insights abonnieren</Label>
                         </div>
-                        <Button 
-                          onClick={() => {
-                            handleSubmitClick();
-                          }}
-                          className="w-full bg-black text-white hover:bg-gray-800"
-                          disabled={!userEmail || getTotalServices() === 0}
-                        >
+                        <Button onClick={() => { handleSubmitClick(); }} className="w-full bg-black text-white hover:bg-gray-800" disabled={!userEmail || getTotalServices() === 0}>
                           Anfrage senden
                         </Button>
                       </div>
@@ -594,12 +478,8 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
-                  Erfolgsbilanz
-                </h2>
-                <p className="text-xl text-gray-600">
-                  Außergewöhnliche Ergebnisse in verschiedenen digitalen Projekten
-                </p>
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Erfolgsbilanz</h2>
+                <p className="text-xl text-gray-600">Außergewöhnliche Ergebnisse in verschiedenen digitalen Projekten</p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">
@@ -636,14 +516,10 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 text-center">
               <div className="space-y-8">
-                <h2 className="text-4xl md:text-5xl font-bold text-black">
-                  Kontakt aufnehmen
-                </h2>
-                <p className="text-xl text-gray-600">
-                  Bereit, Ihre digitale Präsenz zu transformieren? Lassen Sie uns über Ihr Projekt sprechen.
-                </p>
+                <h2 className="text-4xl md:text-5xl font-bold text-black">Kontakt aufnehmen</h2>
+                <p className="text-xl text-gray-600">Bereit, Ihre digitale Präsenz zu transformieren? Lassen Sie uns über Ihr Projekt sprechen.</p>
                 
-                <Button variant="outline" size="lg" className="bg-white border-black text-black hover:bg-gray-50">
+                <Button variant="outline" size="lg" className="bg-white border-black text-black hover:bg-gray-50 inline-flex items-center">
                   <Mail className="mr-2" size={20} />
                   vincent@vincialmedia.com
                 </Button>
@@ -668,5 +544,5 @@ export default function Home() {
         </footer>
       </main>
     </>
-  )
+  );
 }
