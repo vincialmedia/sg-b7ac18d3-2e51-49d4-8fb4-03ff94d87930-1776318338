@@ -175,7 +175,7 @@ export default function Home() {
                 <Progress value={progressPercentage} className="h-2" />
               </div>
               {hasReachedGoal ? (
-                <Badge className="bg-black text-white border-0">
+                <Badge className="bg-black text-white border-0 inline-flex items-center">
                   <Gift className="mr-1" size={12} />
                   Bonus freigeschaltet
                 </Badge>
@@ -199,12 +199,13 @@ export default function Home() {
                     </Badge>
                     
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-black">
-                      Digitale Exzellenz Transformieren
+                      Digitale<br />
+                      Exzellenz<br />
+                      Transformieren
                     </h1>
                     
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                      Entwickeln Sie hochmoderne digitale Erfahrungen, die über konventionelle Grenzen hinausgehen. 
-                      Wo Innovation auf Umsetzung trifft und Möglichkeiten Realität werden.
+                      Entwickeln Sie hochmoderne digitale Erfahrungen, die über konventionelle Grenzen hinausgehen. Wo Innovation auf Umsetzung trifft und Möglichkeiten Realität werden.
                     </p>
                   </div>
 
@@ -308,31 +309,31 @@ export default function Home() {
                   const selectedCount = selectedServices[service.id] || 0;
                   
                   return (
-                    <div key={service.id} className="w-full bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
-                      <div className="text-center space-y-4 sm:space-y-6 flex-1 flex flex-col">
-                        <div className="mx-auto w-16 sm:w-20 h-16 sm:h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-105 transition-transform duration-300">
+                    <div key={service.id} className="w-full bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
+                      <div className="text-center space-y-6 flex-1 flex flex-col">
+                        <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                           <Icon className="text-black" size={32} />
                         </div>
                         
-                        <div className="space-y-2 sm:space-y-3">
+                        <div className="space-y-3">
                           <Badge className="bg-black text-white border-0 text-xs inline-flex items-center">
                             +{service.basePoints} Punkte
                           </Badge>
-                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black break-words">{service.title}</h3>
-                          <p className="text-sm md:text-base text-gray-600">{service.description}</p>
+                          <h3 className="text-2xl font-bold text-black">{service.title}</h3>
+                          <p className="text-gray-600 text-center">{service.description}</p>
                         </div>
                         
-                        <div className="bg-gray-50 p-3 sm:p-4 rounded-lg border border-gray-100">
-                          <p className="text-xs md:text-sm text-gray-600">{service.explanation}</p>
+                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-center">
+                          <p className="text-sm text-gray-600">{service.explanation}</p>
                         </div>
                         
-                        <div className="space-y-2 sm:space-y-3 flex-1">
-                          <h4 className="font-semibold text-black text-sm md:text-base">Kernkompetenzen:</h4>
+                        <div className="space-y-3 flex-1">
+                          <h4 className="font-semibold text-black">Kernkompetenzen:</h4>
                           <div className="space-y-2">
                             {service.features.map((feature, idx) => (
                               <div key={idx} className="flex items-center gap-2">
                                 <CheckCircle className="text-black flex-shrink-0" size={12} />
-                                <span className="text-xs md:text-sm text-gray-600">{feature}</span>
+                                <span className="text-sm text-gray-600">{feature}</span>
                               </div>
                             ))}
                           </div>
