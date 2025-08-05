@@ -48,11 +48,11 @@ export default function Home() {
     {
       id: "automation",
       icon: Zap,
-      title: "Intelligente Automatisierung",
-      description: "Optimieren Sie Ihr Marketing mit intelligenten Automatisierungssystemen.",
-      explanation: "Setzen Sie selbstoptimierende Automatisierungsnetzwerke ein, die kontinuierlich lernen und sich anpassen und die Effizienz über alle Ihre digitalen Berührungspunkte maximieren.",
+      title: "Marketing Automation",
+      description: "Automatisieren Sie Ihre Marketing-Prozesse für mehr Effizienz und bessere Ergebnisse.",
+      explanation: "Implementieren Sie intelligente Marketing-Automation-Systeme, die Leads qualifizieren, Kunden segmentieren und personalisierte Kampagnen automatisch ausliefern für maximale Conversion-Raten.",
       basePoints: 350,
-      features: ["Intelligente Workflows", "Multi-Channel-Analytik", "Selbstoptimierung", "Performance-Tracking", "Systemintegration"],
+      features: ["Lead Nurturing", "E-Mail Marketing", "CRM Integration", "Conversion Tracking", "Personalisierung"],
     }
   ];
 
