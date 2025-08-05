@@ -189,7 +189,7 @@ export default function Home() {
         {/* Hero Section */}
         <section ref={heroRef} className="relative px-4 py-20 md:py-32 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16">
+            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16">
               <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                 <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
                   <div className="space-y-4 lg:space-y-6">
@@ -199,9 +199,8 @@ export default function Home() {
                     </Badge>
                     
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-black">
-                      Digitale<br />
-                      Exzellenz<br />
-                      Transformieren
+                      Digital<br />
+                      Marketing
                     </h1>
                     
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
@@ -235,7 +234,7 @@ export default function Home() {
         {/* Portfolio Section */}
         <section id="portfolio" className="px-4 py-20 relative bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Ausgewähltes Portfolio</h2>
                 <p className="text-xl text-gray-600">Erleben Sie die Verschmelzung von fortschrittlicher Technik und digitaler Innovation</p>
@@ -297,7 +296,7 @@ export default function Home() {
         {/* Services Section */}
         <section id="services" className="px-4 py-20 relative">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6">Service-Portfolio</h2>
                 <p className="text-lg md:text-xl text-gray-600">Wählen Sie Ihre Services aus und erstellen Sie Ihr Projektpaket</p>
@@ -363,7 +362,7 @@ export default function Home() {
         {getTotalServices() > 0 && (
           <section className="px-4 py-20 relative bg-gray-50">
             <div className="max-w-7xl mx-auto">
-              <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+              <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
                 <div className="text-center space-y-6 mb-8">
                   <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center">
                     <Package className="text-black" size={40} />
@@ -477,7 +476,7 @@ export default function Home() {
         {/* Achievements Section */}
         <section className="px-4 py-20 relative">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Erfolgsbilanz</h2>
                 <p className="text-xl text-gray-600">Außergewöhnliche Ergebnisse in verschiedenen digitalen Projekten</p>
@@ -515,7 +514,7 @@ export default function Home() {
         {/* Contact Section */}
         <section className="px-4 py-20 relative bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 text-center">
+            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 text-center">
               <div className="space-y-8">
                 <h2 className="text-4xl md:text-5xl font-bold text-black">Kontakt aufnehmen</h2>
                 <p className="text-xl text-gray-600">Bereit, Ihre digitale Präsenz zu transformieren? Lassen Sie uns über Ihr Projekt sprechen.</p>
@@ -532,7 +531,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="px-4 py-12 relative border-t border-gray-200">
           <div className="max-w-7xl mx-auto">
-            <div className="w-full md:max-w-[90%] lg:max-w-[80%] mx-auto text-center">
+            <div className="w-[90%] mx-auto text-center">
               <h3 className="text-3xl font-bold text-black mb-4">Vincialmedia</h3>
               <p className="text-gray-600 mb-6">Fortschrittliche Digitale Architektur • Performance Engineering • Strategische Innovation</p>
               <div className="flex justify-center gap-3 flex-wrap">
