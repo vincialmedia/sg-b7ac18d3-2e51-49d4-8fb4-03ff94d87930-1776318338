@@ -193,9 +193,9 @@ export default function Home() {
               <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                 <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
                   <div className="space-y-4 lg:space-y-6">
-                    <Badge className="bg-black text-white border-0 inline-flex items-center">
+                    <Badge className="bg-black text-white border-0 inline-flex items-center hover:bg-red-600 transition-colors duration-300">
                       <Cpu className="mr-2" size={14} />
-                      Fortschrittlicher Digitaler Architekt
+                      Digital Marketing Architect
                     </Badge>
                     
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-black">
