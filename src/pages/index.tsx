@@ -241,60 +241,60 @@ export default function Home() {
         <section className="px-4 py-16 relative bg-white">
           <div className="max-w-7xl mx-auto">
             <div className="w-[90%] mx-auto text-center">
-              <h3 className="text-2xl md:text-3xl font-bold text-black mb-12">hier habe ich mitgewirkt</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-black mb-12">Diese Marken setzen auf meine Expertise</h3>
               
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
                 {/* Speed Comparer */}
-                <div className="w-20 h-20 md:w-24 md:h-24 relative flex items-center justify-center">
+                <div className="w-30 h-30 md:w-36 md:h-36 relative flex items-center justify-center">
                   <Image 
                     src="/channels4_profile.jpg" 
                     alt="Speed Comparer" 
-                    width={96} 
-                    height={96} 
+                    width={144} 
+                    height={144} 
                     className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
                   />
                 </div>
                 
                 {/* Crowdhouse */}
-                <div className="w-24 h-20 md:w-32 md:h-24 relative flex items-center justify-center">
+                <div className="w-36 h-30 md:w-48 md:h-36 relative flex items-center justify-center">
                   <Image 
                     src="/Crowdhouse_Logo.png" 
                     alt="Crowdhouse" 
-                    width={128} 
-                    height={96} 
+                    width={192} 
+                    height={144} 
                     className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
                   />
                 </div>
                 
                 {/* SRF */}
-                <div className="w-24 h-20 md:w-32 md:h-24 relative flex items-center justify-center">
+                <div className="w-36 h-30 md:w-48 md:h-36 relative flex items-center justify-center">
                   <Image 
                     src="/images.png" 
                     alt="SRF" 
-                    width={128} 
-                    height={96} 
+                    width={192} 
+                    height={144} 
                     className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
                   />
                 </div>
                 
                 {/* NordVPN */}
-                <div className="w-20 h-20 md:w-24 md:h-24 relative flex items-center justify-center">
+                <div className="w-30 h-30 md:w-36 md:h-36 relative flex items-center justify-center">
                   <Image 
                     src="/NordVPN_Logo_square.svg.png" 
                     alt="NordVPN" 
-                    width={96} 
-                    height={96} 
+                    width={144} 
+                    height={144} 
                     className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
                   />
                 </div>
                 
                 {/* Stellantis */}
-                <div className="w-24 h-20 md:w-32 md:h-24 relative flex items-center justify-center col-span-2 md:col-span-1">
+                <div className="w-36 h-30 md:w-48 md:h-36 relative flex items-center justify-center col-span-2 md:col-span-1">
                   <Image 
                     src="/STELLANTIS.jpg" 
                     alt="Stellantis" 
-                    width={128} 
-                    height={96} 
+                    width={192} 
+                    height={144} 
                     className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
                   />
                 </div>
