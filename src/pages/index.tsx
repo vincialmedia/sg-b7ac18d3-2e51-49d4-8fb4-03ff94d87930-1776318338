@@ -318,7 +318,7 @@ export default function Home() {
                   const selectedCount = selectedServices[service.id] || 0;
                   
                   return (
-                    <div key={service.id} className="w-full bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
+                    <div key={service.id} className="w-full bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col h-full">
                       <div className="text-center space-y-6 flex-1 flex flex-col">
                         <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                           <Icon className="text-black" size={32} />
@@ -328,21 +328,21 @@ export default function Home() {
                           <Badge className="bg-black text-white border-0 text-xs inline-flex items-center">
                             +{service.basePoints} Punkte
                           </Badge>
-                          <h3 className="text-2xl font-bold text-black">{service.title}</h3>
-                          <p className="text-gray-600 text-center">{service.description}</p>
+                          <h3 className="text-2xl font-bold text-black min-h-[64px] flex items-center justify-center">{service.title}</h3>
+                          <p className="text-gray-600 text-center min-h-[72px] flex items-center justify-center">{service.description}</p>
                         </div>
                         
-                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-center">
+                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-center flex-1">
                           <p className="text-sm text-gray-600">{service.explanation}</p>
                         </div>
                         
-                        <div className="space-y-3 flex-1">
+                        <div className="space-y-3">
                           <h4 className="font-semibold text-black">Kernkompetenzen:</h4>
-                          <div className="space-y-2">
+                          <div className="space-y-2 min-h-[120px]">
                             {service.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-center gap-2">
+                              <div key={idx} className="flex items-center gap-2 justify-start">
                                 <CheckCircle className="text-black flex-shrink-0" size={12} />
-                                <span className="text-sm text-gray-600">{feature}</span>
+                                <span className="text-sm text-gray-600 text-left">{feature}</span>
                               </div>
                             ))}
                           </div>
