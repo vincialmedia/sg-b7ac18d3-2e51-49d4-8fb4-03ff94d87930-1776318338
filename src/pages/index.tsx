@@ -178,29 +178,6 @@ export default function Home() {
       </Script>
       
       <main className="min-h-screen bg-white overflow-x-hidden">
-        {/* Progress Bar */}
-        <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 transition-all duration-300">
-          <div className="max-w-7xl mx-auto px-4 py-3">
-            <div className="flex items-center justify-between gap-2 sm:gap-4">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <Sparkles className="text-black" size={16} />
-                <span className="text-sm font-medium text-black">Preisrechner</span>
-              </div>
-              <div className="flex-1 max-w-[120px] sm:max-w-xs mx-2 sm:mx-4">
-                <Progress value={progressPercentage} className="h-2" />
-              </div>
-              {hasReachedGoal ? (
-                <Badge className="bg-black text-white border-0 inline-flex items-center">
-                  <Gift className="mr-1" size={12} />
-                  Bonus freigeschaltet
-                </Badge>
-              ) : (
-                <span className="text-gray-600 text-sm hidden sm:inline">Wählen Sie Services aus</span>
-              )}
-            </div>
-          </div>
-        </div>
-
         {/* Hero Section */}
         <section ref={heroRef} className="relative px-4 py-20 md:py-32 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto w-full">
@@ -339,11 +316,11 @@ export default function Home() {
                           <Icon className="text-black" size={32} />
                         </div>
                         
-                        <div className="space-y-3">
-                          <Badge className="bg-black text-white border-0 text-xs inline-flex items-center">
+                        <div className="space-y-4">
+                          <h3 className="text-2xl font-bold text-black min-h-[64px] flex items-center justify-center">{service.title}</h3>
+                          <Badge className="bg-black text-white border-0 text-lg px-4 py-2 inline-flex items-center">
                             Ab {service.price}
                           </Badge>
-                          <h3 className="text-2xl font-bold text-black min-h-[64px] flex items-center justify-center">{service.title}</h3>
                           <p className="text-gray-600 text-center min-h-[72px] flex items-center justify-center">{service.description}</p>
                         </div>
                         
@@ -383,71 +360,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Portfolio Section */}
-        <section id="portfolio" className="px-4 py-20 relative">
-          <div className="max-w-7xl mx-auto">
-            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Ausgewähltes Portfolio</h2>
-                <p className="text-xl text-gray-600">Erleben Sie die Verschmelzung von fortschrittlicher Technik und digitaler Innovation</p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                {portfolioProjects.map((project, index) => (
-                  <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
-                    <div className="relative h-64 overflow-hidden rounded-lg mb-6">
-                      <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-black text-white border-0 inline-flex items-center">
-                          {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
-                          {index === 0 ? "Hochperformant" : "Fortschrittliche Architektur"}
-                        </Badge>
-                      </div>
-                      <div className="absolute bottom-4 right-4">
-                        <a href={project.link} target="_blank" rel="noopener noreferrer">
-                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-300 inline-flex items-center justify-center">
-                            <ExternalLink size={16} />
-                          </Button>
-                        </a>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <h3 className="text-2xl font-bold text-black">{project.title}</h3>
-                      <p className="text-gray-600">{project.description}</p>
-                      
-                      <div className="space-y-3">
-                        <h4 className="font-semibold text-black">Hauptmerkmale:</h4>
-                        <div className="grid grid-cols-2 gap-2">
-                          {project.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="text-black flex-shrink-0" size={14} />
-                              <span className="text-sm text-gray-600">{feature}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-black">Tech Stack:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech, idx) => (
-                            <Badge key={idx} className="bg-gray-100 text-black border-gray-200">{tech}</Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Package Summary */}
         {getTotalServices() > 0 && (
-          <section className="px-4 py-20 relative bg-gray-50">
+          <section className="px-4 py-20 relative">
             <div className="max-w-7xl mx-auto">
               <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
                 <div className="text-center space-y-6 mb-8">
@@ -593,6 +508,68 @@ export default function Home() {
                   <h3 className="text-3xl font-bold text-black mb-2">100% Zufriedenheit</h3>
                   <p className="text-gray-600">Verpflichtet, Kundenerwartungen zu übertreffen</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Portfolio Section */}
+        <section id="portfolio" className="px-4 py-20 relative">
+          <div className="max-w-7xl mx-auto">
+            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Ausgewähltes Portfolio</h2>
+                <p className="text-xl text-gray-600">Erleben Sie die Verschmelzung von fortschrittlicher Technik und digitaler Innovation</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {portfolioProjects.map((project, index) => (
+                  <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <div className="relative h-64 overflow-hidden rounded-lg mb-6">
+                      <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-black text-white border-0 inline-flex items-center">
+                          {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
+                          {index === 0 ? "Hochperformant" : "Fortschrittliche Architektur"}
+                        </Badge>
+                      </div>
+                      <div className="absolute bottom-4 right-4">
+                        <a href={project.link} target="_blank" rel="noopener noreferrer">
+                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-300 inline-flex items-center justify-center">
+                            <ExternalLink size={16} />
+                          </Button>
+                        </a>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-black">{project.title}</h3>
+                      <p className="text-gray-600">{project.description}</p>
+                      
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-black">Hauptmerkmale:</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {project.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <CheckCircle className="text-black flex-shrink-0" size={14} />
+                              <span className="text-sm text-gray-600">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-black">Tech Stack:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {project.technologies.map((tech, idx) => (
+                            <Badge key={idx} className="bg-gray-100 text-black border-gray-200">{tech}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
