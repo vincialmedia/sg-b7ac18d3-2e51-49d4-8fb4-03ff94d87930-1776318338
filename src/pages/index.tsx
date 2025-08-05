@@ -34,6 +34,7 @@ export default function Home() {
       description: "KI-gestützte Websites, die sich an Ihre Geschäftsanforderungen anpassen und weiterentwickeln.",
       explanation: "Nächste Generation von Web-Architektur mit blitzschnellen Ladezeiten, intelligenter SEO-Optimierung und adaptiven Benutzererfahrungen, die aus dem Besucherverhalten lernen.",
       basePoints: 400,
+      price: "CHF 500.-",
       features: ["Blitzgeschwindigkeit", "Intelligente SEO", "Adaptive UX", "KI-Analytik", "Modernes Design"],
     },
     {
@@ -43,6 +44,7 @@ export default function Home() {
       description: "Strategische Social Media Betreuung für nachhaltiges Wachstum und echtes Engagement.",
       explanation: "Professionelle Social Media Strategien mit datengetriebenen Inhalten, gezielter Community-Entwicklung und messbaren Ergebnissen für maximale Reichweite und Interaktion.",
       basePoints: 300,
+      price: "CHF 250.-",
       features: ["Content-Strategie", "Community Management", "Performance Analytics", "Influencer Marketing", "Social Media Ads"],
     },
     {
@@ -52,6 +54,7 @@ export default function Home() {
       description: "Automatisieren Sie Ihre Marketing-Prozesse für mehr Effizienz und bessere Ergebnisse.",
       explanation: "Implementieren Sie intelligente Marketing-Automation-Systeme, die Leads qualifizieren, Kunden segmentieren und personalisierte Kampagnen automatisch ausliefern für maximale Conversion-Raten.",
       basePoints: 350,
+      price: "CHF 250.-",
       features: ["Lead Nurturing", "E-Mail Marketing", "CRM Integration", "Conversion Tracking", "Personalisierung"],
     }
   ];
@@ -93,6 +96,18 @@ export default function Home() {
 
   const getTotalServices = () => {
     return Object.values(selectedServices).reduce((sum, count) => sum + count, 0);
+  };
+
+  const getTotalPrice = () => {
+    let total = 0;
+    services.forEach(service => {
+      const count = selectedServices[service.id] || 0;
+      if (count > 0) {
+        const price = parseInt(service.price.replace(/[^\d]/g, ''));
+        total += price * count;
+      }
+    });
+    return total;
   };
 
   const handleSubmitClick = async () => {
@@ -169,7 +184,7 @@ export default function Home() {
             <div className="flex items-center justify-between gap-2 sm:gap-4">
               <div className="flex items-center gap-2 sm:gap-3">
                 <Sparkles className="text-black" size={16} />
-                <span className="text-sm font-medium text-black">{userPoints} Punkte</span>
+                <span className="text-sm font-medium text-black">Preisrechner</span>
               </div>
               <div className="flex-1 max-w-[120px] sm:max-w-xs mx-2 sm:mx-4">
                 <Progress value={progressPercentage} className="h-2" />
@@ -180,7 +195,7 @@ export default function Home() {
                   Bonus freigeschaltet
                 </Badge>
               ) : (
-                <span className="text-gray-600 text-sm hidden sm:inline">{1000 - userPoints} bis Bonus freigeschaltet</span>
+                <span className="text-gray-600 text-sm hidden sm:inline">Wählen Sie Services aus</span>
               )}
             </div>
           </div>
@@ -326,7 +341,7 @@ export default function Home() {
                         
                         <div className="space-y-3">
                           <Badge className="bg-black text-white border-0 text-xs inline-flex items-center">
-                            +{service.basePoints} Punkte
+                            Ab {service.price}
                           </Badge>
                           <h3 className="text-2xl font-bold text-black min-h-[64px] flex items-center justify-center">{service.title}</h3>
                           <p className="text-gray-600 text-center min-h-[72px] flex items-center justify-center">{service.description}</p>
@@ -453,7 +468,7 @@ export default function Home() {
                         return (
                           <div key={service.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
                             <span className="text-gray-600">{service.title}</span>
-                            <span className="font-semibold text-black">{count * service.basePoints} Pkt</span>
+                            <span className="font-semibold text-black">{service.price}</span>
                           </div>
                         );
                       })}
@@ -463,8 +478,8 @@ export default function Home() {
                   <div className="space-y-4">
                     <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
                       <div className="flex justify-between items-center mb-3">
-                        <span className="font-semibold text-black">Gesamtpunkte:</span>
-                        <span className="text-2xl font-bold text-black">{userPoints}</span>
+                        <span className="font-semibold text-black">Gesamtpreis:</span>
+                        <span className="text-2xl font-bold text-black">CHF {getTotalPrice()}.-</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Services:</span>
