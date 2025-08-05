@@ -39,11 +39,11 @@ export default function Home() {
     {
       id: "social",
       icon: Users,
-      title: "Digitale Strategie",
-      description: "Transformieren Sie traditionelle soziale Medien mit datengetriebenen Engagement-Strategien.",
-      explanation: "Nutzen Sie fortschrittliche Social-Media-Algorithmen, prädiktive Content-Erstellung und intelligente Engagement-Metriken, um Ihre digitale Präsenz zu maximieren.",
+      title: "Social Media",
+      description: "Strategische Social Media Betreuung für nachhaltiges Wachstum und echtes Engagement.",
+      explanation: "Professionelle Social Media Strategien mit datengetriebenen Inhalten, gezielter Community-Entwicklung und messbaren Ergebnissen für maximale Reichweite und Interaktion.",
       basePoints: 300,
-      features: ["Prädiktiver Content", "Intelligentes Engagement", "Erweiterte Analytik", "Zielgruppen-Mapping", "Digitales Wachstum"],
+      features: ["Content-Strategie", "Community Management", "Performance Analytics", "Influencer Marketing", "Social Media Ads"],
     },
     {
       id: "automation",
