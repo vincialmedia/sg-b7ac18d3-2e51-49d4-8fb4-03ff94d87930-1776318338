@@ -200,7 +200,13 @@ export default function Home() {
                     
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-black">
                       Digital<br />
-                      Marketing
+                      Marketing<br />
+                      <span className="relative inline-block">
+                        <span className="text-red-600 italic transform -rotate-2 inline-block bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent font-black tracking-wider">
+                          Ohne Bullsh*t
+                        </span>
+                        <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-red-700 transform rotate-1 rounded-full"></div>
+                      </span>
                     </h1>
                     
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
