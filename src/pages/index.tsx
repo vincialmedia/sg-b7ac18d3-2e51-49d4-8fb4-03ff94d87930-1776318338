@@ -237,70 +237,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Portfolio Section */}
-        <section id="portfolio" className="px-4 py-20 relative bg-gray-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Ausgewähltes Portfolio</h2>
-                <p className="text-xl text-gray-600">Erleben Sie die Verschmelzung von fortschrittlicher Technik und digitaler Innovation</p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                {portfolioProjects.map((project, index) => (
-                  <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
-                    <div className="relative h-64 overflow-hidden rounded-lg mb-6">
-                      <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-black text-white border-0 inline-flex items-center">
-                          {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
-                          {index === 0 ? "Hochperformant" : "Fortschrittliche Architektur"}
-                        </Badge>
-                      </div>
-                      <div className="absolute bottom-4 right-4">
-                        <a href={project.link} target="_blank" rel="noopener noreferrer">
-                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-300 inline-flex items-center justify-center">
-                            <ExternalLink size={16} />
-                          </Button>
-                        </a>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <h3 className="text-2xl font-bold text-black">{project.title}</h3>
-                      <p className="text-gray-600">{project.description}</p>
-                      
-                      <div className="space-y-3">
-                        <h4 className="font-semibold text-black">Hauptmerkmale:</h4>
-                        <div className="grid grid-cols-2 gap-2">
-                          {project.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="text-black flex-shrink-0" size={14} />
-                              <span className="text-sm text-gray-600">{feature}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-black">Tech Stack:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech, idx) => (
-                            <Badge key={idx} className="bg-gray-100 text-black border-gray-200">{tech}</Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Services Section */}
-        <section id="services" className="px-4 py-20 relative">
+        <section id="services" className="px-4 py-20 relative bg-gray-50">
           <div className="max-w-7xl mx-auto">
             <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
               <div className="text-center mb-16">
@@ -359,6 +297,68 @@ export default function Home() {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Portfolio Section */}
+        <section id="portfolio" className="px-4 py-20 relative">
+          <div className="max-w-7xl mx-auto">
+            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Ausgewähltes Portfolio</h2>
+                <p className="text-xl text-gray-600">Erleben Sie die Verschmelzung von fortschrittlicher Technik und digitaler Innovation</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {portfolioProjects.map((project, index) => (
+                  <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <div className="relative h-64 overflow-hidden rounded-lg mb-6">
+                      <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-black text-white border-0 inline-flex items-center">
+                          {index === 0 ? <Gauge className="mr-1" size={12} /> : <Code className="mr-1" size={12} />}
+                          {index === 0 ? "Hochperformant" : "Fortschrittliche Architektur"}
+                        </Badge>
+                      </div>
+                      <div className="absolute bottom-4 right-4">
+                        <a href={project.link} target="_blank" rel="noopener noreferrer">
+                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-300 inline-flex items-center justify-center">
+                            <ExternalLink size={16} />
+                          </Button>
+                        </a>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-black">{project.title}</h3>
+                      <p className="text-gray-600">{project.description}</p>
+                      
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-black">Hauptmerkmale:</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {project.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <CheckCircle className="text-black flex-shrink-0" size={14} />
+                              <span className="text-sm text-gray-600">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-black">Tech Stack:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {project.technologies.map((tech, idx) => (
+                            <Badge key={idx} className="bg-gray-100 text-black border-gray-200">{tech}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
