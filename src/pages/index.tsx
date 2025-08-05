@@ -210,7 +210,7 @@ export default function Home() {
                     </h1>
                     
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                      Entwickeln Sie hochmoderne digitale Erfahrungen, die über konventionelle Grenzen hinausgehen. Wo Innovation auf Umsetzung trifft und Möglichkeiten Realität werden.
+                      Ich baue digitale Systeme, die verkaufen – nicht nur beeindrucken.
                     </p>
                   </div>
 
