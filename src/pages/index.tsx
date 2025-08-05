@@ -215,12 +215,12 @@ export default function Home() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                    <Button size="lg" onClick={() => scrollToSection("services")} className="w-full sm:w-auto bg-black text-white hover:bg-gray-800 inline-flex items-center justify-center">
+                    <Button size="lg" onClick={() => scrollToSection("services")} className="w-full sm:w-auto bg-black text-white hover:bg-red-600 inline-flex items-center justify-center">
                       <Rocket className="mr-2" size={20} />
                       Ihre Reise beginnen
                     </Button>
                     
-                    <Button variant="outline" size="lg" onClick={() => scrollToSection("portfolio")} className="w-full sm:w-auto bg-white border-black text-black hover:bg-gray-50 inline-flex items-center justify-center">
+                    <Button variant="outline" size="lg" onClick={() => scrollToSection("portfolio")} className="w-full sm:w-auto bg-white border-black text-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-300 inline-flex items-center justify-center">
                       Portfolio ansehen
                       <ArrowRight className="ml-2" size={20} />
                     </Button>
@@ -260,7 +260,7 @@ export default function Home() {
                       </div>
                       <div className="absolute bottom-4 right-4">
                         <a href={project.link} target="_blank" rel="noopener noreferrer">
-                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-white/90 inline-flex items-center justify-center">
+                          <Button variant="outline" size="sm" className="bg-white border-white text-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-300 inline-flex items-center justify-center">
                             <ExternalLink size={16} />
                           </Button>
                         </a>
@@ -346,11 +346,11 @@ export default function Home() {
 
                         <div className="pt-4 mt-auto">
                           {selectedCount === 0 ? (
-                            <Button onClick={() => addService(service.id, service.basePoints)} className="w-full bg-black text-white hover:bg-gray-800">
+                            <Button onClick={() => addService(service.id, service.basePoints)} className="w-full bg-black text-white hover:bg-red-600">
                               Service hinzufügen
                             </Button>
                           ) : (
-                            <Button variant="destructive" onClick={() => removeService(service.id, service.basePoints)} className="w-full">
+                            <Button variant="destructive" onClick={() => removeService(service.id, service.basePoints)} className="w-full bg-red-600 text-white hover:bg-red-700">
                               Service entfernen
                             </Button>
                           )}
@@ -429,7 +429,7 @@ export default function Home() {
                     setShowEmailDialog(open);
                   }}>
                     <DialogTrigger asChild>
-                      <Button size="lg" className="w-full bg-black text-white hover:bg-gray-800 inline-flex items-center justify-center" onClick={(e) => {
+                      <Button size="lg" className="w-full bg-black text-white hover:bg-red-600 inline-flex items-center justify-center" onClick={(e) => {
                         e?.preventDefault();
                         const cleanPath = window.location.pathname + window.location.hash;
                         if (window.history.pushState) {
@@ -457,7 +457,7 @@ export default function Home() {
                           <input type="checkbox" id="marketing" checked={marketingConsent} onChange={(e) => setMarketingConsent(e.target.checked)} className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black" />
                           <Label htmlFor="marketing" className="text-sm text-gray-600">Projekt-Updates und Insights abonnieren</Label>
                         </div>
-                        <Button onClick={() => { handleSubmitClick(); }} className="w-full bg-black text-white hover:bg-gray-800" disabled={!userEmail || getTotalServices() === 0}>
+                        <Button onClick={() => { handleSubmitClick(); }} className="w-full bg-black text-white hover:bg-red-600" disabled={!userEmail || getTotalServices() === 0}>
                           Anfrage senden
                         </Button>
                       </div>
@@ -525,7 +525,7 @@ export default function Home() {
                 <h2 className="text-4xl md:text-5xl font-bold text-black">Kontakt aufnehmen</h2>
                 <p className="text-xl text-gray-600">Bereit, Ihre digitale Präsenz zu transformieren? Lassen Sie uns über Ihr Projekt sprechen.</p>
                 
-                <Button variant="outline" size="lg" className="bg-white border-black text-black hover:bg-gray-50 inline-flex items-center">
+                <Button variant="outline" size="lg" className="bg-white border-black text-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-300 inline-flex items-center">
                   <Mail className="mr-2" size={20} />
                   vincent@vincialmedia.com
                 </Button>
