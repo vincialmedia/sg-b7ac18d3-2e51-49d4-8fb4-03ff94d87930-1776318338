@@ -383,7 +383,7 @@ export default function Home() {
                         return (
                           <div key={service.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
                             <span className="text-gray-600">{service.title}</span>
-                            <span className="font-semibold text-black">{service.price}</span>
+                            <span className="font-semibold text-black">Ab {service.price}</span>
                           </div>
                         );
                       })}
@@ -394,71 +394,38 @@ export default function Home() {
                     <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
                       <div className="flex justify-between items-center mb-3">
                         <span className="font-semibold text-black">Gesamtpreis:</span>
-                        <span className="text-2xl font-bold text-black">CHF {getTotalPrice()}.-</span>
+                        <span className="text-2xl font-bold text-black">Ab CHF {getTotalPrice()}.-</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Services:</span>
                         <span className="text-black">{getTotalServices()}</span>
                       </div>
                     </div>
-                    
-                    {hasReachedGoal && (
-                      <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                        <div className="flex items-center gap-3 text-green-800">
-                          <Gift size={24} />
-                          <div>
-                            <div className="font-semibold">Bonuspaket freigeschaltet!</div>
-                            <div className="text-sm text-green-600">Zusätzlicher Wert inklusive</div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
 
-                <div className="mt-8">
-                  <Dialog open={showEmailDialog} onOpenChange={(open) => {
-                    const cleanPath = window.location.pathname + window.location.hash;
-                    if (open && window.history.pushState) {
-                      window.history.pushState(null, '', cleanPath);
-                    }
-                    setShowEmailDialog(open);
-                  }}>
-                    <DialogTrigger asChild>
-                      <Button size="lg" className="w-full bg-black text-white hover:bg-red-600 inline-flex items-center justify-center" onClick={(e) => {
-                        e?.preventDefault();
-                        const cleanPath = window.location.pathname + window.location.hash;
-                        if (window.history.pushState) {
-                          window.history.pushState(null, '', cleanPath);
-                        }
-                        setShowEmailDialog(true);
-                      }}>
-                        <Rocket className="mr-2" size={20} />
-                        Projekt starten
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="bg-white border-gray-200">
-                      <DialogHeader>
-                        <DialogTitle className="text-black">Projektanfrage</DialogTitle>
-                        <DialogDescription className="text-gray-600">
-                          Geben Sie Ihre Kontaktdaten ein, um Projektspezifikationen zu erhalten
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="space-y-6">
-                        <div>
-                          <Label htmlFor="email" className="text-black">E-Mail-Adresse</Label>
-                          <Input id="email" type="email" placeholder="ihre@email.com" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} className="bg-white border-gray-200 text-black placeholder:text-gray-400" />
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <input type="checkbox" id="marketing" checked={marketingConsent} onChange={(e) => setMarketingConsent(e.target.checked)} className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black" />
-                          <Label htmlFor="marketing" className="text-sm text-gray-600">Projekt-Updates und Insights abonnieren</Label>
-                        </div>
-                        <Button onClick={() => { handleSubmitClick(); }} className="w-full bg-black text-white hover:bg-red-600" disabled={!userEmail || getTotalServices() === 0}>
-                          Anfrage senden
-                        </Button>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                <div className="mt-8 space-y-4">
+                  <div>
+                    <Label htmlFor="package-email" className="text-black">E-Mail-Adresse</Label>
+                    <Input 
+                      id="package-email" 
+                      type="email" 
+                      placeholder="ihre@email.com" 
+                      value={userEmail} 
+                      onChange={(e) => setUserEmail(e.target.value)} 
+                      className="bg-white border-gray-200 text-black placeholder:text-gray-400 mt-2" 
+                    />
+                  </div>
+                  
+                  <Button 
+                    size="lg" 
+                    onClick={handleSubmitClick}
+                    className="w-full bg-black text-white hover:bg-red-600 inline-flex items-center justify-center" 
+                    disabled={!userEmail || getTotalServices() === 0}
+                  >
+                    <Mail className="mr-2" size={20} />
+                    Anfragen
+                  </Button>
                 </div>
               </div>
             </div>
