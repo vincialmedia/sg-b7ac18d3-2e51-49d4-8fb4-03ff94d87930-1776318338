@@ -150,9 +150,6 @@ export default function Home() {
     }
   };
 
-  const progressPercentage = Math.min((userPoints / 1000) * 100, 100);
-  const hasReachedGoal = userPoints >= 1000;
-
   return (
     <>
       <Head>
