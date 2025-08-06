@@ -172,9 +172,9 @@ export default function Home() {
       
       <main className="min-h-screen bg-white overflow-x-hidden">
         {/* Hero Section */}
-        <section ref={heroRef} className="relative px-4 py-20 md:py-32 min-h-screen flex items-center">
+        <section ref={heroRef} className="relative px-4 pt-6 pb-20 md:pt-8 md:pb-32 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16">
+            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16 mt-6">
               <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                 <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
                   <div className="space-y-4 lg:space-y-6">
