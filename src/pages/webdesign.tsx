@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, Code, Rocket, Globe, ArrowRight, Mail, Gauge, Search, Brain, TrendingUp, Cpu, Target, Shield, Award } from 'lucide-react'
 

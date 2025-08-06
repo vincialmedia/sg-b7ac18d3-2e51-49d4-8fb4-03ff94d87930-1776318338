@@ -1,38 +1,17 @@
 import { useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
 import Head from "next/head";
 import Script from "next/script";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { Globe, Zap, Users, ArrowRight, CheckCircle, Mail, Award, TrendingUp, Target, Package, ExternalLink, Code, Gauge, Cpu, Rocket } from "lucide-react";
-import { 
-  Calendar, 
-  ChevronRight, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Star, 
-  Users, 
-  TrendingUp, 
-  Shield, 
-  Award, 
-  BarChart, 
-  Heart,
-  CheckCircle2,
-  Minus,
-  Plus,
-  ArrowRight
-} from 'lucide-react'
 
 export default function Home() {
   const [userPoints, setUserPoints] = useState(0);
   const [selectedServices, setSelectedServices] = useState<{[key: string]: number}>({});
   const [userEmail, setUserEmail] = useState("");
-  const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -154,7 +133,6 @@ export default function Home() {
           window._hsq.push(["identify", { email: userEmail }]);
         }
 
-        setShowEmailDialog(false);
         setShowSuccessMessage(true);
         setTimeout(() => setShowSuccessMessage(false), 3000);
 
