@@ -11,11 +11,17 @@ import {
   createSuccessResponse, 
   handleCorsOptions 
 } from "../_shared/response-utils.ts";
+import { validateCustomerConfirmationRequest } from "../_shared/validation.ts";
 
 serve(async (req: Request) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return handleCorsOptions();
+  }
+
+  // Only allow POST requests
+  if (req.method !== 'POST') {
+    return createErrorResponse('Method not allowed - only POST requests are accepted', 405);
   }
 
   try {
@@ -26,12 +32,23 @@ serve(async (req: Request) => {
       return createErrorResponse('Email sending not configured: RESEND_API_KEY missing.', 500);
     }
 
-    // Parse request body
-    const { packageRequest } = await req.json();
-
-    if (!packageRequest?.email || !packageRequest?.services) {
-      return createErrorResponse('Invalid package request data', 400);
+    // Parse and validate request body
+    let requestData;
+    try {
+      requestData = await req.json();
+    } catch (error) {
+      return createErrorResponse('Invalid JSON in request body', 400);
     }
+
+    const validationResult = validateCustomerConfirmationRequest(requestData);
+    if (!validationResult.success) {
+      return createErrorResponse(
+        `Invalid request data: ${validationResult.errors?.join(', ')}`, 
+        400
+      );
+    }
+
+    const { packageRequest } = validationResult.data!;
 
     // Generate customer confirmation email HTML
     const servicesList = generateCustomerServicesList(packageRequest.services);
