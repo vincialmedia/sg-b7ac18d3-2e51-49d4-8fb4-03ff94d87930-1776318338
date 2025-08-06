@@ -1,11 +1,9 @@
-import React from "react";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Globe, Zap, Brain, Gauge, Search, Smartphone, Shield, TrendingUp, CheckCircle, ArrowRight, Mail, Code, Cpu, Rocket, Target, Award } from "lucide-react";
+import Head from 'next/head'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { CheckCircle, Code, Rocket, Globe, ArrowRight, Mail, Gauge, Search, Brain, TrendingUp, Cpu, Target, Shield, Award } from 'lucide-react'
 
 export default function WebdesignPage() {
   const features = [

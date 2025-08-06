@@ -110,7 +110,7 @@ function generateAdminEmailTemplate(data: SubmitPackageRequestBody): string {
 function generateCustomerEmailTemplate(data: SubmitPackageRequestBody): string {
   const servicesList = Object.entries(data.services)
     .filter(([, count]) => count > 0)
-    .map(([serviceId, count]) => {
+    .map(([serviceId]) => {
       const { name, description } = getServiceDetails(serviceId);
       
       return `<li style="padding: 15px 0; border-bottom: 1px solid #e2e8f0;">

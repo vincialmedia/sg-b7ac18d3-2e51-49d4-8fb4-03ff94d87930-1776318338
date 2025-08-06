@@ -1,14 +1,32 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
+import { Checkbox } from '@/components/ui/checkbox'
 import Head from "next/head";
 import Script from "next/script";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Globe, Zap, Users, ArrowRight, CheckCircle, Mail, Award, TrendingUp, Target, Gift, Package, ExternalLink, Code, Gauge, Sparkles, Cpu, Rocket } from "lucide-react";
+import { Globe, Zap, Users, ArrowRight, CheckCircle, Mail, Award, TrendingUp, Target, Package, ExternalLink, Code, Gauge, Cpu, Rocket } from "lucide-react";
+import { 
+  Calendar, 
+  ChevronRight, 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Star, 
+  Users, 
+  TrendingUp, 
+  Shield, 
+  Award, 
+  BarChart, 
+  Heart,
+  CheckCircle2,
+  Minus,
+  Plus,
+  ArrowRight
+} from 'lucide-react'
 
 export default function Home() {
   const [userPoints, setUserPoints] = useState(0);
