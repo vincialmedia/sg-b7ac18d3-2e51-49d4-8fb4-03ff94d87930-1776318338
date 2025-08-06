@@ -1,44 +1,46 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { corsHeaders } from "../_shared/cors.ts"; // Assuming you might create a shared CORS config
-
-// If you don't have a shared CORS config, define it here:
-// const corsHeaders = {
-//   'Access-Control-Allow-Origin': '*',
-//   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-// };
-
+import { corsHeaders } from "../_shared/cors.ts";
+import { 
+  validateEmailEnvironment, 
+  sendEmailViaResend, 
+  generateAdminServicesList,
+  emailStyles 
+} from "../_shared/email-utils.ts";
+import { 
+  createErrorResponse, 
+  createSuccessResponse, 
+  handleCorsOptions 
+} from "../_shared/response-utils.ts";
 
 serve(async (req: Request) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
+    return handleCorsOptions();
   }
 
   try {
-    const { to, subject, packageRequest } = await req.json();
-
-    const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
-    
-    if (!RESEND_API_KEY) {
-      console.error('RESEND_API_KEY environment variable is not set');
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: 'Email sending not configured: RESEND_API_KEY missing.' 
-        }),
-        {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 500,
-        },
-      );
+    // Validate environment
+    const envError = validateEmailEnvironment();
+    if (envError) {
+      console.error(envError);
+      return createErrorResponse('Email sending not configured: RESEND_API_KEY missing.', 500);
     }
 
+    // Parse request body
+    const { to, subject, packageRequest } = await req.json();
+
+    if (!packageRequest?.email || !packageRequest?.services) {
+      return createErrorResponse('Invalid package request data', 400);
+    }
+
+    // Generate admin notification email HTML
+    const servicesList = generateAdminServicesList(packageRequest.services);
+    
     const emailHtml = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-        <h2 style="color: #2563eb; text-align: center;">New Package Request - Vincialmedia</h2>
+      <div style="${emailStyles.container}">
+        <h2 style="${emailStyles.header}">New Package Request - Vincialmedia</h2>
         
-        <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+        <div style="${emailStyles.section}">
           <h3 style="margin-top: 0; color: #1e3a8a;">Customer Information</h3>
           <p><strong>Email:</strong> ${packageRequest.email}</p>
           <p><strong>Total Points:</strong> ${packageRequest.points}</p>
@@ -49,32 +51,21 @@ serve(async (req: Request) => {
         <div style="background-color: #f0f9ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #cce7ff;">
           <h3 style="margin-top: 0; color: #1e40af;">Selected Services</h3>
           <ul style="list-style-type: none; padding: 0;">
-            ${Object.entries(packageRequest.services).map(([serviceId, count]) => {
-              const serviceName = serviceId.charAt(0).toUpperCase() + serviceId.slice(1);
-              // Ensure points calculation is robust
-              let pointsPerService = 0;
-              if (serviceId === 'website') pointsPerService = 400;
-              else if (serviceId === 'social') pointsPerService = 300;
-              else if (serviceId === 'automation') pointsPerService = 350;
-              const totalPointsForService = (typeof count === 'number' ? count : 0) * pointsPerService;
-              return `<li style="padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
-                <strong>${serviceName}:</strong> ${count} × ${pointsPerService} points = ${totalPointsForService} points
-              </li>`;
-            }).join('')}
+            ${servicesList}
           </ul>
         </div>
 
         ${packageRequest.points >= 1000 ? `
-          <div style="background-color: #f0fdf4; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #22c55e;">
-            <h3 style="margin-top: 0; color: #15803d;">🎁 Gift Unlocked!</h3>
-            <p>This customer has reached 1000+ points and qualifies for a surprise gift or discount!</p>
+          <div style="${emailStyles.highlight}">
+            <h3 style="margin-top: 0; color: #15803d;">🎁 Premium Customer Alert!</h3>
+            <p style="margin-bottom: 0;">This customer has reached 1000+ points and qualifies for special bonuses or discounts!</p>
           </div>
         ` : ''}
 
-        <div style="background-color: #fffbeb; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #fde68a;">
-          <h3 style="margin-top: 0; color: #92400e;">Next Steps</h3>
+        <div style="${emailStyles.warning}">
+          <h3 style="margin-top: 0; color: #92400e;">Action Required</h3>
           <p>Please follow up with this customer to discuss their package requirements and provide a detailed proposal.</p>
-          <p><strong>Customer Email:</strong> <a href="mailto:${packageRequest.email}" style="color: #1d4ed8;">${packageRequest.email}</a></p>
+          <p style="margin-bottom: 0;"><strong>Customer Email:</strong> <a href="mailto:${packageRequest.email}" style="color: #1d4ed8;">${packageRequest.email}</a></p>
         </div>
 
         <hr style="margin: 30px 0; border: none; border-top: 1px solid #e2e8f0;">
@@ -84,60 +75,19 @@ serve(async (req: Request) => {
       </div>
     `;
 
-    const emailResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Vincialmedia <noreply@vincialmedia.com>', 
-        to: [to],
-        subject: subject,
-        html: emailHtml,
-      }),
-    });
-
-    if (!emailResponse.ok) {
-      const errorBody = await emailResponse.json();
-      console.error('Failed to send email:', emailResponse.status, errorBody);
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: `Failed to send email: ${errorBody.message || emailResponse.statusText}` 
-        }),
-        {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: emailResponse.status,
-        },
-      );
+    // Send email
+    const emailResult = await sendEmailViaResend(to, subject, emailHtml);
+    
+    if (!emailResult.success) {
+      console.error('Failed to send admin notification:', emailResult.error);
+      return createErrorResponse(emailResult.error || 'Failed to send email', 500);
     }
 
-    const emailResult = await emailResponse.json();
-
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: 'Email sent successfully',
-        emailId: emailResult.id 
-      }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200,
-      },
-    );
+    console.log('Admin notification sent successfully:', emailResult.emailId);
+    return createSuccessResponse('Email sent successfully', emailResult.emailId);
 
   } catch (error) {
     console.error('Error in send-notification function:', error);
-    return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error.message 
-      }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500,
-      },
-    );
+    return createErrorResponse(error.message || 'Internal server error');
   }
 });
