@@ -228,7 +228,7 @@ export default function Home() {
             <div className="w-[90%] mx-auto text-center">
               <h3 className="text-2xl md:text-3xl font-bold text-black mb-12">Diese Marken setzen auf meine Expertise</h3>
               
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
                 {/* Speed Comparer */}
                 <div className="w-30 h-30 md:w-36 md:h-36 relative flex items-center justify-center">
                   <Image 
@@ -274,10 +274,21 @@ export default function Home() {
                 </div>
                 
                 {/* Stellantis */}
-                <div className="w-36 h-30 md:w-48 md:h-36 relative flex items-center justify-center col-span-2 md:col-span-1">
+                <div className="w-36 h-30 md:w-48 md:h-36 relative flex items-center justify-center">
                   <Image 
                     src="/STELLANTIS.jpg" 
                     alt="Stellantis" 
+                    width={192} 
+                    height={144} 
+                    className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                  />
+                </div>
+                
+                {/* Mepha */}
+                <div className="w-36 h-30 md:w-48 md:h-36 relative flex items-center justify-center">
+                  <Image 
+                    src="/mepha-logo-talendo.jpg" 
+                    alt="Mepha" 
                     width={192} 
                     height={144} 
                     className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
