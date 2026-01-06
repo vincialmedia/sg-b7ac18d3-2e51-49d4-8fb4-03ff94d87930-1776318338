@@ -58,12 +58,12 @@ export default function Home() {
 
   const portfolioProjects = [
     {
-      title: "Crowdhouse",
-      description: "Deutliche Steigerung der Konversionsraten durch Implementierung intelligenter Marketing-Automatisierung, die Nutzerverhaltensmuster vorhersagt.",
+      title: "BuyAuto",
+      description: "Die führende Plattform für Leasingübernahmen in der Schweiz. Verbindet Leasingnehmer und Übernehmer nahtlos für effiziente Fahrzeugwechsel.",
       image: "/vincent-mbkuncn4.jpeg",
-      technologies: ["Cloud-Infrastruktur", "Fortgeschrittenes WordPress", "Custom Scripts", "Modernes JS"],
-      features: ["Intelligente Automatisierung", "Performance-Mapping", "Erweiterte Analytik"],
-      link: "https://www.crowdhouse.com",
+      technologies: ["Marktplatz-Architektur", "Responsive Design", "Suchalgorithmen", "Payment Integration"],
+      features: ["Fahrzeug-Matching", "Leasing-Kalkulation", "Marktplatz-Integration"],
+      link: "https://www.buyauto.ch/",
     },
     {
       title: "Speed Comparer",
@@ -240,15 +240,11 @@ export default function Home() {
                   />
                 </div>
                 
-                {/* Crowdhouse */}
+                {/* BuyAuto */}
                 <div className="w-36 h-30 md:w-48 md:h-36 relative flex items-center justify-center">
-                  <Image 
-                    src="/Crowdhouse_Logo.png" 
-                    alt="Crowdhouse" 
-                    width={192} 
-                    height={144} 
-                    className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
-                  />
+                  <div className="w-full h-full flex items-center justify-center bg-gray-50 rounded-lg border border-gray-200 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100">
+                    <span className="text-2xl md:text-3xl font-bold text-black">BuyAuto</span>
+                  </div>
                 </div>
                 
                 {/* SRF */}
