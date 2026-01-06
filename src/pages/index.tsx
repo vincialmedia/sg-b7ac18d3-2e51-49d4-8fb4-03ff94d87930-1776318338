@@ -60,7 +60,7 @@ export default function Home() {
     {
       title: "BuyAuto",
       description: "Die führende Plattform für Leasingübernahmen in der Schweiz. Verbindet Leasingnehmer und Übernehmer nahtlos für effiziente Fahrzeugwechsel.",
-      image: "/vincent-mbkuncn4.jpeg",
+      image: "/ChatGPT_Image_Jan_6_2026_10_43_14_AM.png",
       technologies: ["Marktplatz-Architektur", "Responsive Design", "Suchalgorithmen", "Payment Integration"],
       features: ["Fahrzeug-Matching", "Leasing-Kalkulation", "Marktplatz-Integration"],
       link: "https://www.buyauto.ch/",
