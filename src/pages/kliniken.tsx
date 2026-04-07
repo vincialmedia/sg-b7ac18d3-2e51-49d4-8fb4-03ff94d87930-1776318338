@@ -3,9 +3,9 @@ import { ClinicsHero } from "@/components/clinics/ClinicsHero";
 import { ClinicsBodySections } from "@/components/clinics/ClinicsBodySections";
 import { ClinicsLeadFormSection } from "@/components/clinics/ClinicsLeadFormSection";
 
-const SEO_TITLE = "Lead-System für Kliniken | VincialMedia";
+const SEO_TITLE = "Mehr Anfragen zu echten Terminen machen | VincialMedia";
 const META_DESCRIPTION =
-  "Wir helfen Kliniken, mehr Anfragen in echte Termine umzuwandeln – mit Sofort-Antworten, Follow-up und klarer Lead-Struktur.";
+  "Wir helfen Kliniken, schneller auf Anfragen zu reagieren, klar nachzufassen und weniger Interessenten zu verlieren – damit aus mehr Anfragen echte Termine werden.";
 const CANONICAL_URL = "https://vincialmedia.com/kliniken";
 
 const CALENDAR_BOOKING_URL = "";

@@ -6,9 +6,9 @@ export function ClinicsFlowSection() {
       <div className="max-w-7xl mx-auto">
         <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
           <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-black">So läuft es nach der Anfrage ab</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-black">Der Ablauf – in 10 Sekunden klar</h2>
             <p className="text-lg text-gray-600 mt-4">
-              Nicht kompliziert. Einfach ein klarer Ablauf, damit Anfragen nicht liegen bleiben und schneller zu Terminen werden.
+              Nach der Anfrage passiert sofort etwas – und niemand muss raten, was als Nächstes dran ist. So gehen weniger Anfragen im Alltag unter.
             </p>
           </div>
 
@@ -25,7 +25,7 @@ export function ClinicsFlowSection() {
             <div className="mt-6 rounded-xl border border-gray-200 bg-gray-50 p-5 space-y-2">
               <p className="text-sm text-gray-600">Anfrage → Sofort-Antwort → Übersicht → Nachfassen → Termin</p>
               <p className="text-sm text-gray-600">
-                <span className="text-black font-medium">Nutzen:</span> weniger verpasste Kontakte, weniger Rückfragen im Team, mehr klare Termine im Kalender.
+                <span className="text-black font-medium">Nutzen:</span> schneller zurückmelden, weniger vergessen, mehr Termine aus den Anfragen, die heute schon reinkommen.
               </p>
             </div>
           </div>

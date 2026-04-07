@@ -52,7 +52,7 @@ function getInquiryHandlingLabel(value: InquiryHandlingOption): string {
     case "slow":
       return "Eher langsam / uneinheitlich";
     case "no-followup":
-      return "Kein klares Follow-up";
+      return "Kein klares Nachfassen";
     case "unknown":
       return "Weiss nicht genau";
   }
@@ -261,7 +261,7 @@ export function ClinicsLeadFormCard({ calendarBookingUrl }: ClinicsLeadFormCardP
                 <SelectContent>
                   <SelectItem value="manual">Wir antworten manuell</SelectItem>
                   <SelectItem value="slow">Eher langsam / uneinheitlich</SelectItem>
-                  <SelectItem value="no-followup">Kein klares Follow-up</SelectItem>
+                  <SelectItem value="no-followup">Kein klares Nachfassen</SelectItem>
                   <SelectItem value="unknown">Weiss nicht genau</SelectItem>
                 </SelectContent>
               </Select>

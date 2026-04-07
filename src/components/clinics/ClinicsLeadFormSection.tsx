@@ -56,12 +56,12 @@ export function ClinicsLeadFormSection({ calendarBookingUrl, imprintHref, privac
           <footer className="max-w-7xl mx-auto mt-10 px-4 pb-10">
             <div className="w-[90%] mx-auto border-t border-gray-200 pt-8 text-center">
               <h3 className="text-2xl font-bold text-black mb-2">Vincialmedia</h3>
-              <p className="text-gray-600 mb-6">Lead-Systeme für Termin-Kliniken • Follow-up • Pipeline</p>
+              <p className="text-gray-600 mb-6">Mehr Termine aus Anfragen • Schnelle Antwort • Sauberes Nachfassen</p>
 
               <div className="flex justify-center gap-3 flex-wrap mb-6">
-                <Badge className="bg-gray-100 text-black border-gray-200">Lead Conversion</Badge>
-                <Badge className="bg-gray-100 text-black border-gray-200">Follow-up</Badge>
-                <Badge className="bg-gray-100 text-black border-gray-200">Pipeline</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Mehr Termine</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Nachfassen</Badge>
+                <Badge className="bg-gray-100 text-black border-gray-200">Übersicht</Badge>
               </div>
 
               <div className="flex justify-center gap-6 text-sm text-gray-600">
