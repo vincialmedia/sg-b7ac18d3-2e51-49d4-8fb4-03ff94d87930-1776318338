@@ -2,7 +2,7 @@ import React from "react";
 import { ClinicsProblemSection } from "@/components/clinics/ClinicsProblemSection";
 import { ClinicsSolutionSection } from "@/components/clinics/ClinicsSolutionSection";
 import { ClinicsFlowSection } from "@/components/clinics/ClinicsFlowSection";
-import { ClinicsExampleSection } from "@/components/clinics/ClinicsExampleSection";
+import { ClinicsTrustSection } from "@/components/clinics/ClinicsTrustSection";
 import { ClinicsWhoItIsForSection } from "@/components/clinics/ClinicsWhoItIsForSection";
 import { ClinicsFaqSection } from "@/components/clinics/ClinicsFaqSection";
 
@@ -16,7 +16,7 @@ export function ClinicsBodySections({ onCtaClick }: ClinicsBodySectionsProps) {
       <ClinicsProblemSection />
       <ClinicsSolutionSection onCtaClick={onCtaClick} />
       <ClinicsFlowSection />
-      <ClinicsExampleSection onCtaClick={onCtaClick} />
+      <ClinicsTrustSection />
       <ClinicsWhoItIsForSection />
       <ClinicsFaqSection />
     </>

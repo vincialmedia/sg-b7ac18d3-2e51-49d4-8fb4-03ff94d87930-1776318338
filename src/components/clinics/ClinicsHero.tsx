@@ -29,7 +29,7 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
             <div className="max-w-3xl">
               <Badge className="bg-black text-white border-0 inline-flex items-center hover:bg-red-600 transition-colors duration-300">
                 <Stethoscope className="mr-2" size={14} />
-                Lead-System für Kliniken
+                Lead-System für Termin-Kliniken
               </Badge>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-black mt-6">
@@ -37,9 +37,10 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mt-6">
-                Wir bauen ein schlankes Lead-System für Termin-Kliniken: neue Anfragen werden <span className="font-medium text-black">innerhalb von Minuten</span>{" "}
-                bestätigt, es gibt <span className="font-medium text-black">klare nächste Schritte</span> und ein{" "}
-                <span className="font-medium text-black">konsequentes Follow-up</span> – damit weniger Kontakte im Alltag verloren gehen und mehr Beratungstermine zustande
+                Wir helfen Kliniken, mehr Anfragen in Buchungen umzuwandeln – durch{" "}
+                <span className="font-medium text-black">schnellere Erstreaktion</span>,{" "}
+                <span className="font-medium text-black">konsequentes Follow-up</span> und{" "}
+                <span className="font-medium text-black">klare Zuständigkeiten</span>. Damit weniger Kontakte im Alltag verschwinden – und mehr Beratungstermine zustande
                 kommen.
               </p>
 
@@ -63,13 +64,13 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
                   onClick={onSecondaryCtaClick}
                   className="w-full sm:w-auto bg-white border-black text-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-300 inline-flex items-center justify-center"
                 >
-                  Beispiel ansehen
+                  So funktioniert es
                 </Button>
               </div>
 
               <p className="text-sm text-gray-600 mt-4">
-                Fokus auf Prozess statt mehr Aufwand: <span className="text-black font-medium">schneller Erstkontakt</span>,{" "}
-                <span className="text-black font-medium">sauberes Follow-up</span>, <span className="text-black font-medium">klare Zuständigkeiten</span> im Team.
+                Kurzer, ruhiger Prozess – ohne CRM-Zwang: <span className="text-black font-medium">Sofort-Antwort</span>,{" "}
+                <span className="text-black font-medium">Pipeline</span>, <span className="text-black font-medium">Follow-up Rhythmus</span>.
               </p>
 
               <p className="text-sm text-gray-600 mt-2">

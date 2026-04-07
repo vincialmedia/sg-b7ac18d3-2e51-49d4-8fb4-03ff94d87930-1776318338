@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +8,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 type InquiryHandlingOption = "manual" | "slow" | "no-followup" | "unknown";
 
-interface ClinicsDemoFormValues {
+interface ClinicsLeadPayload {
+  firstName: string;
+  company: string;
+  email: string;
+  phone: string;
+  website?: string;
+  inquiryHandling: InquiryHandlingOption;
+  sourcePage: string;
+  sourceType: string;
+  submittedAt: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+}
+
+interface ClinicsLeadFormValues {
   firstName: string;
   company: string;
   email: string;
@@ -17,9 +32,18 @@ interface ClinicsDemoFormValues {
   inquiryHandling: InquiryHandlingOption | "";
 }
 
+interface TrackingFields {
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+}
+
 interface ClinicsLeadFormCardProps {
   calendarBookingUrl: string;
 }
+
+const SOURCE_PAGE = "/kliniken";
+const SOURCE_TYPE = "outreach";
 
 function getInquiryHandlingLabel(value: InquiryHandlingOption): string {
   switch (value) {
@@ -34,8 +58,25 @@ function getInquiryHandlingLabel(value: InquiryHandlingOption): string {
   }
 }
 
+function buildPayload(values: ClinicsLeadFormValues, tracking: TrackingFields, submittedAt: string): ClinicsLeadPayload {
+  return {
+    firstName: values.firstName.trim(),
+    company: values.company.trim(),
+    email: values.email.trim(),
+    phone: values.phone.trim(),
+    website: values.website.trim() || undefined,
+    inquiryHandling: values.inquiryHandling as InquiryHandlingOption,
+    sourcePage: SOURCE_PAGE,
+    sourceType: SOURCE_TYPE,
+    submittedAt,
+    utmSource: tracking.utmSource || undefined,
+    utmMedium: tracking.utmMedium || undefined,
+    utmCampaign: tracking.utmCampaign || undefined
+  };
+}
+
 export function ClinicsLeadFormCard({ calendarBookingUrl }: ClinicsLeadFormCardProps) {
-  const [values, setValues] = useState<ClinicsDemoFormValues>({
+  const [values, setValues] = useState<ClinicsLeadFormValues>({
     firstName: "",
     company: "",
     email: "",
@@ -44,9 +85,31 @@ export function ClinicsLeadFormCard({ calendarBookingUrl }: ClinicsLeadFormCardP
     inquiryHandling: ""
   });
 
+  const [tracking, setTracking] = useState<TrackingFields>({
+    utmSource: "",
+    utmMedium: "",
+    utmCampaign: ""
+  });
+
+  const [clientSubmittedAt, setClientSubmittedAt] = useState<string>("");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string>("");
   const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTracking({
+      utmSource: params.get("utm_source") || "",
+      utmMedium: params.get("utm_medium") || "",
+      utmCampaign: params.get("utm_campaign") || ""
+    });
+  }, []);
+
+  const inquiryHandlingLabel = useMemo(() => {
+    if (!values.inquiryHandling) return "";
+    return getInquiryHandlingLabel(values.inquiryHandling as InquiryHandlingOption);
+  }, [values.inquiryHandling]);
 
   async function handleSubmit() {
     setSubmitError("");
@@ -57,19 +120,17 @@ export function ClinicsLeadFormCard({ calendarBookingUrl }: ClinicsLeadFormCardP
     if (!values.phone.trim()) return setSubmitError("Bitte Telefonnummer ausfüllen.");
     if (!values.inquiryHandling) return setSubmitError("Bitte eine Option wählen.");
 
+    const submittedAt = new Date().toISOString();
+    setClientSubmittedAt(submittedAt);
+
     setIsSubmitting(true);
     try {
+      const payload = buildPayload(values, tracking, submittedAt);
+
       const response = await fetch("/api/clinics-demo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: values.firstName.trim(),
-          company: values.company.trim(),
-          email: values.email.trim(),
-          phone: values.phone.trim(),
-          website: values.website.trim(),
-          inquiryHandling: values.inquiryHandling
-        })
+        body: JSON.stringify(payload)
       });
 
       const result = (await response.json()) as { success?: boolean; message?: string };
@@ -98,6 +159,13 @@ export function ClinicsLeadFormCard({ calendarBookingUrl }: ClinicsLeadFormCardP
               void handleSubmit();
             }}
           >
+            <input type="hidden" name="source_page" value={SOURCE_PAGE} />
+            <input type="hidden" name="source_type" value={SOURCE_TYPE} />
+            <input type="hidden" name="submitted_at" value={clientSubmittedAt} />
+            <input type="hidden" name="utm_source" value={tracking.utmSource} />
+            <input type="hidden" name="utm_medium" value={tracking.utmMedium} />
+            <input type="hidden" name="utm_campaign" value={tracking.utmCampaign} />
+
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName" className="text-black">
@@ -273,7 +341,7 @@ export function ClinicsLeadFormCard({ calendarBookingUrl }: ClinicsLeadFormCardP
                 ) : null}
                 {values.inquiryHandling ? (
                   <p>
-                    <span className="text-gray-500">Status:</span> {getInquiryHandlingLabel(values.inquiryHandling as InquiryHandlingOption)}
+                    <span className="text-gray-500">Status:</span> {inquiryHandlingLabel}
                   </p>
                 ) : null}
               </div>
