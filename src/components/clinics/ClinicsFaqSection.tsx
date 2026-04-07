@@ -4,23 +4,23 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const faqs = [
   {
     q: "Brauche ich dafür ein neues CRM?",
-    a: "Nicht zwingend. Wir können an euer heutiges Setup andocken (E-Mail, Telefon, bestehende Tools). Wenn aktuell keine saubere Übersicht existiert, setzen wir eine schlanke Pipeline auf – so simpel wie nötig."
+    a: "Nein. Wenn ihr heute schon mit einem Tool arbeitet, knüpfen wir daran an. Wenn nicht, reicht oft eine einfache Übersicht. Wichtig ist nicht das Tool – sondern dass Anfragen nicht liegen bleiben."
   },
   {
     q: "Funktioniert das auch mit meinem bestehenden Ablauf?",
-    a: "Ja. Wir starten mit einer kurzen Ist-Aufnahme: Was passiert heute nach der Anfrage? Danach bauen wir nur die fehlenden Schritte (Sofort-Antwort, Follow-up, Übersicht) – ohne unnötige Umstellung."
+    a: "Ja. Wir reissen nichts um. Wir ergänzen nur die fehlenden Schritte: schnelle Rückmeldung, klare nächste Schritte und sauberes Nachfassen."
   },
   {
     q: "Wie schnell kann das live sein?",
-    a: "Ein erster produktiver Ablauf kann schnell stehen, sobald Texte, Zuständigkeiten und Kanäle klar sind. In der Demo klären wir, was bei euch realistisch ist und wo der grösste Hebel liegt."
+    a: "Oft in 1–2 Wochen startklar – je nachdem, über welche Kanäle die Anfragen kommen und wer im Team was übernimmt. In der Demo klären wir das realistisch."
   },
   {
     q: "Muss ich meine Website komplett neu machen?",
-    a: "Nein. In vielen Fällen reicht ein fokussiertes Formular bzw. eine saubere Anfrage-Strecke plus die Logik danach. Eure bestehende Website kann bleiben, wie sie ist."
+    a: "Nein. In vielen Fällen reicht es, den Weg nach der Anfrage sauber zu machen. Das Formular kann bleiben, wie es ist – oder wir ergänzen es minimal."
   },
   {
     q: "Was braucht ihr von uns?",
-    a: "Zugriff auf den aktuellen Anfrage-Kanal, kurze Abstimmung zu Zuständigkeiten und die Texte für Bestätigung & Follow-up. Mehr nicht."
+    a: "Kurz: Wo kommen Anfragen rein? Wer antwortet? Und welche Texte sollen rausgehen? Den Rest setzen wir so auf, dass es im Alltag funktioniert."
   }
 ];
 
@@ -31,7 +31,7 @@ export function ClinicsFaqSection() {
         <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-black">FAQ</h2>
-            <p className="text-lg text-gray-600 mt-4">Kurz beantwortet – in der Demo klären wir, was bei euch konkret Sinn macht.</p>
+            <p className="text-lg text-gray-600 mt-4">Kurz beantwortet. Wenn du Fragen hast, klären wir sie im Gespräch.</p>
           </div>
 
           <div className="mt-10">

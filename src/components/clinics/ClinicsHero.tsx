@@ -16,7 +16,7 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
           <div className="flex items-center justify-between gap-6 pb-6 border-b border-gray-100">
             <Link href="/" className="inline-flex items-center gap-2">
               <span className="text-lg sm:text-xl font-bold text-black">Vincialmedia</span>
-              <Badge className="bg-gray-100 text-black border-gray-200 hidden sm:inline-flex">Outreach</Badge>
+              <Badge className="bg-gray-100 text-black border-gray-200 hidden sm:inline-flex">Kliniken</Badge>
             </Link>
 
             <Link href="/" className="text-sm text-gray-600 hover:text-black transition-colors inline-flex items-center gap-1">
@@ -29,7 +29,7 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
             <div className="max-w-3xl">
               <Badge className="bg-black text-white border-0 inline-flex items-center hover:bg-red-600 transition-colors duration-300">
                 <Stethoscope className="mr-2" size={14} />
-                Lead-System für Termin-Kliniken
+                Mehr Termine aus bestehenden Anfragen
               </Badge>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-black mt-6">
@@ -37,11 +37,9 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mt-6">
-                Wir helfen Kliniken, mehr Anfragen in Buchungen umzuwandeln – durch{" "}
-                <span className="font-medium text-black">schnellere Erstreaktion</span>,{" "}
-                <span className="font-medium text-black">konsequentes Follow-up</span> und{" "}
-                <span className="font-medium text-black">klare Zuständigkeiten</span>. Damit weniger Kontakte im Alltag verschwinden – und mehr Beratungstermine zustande
-                kommen.
+                Wir helfen ästhetischen und terminbasierten Kliniken, <span className="font-medium text-black">schneller zu reagieren</span>,{" "}
+                <span className="font-medium text-black">klar nachzufassen</span> und <span className="font-medium text-black">weniger Anfragen zu verlieren</span>.
+                Damit aus mehr Interessenten wirklich Termine werden.
               </p>
 
               <p className="text-sm text-gray-600 mt-3">
@@ -69,13 +67,12 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
               </div>
 
               <p className="text-sm text-gray-600 mt-4">
-                Kurzer, ruhiger Prozess – ohne CRM-Zwang: <span className="text-black font-medium">Sofort-Antwort</span>,{" "}
-                <span className="text-black font-medium">Pipeline</span>, <span className="text-black font-medium">Follow-up Rhythmus</span>.
+                <span className="text-black font-medium">Was passiert als Nächstes:</span> 10–15 Minuten Call. Wir schauen kurz auf euren Ablauf – und du bekommst eine
+                klare Einschätzung, ob das bei euch Sinn macht.
               </p>
 
               <p className="text-sm text-gray-600 mt-2">
-                <span className="text-black font-medium">Demo dauert 10–15 Minuten.</span> Du bekommst eine klare Einschätzung, welche Schritte bei euch fehlen – und was
-                sich wirklich lohnt.
+                Ohne Fachbegriffe, ohne Software-Zwang. Einfach: schneller antworten, nichts vergessen, mehr Termine.
               </p>
             </div>
           </div>

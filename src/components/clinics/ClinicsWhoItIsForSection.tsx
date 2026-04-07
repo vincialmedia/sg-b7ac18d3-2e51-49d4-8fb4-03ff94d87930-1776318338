@@ -3,19 +3,19 @@ import React from "react";
 const targetGroups = [
   {
     title: "Ästhetische Kliniken",
-    text: "Viele Anfragen brauchen Beratung und Vertrauen. Eine schnelle, klare Antwort wirkt professionell – und erhöht die Chance, dass die Beratung bei euch stattfindet."
+    text: "Viele Anfragen brauchen Beratung und Vertrauen. Wer schnell und ruhig antwortet, wird als professionell wahrgenommen – und bekommt eher den Termin."
   },
   {
     title: "Laser-Kliniken",
-    text: "Viele Erstkontakte, oft ähnliche Fragen. Ein sauberer Ablauf sorgt dafür, dass niemand „zwischen Terminen“ verloren geht – und Follow-ups konsequent passieren."
+    text: "Viele Erstkontakte mit ähnlichen Fragen. Wenn niemand sauber nachfasst, springt der Interessent ab. Ein klarer Ablauf bringt Ruhe ins Team."
   },
   {
     title: "Premium-Zahnmedizin / Zahnkliniken",
-    text: "Hoher Anfragewert, planbare Termine. Ein strukturierter Erstkontakt und klare Terminführung zahlen direkt auf Auslastung und Qualität der Patientenkommunikation ein."
+    text: "Termine sind planbar, aber wertvoll. Ein sauberer Erstkontakt und klares Nachfassen reduziert Absagen und bringt mehr Gespräche in den Kalender."
   },
   {
     title: "Beauty / Cosmetic Anbieter",
-    text: "Viele Interessenten springen ab, wenn nach der Anfrage nichts passiert. Ein klares Follow-up holt Unentschlossene zurück – ohne dass das Team permanent daran denken muss."
+    text: "Viele Interessenten sind unentschlossen. Wenn nach der Anfrage nichts passiert, sind sie weg. Erinnerungen und klare Schritte holen Termine zurück."
   }
 ];
 
@@ -27,8 +27,8 @@ export function ClinicsWhoItIsForSection() {
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-black">Für welche Kliniken das sinnvoll ist</h2>
             <p className="text-lg text-gray-600 mt-4">
-              Ideal für Kliniken mit beratungsintensiven Anfragen – wo der Erstkontakt Vertrauen schafft und Geschwindigkeit den Unterschied macht. Besonders dann, wenn im
-              Alltag viele Kontakte parallel laufen und Zuständigkeiten nicht immer glasklar sind.
+              Wenn bei euch regelmässig Anfragen reinkommen, aber nicht jede sauber zu Ende geführt wird, ist das hier meist der grösste Hebel: schneller reagieren, klar
+              nachfassen, weniger vergessen.
             </p>
           </div>
 
@@ -40,6 +40,10 @@ export function ClinicsWhoItIsForSection() {
               </div>
             ))}
           </div>
+
+          <p className="text-sm text-gray-600 mt-8">
+            Passt das zu euch? Dann frag kurz an – in der Demo klären wir schnell, ob und wie man das bei euch sauber aufsetzen kann.
+          </p>
         </div>
       </div>
     </section>

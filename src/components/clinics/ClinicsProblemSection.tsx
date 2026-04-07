@@ -6,11 +6,12 @@ export function ClinicsProblemSection() {
       <div className="max-w-7xl mx-auto">
         <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
           <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-black">Marketing bringt Anfragen. Verloren gehen sie danach.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-black">Anfragen kommen rein. Verloren gehen sie danach.</h2>
             <p className="text-lg text-gray-600 mt-4">
-              In vielen Kliniken ist nicht die Nachfrage das Problem – sondern der Ablauf nach dem ersten Kontakt.
+              In vielen Kliniken ist nicht „zu wenig Nachfrage“ das Problem – sondern der Alltag nach der Anfrage.
               <br />
-              Wenn die Antwort zu spät kommt, der nächste Schritt unklar ist oder niemand konsequent nachfasst, bucht der Patient dort, wo es schneller und ruhiger wirkt.
+              Zwischen Telefon, Terminen und Teamwechseln bleiben Kontakte liegen. Und wenn die Antwort zu spät kommt, bucht der Patient dort, wo es schneller und klarer
+              wirkt.
             </p>
           </div>
 
@@ -18,15 +19,15 @@ export function ClinicsProblemSection() {
             {[
               {
                 title: "Antworten kommen zu spät",
-                text: "Anfragen kommen zwischen Terminen, am Abend oder am Wochenende rein. Wenn die erste Antwort erst Stunden später kommt, ist das Fenster oft zu."
+                text: "Anfragen kommen abends, am Wochenende oder zwischen Terminen rein. Wenn die erste Rückmeldung erst Stunden später kommt, ist der Interessent oft schon weg."
               },
               {
-                title: "Es gibt kein klares Follow-up",
-                text: "„Wir melden uns“ ist kein Prozess. Ohne festen Rhythmus (z. B. Tag 1/3/7) bleiben viele Kontakte liegen – ohne klares Ja oder Nein."
+                title: "Es gibt kein klares Nachfassen",
+                text: "Viele sagen „wir melden uns“, aber es passiert nichts. Ohne festen Ablauf wird nicht konsequent nachgefasst – und aus einer Anfrage wird kein Termin."
               },
               {
                 title: "Anfragen versanden im Alltag",
-                text: "Empfang, Telefon, Teamwechsel, Rückfragen: Infos landen in Postfächern, Notizen oder Chats. Am Ende ist nicht klar, wer antwortet – und was der nächste Schritt ist."
+                text: "Infos landen in Postfächern, Notizen oder Chats. Am Ende ist nicht klar: Wer kümmert sich? Was ist der nächste Schritt?"
               }
             ].map((item) => (
               <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
@@ -36,7 +37,9 @@ export function ClinicsProblemSection() {
             ))}
           </div>
 
-          <p className="text-sm text-gray-600 mt-8">Genau dort setzen wir an: weniger Lead-Verlust durch klare Schritte nach der Anfrage.</p>
+          <p className="text-sm text-gray-600 mt-8">
+            Ergebnis: Ihr habt Anfragen – aber ihr macht zu wenig daraus. Genau dort setzen wir an.
+          </p>
         </div>
       </div>
     </section>

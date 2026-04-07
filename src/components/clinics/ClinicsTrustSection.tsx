@@ -6,17 +6,17 @@ export function ClinicsTrustSection() {
       <div className="max-w-7xl mx-auto">
         <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
           <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-black">Vertrauen & Einordnung</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-black">Vertrauen & Vorgehen</h2>
             <p className="text-lg text-gray-600 mt-4">
-              Diese Seite ist bewusst fokussiert: kein Portfolio, keine Spielereien. Ziel ist ein sauberer Erstkontakt und ein klarer nächster Schritt.
+              Kein grosses Projekt, keine Spielereien. Wir machen euren Ablauf nach der Anfrage klarer – damit weniger liegen bleibt.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6 mt-10">
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-sm">
-              <p className="text-xs font-semibold text-gray-500">Testimonial (Platzhalter)</p>
+              <p className="text-xs font-semibold text-gray-500">Referenz (Platzhalter)</p>
               <p className="text-base text-black mt-3 leading-relaxed">
-                „Nach der Umstellung ist klar, wer wann antwortet. Anfragen gehen nicht mehr unter – und aus mehr Kontakten werden tatsächlich Termine.“
+                „Seit wir schneller antworten und konsequent nachfassen, geht viel weniger unter. Das Team weiss, was zu tun ist – und mehr Anfragen werden zu Terminen.“
               </p>
               <div className="mt-4">
                 <p className="text-sm font-semibold text-black">Name folgt</p>
@@ -25,35 +25,29 @@ export function ClinicsTrustSection() {
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-              <p className="text-xs font-semibold text-gray-500">Case Study (Platzhalter)</p>
+              <p className="text-xs font-semibold text-gray-500">Kurzbeispiel (Platzhalter)</p>
 
               <div className="mt-4 space-y-4">
                 <div>
-                  <p className="text-sm font-semibold text-black">Ausgangslage</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Viele Anfragen über mehrere Kanäle, unklare Zuständigkeit, Follow-up passiert „wenn Zeit ist“.
-                  </p>
+                  <p className="text-sm font-semibold text-black">Vorher</p>
+                  <p className="text-sm text-gray-600 mt-1">Anfragen über mehrere Kanäle, Rückfragen, niemand weiss genau, was als Nächstes passiert.</p>
                 </div>
 
                 <div>
-                  <p className="text-sm font-semibold text-black">Umsetzung</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Sofort-Antwort, klare Pipeline-Status, Follow-up Rhythmus (Tag 1/3/7), Übergabe-Regeln im Team.
-                  </p>
+                  <p className="text-sm font-semibold text-black">Nachher</p>
+                  <p className="text-sm text-gray-600 mt-1">Sofortige Rückmeldung, klare Übersicht, ruhiges Nachfassen, Erinnerungen vor dem Termin.</p>
                 </div>
 
                 <div>
-                  <p className="text-sm font-semibold text-black">Resultat</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Schnellere Reaktion, weniger offene Enden, ruhigere interne Abläufe – und mehr gebuchte Gespräche aus bestehenden Anfragen.
-                  </p>
+                  <p className="text-sm font-semibold text-black">Ergebnis</p>
+                  <p className="text-sm text-gray-600 mt-1">Weniger verpasste Anfragen, weniger Chaos im Alltag, mehr gebuchte Gespräche.</p>
                 </div>
               </div>
             </div>
           </div>
 
           <p className="text-xs text-gray-500 mt-6">
-            Hinweis: Platzhalter – echte Referenzen/Beispiele kann ich dir in der Demo zeigen, sobald du kurz anfragst.
+            Hinweis: Platzhalter – echte Beispiele/Referenzen zeige ich dir gerne im Gespräch, wenn du kurz anfragst.
           </p>
         </div>
       </div>
