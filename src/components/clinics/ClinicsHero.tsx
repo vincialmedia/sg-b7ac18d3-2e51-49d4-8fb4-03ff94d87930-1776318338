@@ -29,7 +29,7 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
             <div className="max-w-3xl">
               <Badge className="bg-black text-white border-0 inline-flex items-center hover:bg-red-600 transition-colors duration-300">
                 <Stethoscope className="mr-2" size={14} />
-                Lead-System fuer Kliniken
+                Lead-System für Kliniken
               </Badge>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-black mt-6">
@@ -37,8 +37,8 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mt-6">
-                Wir bauen fuer aesthetische und terminbasierte Kliniken ein simples System, das neue Anfragen sofort beantwortet,
-                sauber nachfasst und weniger Leads im Alltag verloren gehen laesst.
+                Wir bauen für ästhetische und terminbasierte Kliniken ein simples System, das neue Anfragen sofort beantwortet,
+                sauber nachfasst und weniger Leads im Alltag verloren gehen lässt.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8">

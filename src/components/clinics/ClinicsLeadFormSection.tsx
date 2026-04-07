@@ -59,11 +59,11 @@ export function ClinicsLeadFormSection({
   async function handleSubmit() {
     setSubmitError("");
 
-    if (!values.firstName.trim()) return setSubmitError("Bitte Vorname ausfuellen.");
-    if (!values.company.trim()) return setSubmitError("Bitte Klinik / Firma ausfuellen.");
-    if (!values.email.trim()) return setSubmitError("Bitte E-Mail ausfuellen.");
-    if (!values.phone.trim()) return setSubmitError("Bitte Telefonnummer ausfuellen.");
-    if (!values.inquiryHandling) return setSubmitError("Bitte eine Option waehlen.");
+    if (!values.firstName.trim()) return setSubmitError("Bitte Vorname ausfüllen.");
+    if (!values.company.trim()) return setSubmitError("Bitte Klinik / Firma ausfüllen.");
+    if (!values.email.trim()) return setSubmitError("Bitte E-Mail ausfüllen.");
+    if (!values.phone.trim()) return setSubmitError("Bitte Telefonnummer ausfüllen.");
+    if (!values.inquiryHandling) return setSubmitError("Bitte eine Option wählen.");
 
     setIsSubmitting(true);
     try {
@@ -83,13 +83,13 @@ export function ClinicsLeadFormSection({
       const result = (await response.json()) as { success?: boolean; message?: string };
 
       if (!response.ok || !result.success) {
-        setSubmitError(result.message || "Unerwarteter Fehler beim Senden. Bitte kurz spaeter nochmals versuchen.");
+        setSubmitError(result.message || "Unerwarteter Fehler beim Senden. Bitte kurz später nochmals versuchen.");
         return;
       }
 
       setIsSuccess(true);
     } catch {
-      setSubmitError("Netzwerkfehler. Bitte kurz spaeter nochmals versuchen.");
+      setSubmitError("Netzwerkfehler. Bitte kurz später nochmals versuchen.");
     } finally {
       setIsSubmitting(false);
     }
@@ -103,7 +103,7 @@ export function ClinicsLeadFormSection({
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-black">Kurze Demo anfragen</h2>
               <p className="text-lg text-gray-600 mt-4">
-                Du erhaeltst eine klare Einschaetzung, wie der Ablauf bei dir aussehen kann – ohne Umwege.
+                Du erhältst eine klare Einschätzung, wie der Ablauf bei dir aussehen kann – ohne Umwege.
               </p>
 
               <div className="mt-8 space-y-4">
@@ -111,7 +111,7 @@ export function ClinicsLeadFormSection({
                   <Mail size={18} className="text-black mt-1" />
                   <div>
                     <p className="text-sm font-semibold text-black">Antwort per E-Mail</p>
-                    <p className="text-sm text-gray-600">Wir melden uns mit naechsten Schritten und Fragen.</p>
+                    <p className="text-sm text-gray-600">Wir melden uns mit nächsten Schritten und Fragen.</p>
                   </div>
                 </div>
 
@@ -119,7 +119,7 @@ export function ClinicsLeadFormSection({
                   <Phone size={18} className="text-black mt-1" />
                   <div>
                     <p className="text-sm font-semibold text-black">Oder kurz telefonisch</p>
-                    <p className="text-sm text-gray-600">Wenn’s passt, klaeren wir in 10–15 Minuten die Basics.</p>
+                    <p className="text-sm text-gray-600">Wenn’s passt, klären wir in 10–15 Minuten die Basics.</p>
                   </div>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export function ClinicsLeadFormSection({
               <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-6">
                 <p className="text-sm font-semibold text-black">Wichtig</p>
                 <p className="text-sm text-gray-600 mt-2">
-                  Diese Seite ist bewusst fokussiert fuer Outreach. Keine Ablenkung – nur das, was fuer die Entscheidung wichtig ist.
+                  Diese Seite ist bewusst fokussiert für Outreach. Keine Ablenkung – nur das, was für die Entscheidung wichtig ist.
                 </p>
               </div>
             </div>
@@ -233,7 +233,7 @@ export function ClinicsLeadFormSection({
                           onValueChange={(val) => setValues((prev) => ({ ...prev, inquiryHandling: val as InquiryHandlingOption }))}
                         >
                           <SelectTrigger id="inquiryHandling" className="bg-white border-gray-200 text-black">
-                            <SelectValue placeholder="Bitte waehlen" />
+                            <SelectValue placeholder="Bitte wählen" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="manual">Wir antworten manuell</SelectItem>
@@ -248,7 +248,7 @@ export function ClinicsLeadFormSection({
 
                       {submitError ? (
                         <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-                          <p className="text-sm font-semibold text-red-800">Bitte kurz pruefen</p>
+                          <p className="text-sm font-semibold text-red-800">Bitte kurz prüfen</p>
                           <p className="text-sm text-red-800/80 mt-1">{submitError}</p>
                         </div>
                       ) : null}
@@ -264,7 +264,7 @@ export function ClinicsLeadFormSection({
                       </Button>
 
                       <p className="text-xs text-gray-500">
-                        Mit dem Absenden bestaetigst du, dass wir dich zur Bearbeitung deiner Anfrage kontaktieren duerfen. Datenschutz/Impressum sind unten verlinkt.
+                        Mit dem Absenden bestätigst du, dass wir dich zur Bearbeitung deiner Anfrage kontaktieren dürfen. Datenschutz/Impressum sind unten verlinkt.
                       </p>
                     </form>
                   ) : (
@@ -272,30 +272,37 @@ export function ClinicsLeadFormSection({
                       <div className="rounded-xl border border-green-200 bg-green-50 p-6">
                         <p className="text-base font-semibold text-green-900">Danke – deine Anfrage ist eingegangen.</p>
                         <p className="text-sm text-green-900/80 mt-2">
-                          Ich melde mich in Kuerze bei dir. Wenn du direkt einen Termin buchen willst, kannst du das hier tun.
+                          Ich melde mich in Kürze bei dir. Wenn du direkt einen Termin buchen willst, kannst du das hier tun.
                         </p>
                       </div>
 
                       <div className="space-y-2">
                         <p className="text-xs font-semibold text-gray-500">Termin-Link</p>
-                        <Button
-                          size="lg"
-                          className="w-full bg-black text-white hover:bg-red-600 inline-flex items-center justify-center"
-                          asChild
-                          disabled={!calendarBookingUrl}
-                        >
-                          <a
-                            href={calendarBookingUrl || "#"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-disabled={!calendarBookingUrl}
+
+                        {calendarBookingUrl ? (
+                          <Button
+                            size="lg"
+                            className="w-full bg-black text-white hover:bg-red-600 inline-flex items-center justify-center"
+                            asChild
+                          >
+                            <a href={calendarBookingUrl} target="_blank" rel="noopener noreferrer">
+                              Termin buchen
+                              <ArrowRight className="ml-2" size={18} />
+                            </a>
+                          </Button>
+                        ) : (
+                          <Button
+                            size="lg"
+                            className="w-full bg-black text-white hover:bg-red-600 inline-flex items-center justify-center"
+                            disabled
                           >
                             Termin buchen
                             <ArrowRight className="ml-2" size={18} />
-                          </a>
-                        </Button>
+                          </Button>
+                        )}
+
                         {!calendarBookingUrl ? (
-                          <p className="text-xs text-gray-500">Platzhalter – Calendly-Link kann spaeter eingefuegt werden.</p>
+                          <p className="text-xs text-gray-500">Platzhalter – Calendly-Link kann später eingefügt werden.</p>
                         ) : null}
                       </div>
 

@@ -3,7 +3,7 @@ import { ClinicsHero } from "@/components/clinics/ClinicsHero";
 import { ClinicsBodySections } from "@/components/clinics/ClinicsBodySections";
 import { ClinicsLeadFormSection } from "@/components/clinics/ClinicsLeadFormSection";
 
-const SEO_TITLE = "Lead-System fuer Kliniken | VincialMedia";
+const SEO_TITLE = "Lead-System für Kliniken | VincialMedia";
 const META_DESCRIPTION =
   "Wir helfen Kliniken, mehr Anfragen in echte Termine umzuwandeln – mit Sofort-Antworten, Follow-up und klarer Lead-Struktur.";
 const CANONICAL_URL = "https://vincialmedia.com/kliniken";
