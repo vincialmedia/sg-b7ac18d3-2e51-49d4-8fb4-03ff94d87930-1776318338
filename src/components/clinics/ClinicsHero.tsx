@@ -37,8 +37,14 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mt-6">
-                Wir bauen für ästhetische und terminbasierte Kliniken ein simples System, das neue Anfragen sofort beantwortet,
-                sauber nachfasst und weniger Leads im Alltag verloren gehen lässt.
+                Wir bauen ein schlankes Lead-System für Termin-Kliniken: neue Anfragen werden <span className="font-medium text-black">innerhalb von Minuten</span>{" "}
+                bestätigt, es gibt <span className="font-medium text-black">klare nächste Schritte</span> und ein{" "}
+                <span className="font-medium text-black">konsequentes Follow-up</span> – damit weniger Kontakte im Alltag verloren gehen und mehr Beratungstermine zustande
+                kommen.
+              </p>
+
+              <p className="text-sm text-gray-600 mt-3">
+                Für ästhetische Kliniken, Laser-Kliniken, Beauty/Cosmetic Anbieter, Premium-Zahnmedizin und ähnliche Terminanbieter.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8">
@@ -62,7 +68,13 @@ export function ClinicsHero({ onPrimaryCtaClick, onSecondaryCtaClick }: ClinicsH
               </div>
 
               <p className="text-sm text-gray-600 mt-4">
-                Klare Prozesse statt mehr Ads: Schnellere Reaktion, besseres Follow-up, mehr Buchungen.
+                Fokus auf Prozess statt mehr Aufwand: <span className="text-black font-medium">schneller Erstkontakt</span>,{" "}
+                <span className="text-black font-medium">sauberes Follow-up</span>, <span className="text-black font-medium">klare Zuständigkeiten</span> im Team.
+              </p>
+
+              <p className="text-sm text-gray-600 mt-2">
+                <span className="text-black font-medium">Demo dauert 10–15 Minuten.</span> Du bekommst eine klare Einschätzung, welche Schritte bei euch fehlen – und was
+                sich wirklich lohnt.
               </p>
             </div>
           </div>

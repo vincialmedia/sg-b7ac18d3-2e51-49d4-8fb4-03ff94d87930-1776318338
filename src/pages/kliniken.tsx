@@ -30,18 +30,9 @@ export default function ClinicsLandingPage() {
       </Head>
 
       <main className="min-h-screen bg-white overflow-x-hidden">
-        <ClinicsHero
-          onPrimaryCtaClick={() => scrollToSection("demo-form")}
-          onSecondaryCtaClick={() => scrollToSection("beispiel")}
-        />
-
-        <ClinicsBodySections onCtaClick={() => scrollToSection("demo-form")} />
-
-        <ClinicsLeadFormSection
-          calendarBookingUrl={CALENDAR_BOOKING_URL}
-          imprintHref={IMPRINT_HREF}
-          privacyHref={PRIVACY_HREF}
-        />
+        <ClinicsHero onPrimaryCtaClick={() => scrollToSection("lead-form")} onSecondaryCtaClick={() => scrollToSection("beispiel")} />
+        <ClinicsBodySections onCtaClick={() => scrollToSection("lead-form")} />
+        <ClinicsLeadFormSection calendarBookingUrl={CALENDAR_BOOKING_URL} imprintHref={IMPRINT_HREF} privacyHref={PRIVACY_HREF} />
       </main>
     </>
   );
