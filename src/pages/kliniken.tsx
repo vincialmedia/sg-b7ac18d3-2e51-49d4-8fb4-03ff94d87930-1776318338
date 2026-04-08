@@ -31,7 +31,7 @@ import {
 // ============================================
 // CONFIGURATION - Update these values later
 // ============================================
-const WEBHOOK_URL = ""; // Add your Make/HubSpot webhook URL here
+const WEBHOOK_URL = "https://hook.eu1.make.com/ql1gz6k4cci96l6q4xd31xwqk057f7xq"; // Add your Make/HubSpot webhook URL here
 const CALENDLY_URL = ""; // Add your Calendly link here
 const NOTIFICATION_EMAIL = "vincent@vincialmedia.com";
 // ============================================
