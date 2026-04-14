@@ -140,7 +140,7 @@ export default function KlinikenPage() {
     } catch (err) {
       console.error("Submission error:", err);
       setError(
-        "Es gab ein Problem beim Senden. Bitte versuche es erneut oder kontaktiere uns direkt."
+        "Es gab ein Problem beim Senden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
       );
     } finally {
       setIsSubmitting(false);
@@ -163,31 +163,32 @@ export default function KlinikenPage() {
         {/* Hero Section */}
         <section className="px-4 pt-12 pb-20 md:pt-20 md:pb-28 bg-white">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 mb-8 bg-gray-100 border border-gray-200 rounded-full">
+            <div className="inline-flex items-center px-4 py-2 mb-8 bg-gray-100 border border-gray-200 rounded-full animate-fade-in-up">
               <span className="text-sm font-medium text-gray-700">
                 Für Kliniken mit beratungsintensiven Anfragen
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-6 animate-fade-in-up animation-delay-100">
               Mehr Anfragen zu echten Terminen machen
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10">
-              Wir helfen dir, schneller auf Anfragen zu reagieren, den Überblick
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 animate-fade-in-up animation-delay-200">
+              Wir helfen Ihnen, schneller auf Anfragen zu reagieren, den Überblick
               zu behalten und weniger Interessenten zu verlieren – damit mehr
               davon zu echten Terminen werden.
             </p>
 
             <Button
               onClick={scrollToForm}
-              className="bg-black text-white hover:bg-red-600 text-lg px-8 py-6 h-auto rounded-full transition-all duration-300"
+              className="btn-premium bg-black text-white hover:bg-red-600 text-lg px-8 py-6 h-auto rounded-full transition-all duration-300 animate-fade-in-up animation-delay-300"
             >
-              Kurze Demo anfragen
+              <span className="hidden sm:inline">Kurze Demo anfragen</span>
+              <span className="sm:hidden">Demo anfragen</span>
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
 
-            <p className="mt-10 text-sm text-gray-500">
+            <p className="mt-10 text-sm text-gray-500 animate-fade-in-up animation-delay-400">
               Für ästhetische Kliniken, Laser-Kliniken, Beauty & Cosmetic
               Anbieter, Premium-Zahnmedizin und ähnliche Terminanbieter.
             </p>
@@ -198,11 +199,11 @@ export default function KlinikenPage() {
         <section className="px-4 py-20 bg-gray-50">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-12">
-              Wobei ich dir helfe
+              Wobei ich Ihnen helfe
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
+              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
                 <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
                   <Clock className="h-7 w-7 text-gray-700" />
                 </div>
@@ -215,7 +216,7 @@ export default function KlinikenPage() {
                 </p>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
+              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
                 <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
                   <Users className="h-7 w-7 text-gray-700" />
                 </div>
@@ -228,7 +229,7 @@ export default function KlinikenPage() {
                 </p>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
+              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
                 <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
                   <TrendingUp className="h-7 w-7 text-gray-700" />
                 </div>
@@ -241,7 +242,7 @@ export default function KlinikenPage() {
                 </p>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
+              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
                 <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
                   <Zap className="h-7 w-7 text-gray-700" />
                 </div>
@@ -250,7 +251,7 @@ export default function KlinikenPage() {
                 </h3>
                 <p className="text-gray-600 text-sm">
                   Ein klarer Ablauf statt ständigem Hin und Her. Einfacher für
-                  dich und dein Team.
+                  Sie und Ihr Team.
                 </p>
               </div>
             </div>
@@ -266,7 +267,7 @@ export default function KlinikenPage() {
 
             <div className="space-y-8">
               <div className="flex items-start gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
+                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
                   1
                 </div>
                 <div>
@@ -281,7 +282,7 @@ export default function KlinikenPage() {
               </div>
 
               <div className="flex items-start gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
+                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
                   2
                 </div>
                 <div>
@@ -295,7 +296,7 @@ export default function KlinikenPage() {
               </div>
 
               <div className="flex items-start gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
+                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
                   3
                 </div>
                 <div>
@@ -303,14 +304,14 @@ export default function KlinikenPage() {
                     Der nächste Schritt ist klar
                   </h3>
                   <p className="text-gray-600">
-                    Du oder dein Team wisst sofort, was zu tun ist – ohne
+                    Sie oder Ihr Team wissen sofort, was zu tun ist – ohne
                     Rätselraten.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                <div className="step-number flex-shrink-0 w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
                   4
                 </div>
                 <div>
@@ -333,7 +334,7 @@ export default function KlinikenPage() {
               Einfach, klar und ohne unnötigen Aufwand
             </h2>
             <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-              Du musst nicht alles umstellen. Wir schauen gemeinsam, was bei dir
+              Sie müssen nicht alles umstellen. Wir schauen gemeinsam, was bei Ihnen
               Sinn macht.
             </p>
 
@@ -371,7 +372,7 @@ export default function KlinikenPage() {
                     Passt zu bestehenden Abläufen
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Du musst nicht alles ändern. Wir passen uns an, was bei dir
+                    Sie müssen nicht alles ändern. Wir passen uns an, was bei Ihnen
                     funktioniert.
                   </p>
                 </div>
@@ -384,7 +385,7 @@ export default function KlinikenPage() {
                     Persönliche Betreuung
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Kein anonymer Support – du arbeitest direkt mit mir
+                    Kein anonymer Support – Sie arbeiten direkt mit mir
                     zusammen.
                   </p>
                 </div>
@@ -407,8 +408,8 @@ export default function KlinikenPage() {
                       Kurze Demo anfragen
                     </h2>
                     <p className="text-gray-600">
-                      Schick mir kurz deine Angaben. Ich melde mich bei dir und
-                      wir schauen gemeinsam, wo bei euch Anfragen verloren gehen
+                      Schicken Sie mir kurz Ihre Angaben. Ich melde mich bei Ihnen und
+                      wir schauen gemeinsam, wo bei Ihnen Anfragen verloren gehen
                       und wie man den Ablauf vereinfachen kann.
                     </p>
                   </div>
@@ -427,8 +428,8 @@ export default function KlinikenPage() {
                           onChange={(e) =>
                             handleInputChange("firstName", e.target.value)
                           }
-                          className="bg-white border-gray-200 text-black placeholder:text-gray-400"
-                          placeholder="Dein Vorname"
+                          className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
+                          placeholder="Ihr Vorname"
                         />
                       </div>
 
@@ -444,8 +445,8 @@ export default function KlinikenPage() {
                           onChange={(e) =>
                             handleInputChange("lastName", e.target.value)
                           }
-                          className="bg-white border-gray-200 text-black placeholder:text-gray-400"
-                          placeholder="Dein Nachname"
+                          className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
+                          placeholder="Ihr Nachname"
                         />
                       </div>
                     </div>
@@ -462,7 +463,7 @@ export default function KlinikenPage() {
                         onChange={(e) =>
                           handleInputChange("clinic", e.target.value)
                         }
-                        className="bg-white border-gray-200 text-black placeholder:text-gray-400"
+                        className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
                         placeholder="Name der Klinik"
                       />
                     </div>
@@ -480,8 +481,8 @@ export default function KlinikenPage() {
                           onChange={(e) =>
                             handleInputChange("email", e.target.value)
                           }
-                          className="bg-white border-gray-200 text-black placeholder:text-gray-400"
-                          placeholder="deine@email.ch"
+                          className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
+                          placeholder="ihre@email.ch"
                         />
                       </div>
 
@@ -497,7 +498,7 @@ export default function KlinikenPage() {
                           onChange={(e) =>
                             handleInputChange("phone", e.target.value)
                           }
-                          className="bg-white border-gray-200 text-black placeholder:text-gray-400"
+                          className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
                           placeholder="+41 79 123 45 67"
                         />
                       </div>
@@ -514,8 +515,8 @@ export default function KlinikenPage() {
                         onChange={(e) =>
                           handleInputChange("website", e.target.value)
                         }
-                        className="bg-white border-gray-200 text-black placeholder:text-gray-400"
-                        placeholder="deine-klinik.ch"
+                        className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
+                        placeholder="ihre-klinik.ch"
                       />
                     </div>
 
@@ -530,7 +531,7 @@ export default function KlinikenPage() {
                         }
                         required
                       >
-                        <SelectTrigger className="bg-white border-gray-200 text-black">
+                        <SelectTrigger className="input-premium bg-white border-gray-200 text-black">
                           <SelectValue placeholder="Bitte wählen" />
                         </SelectTrigger>
                         <SelectContent>
@@ -559,20 +560,21 @@ export default function KlinikenPage() {
                     <Button
                       type="submit"
                       disabled={isSubmitting || !formData.currentProcess}
-                      className="w-full bg-black text-white hover:bg-red-600 text-lg py-6 h-auto rounded-full transition-all duration-300 disabled:opacity-50"
+                      className="btn-premium w-full bg-black text-white hover:bg-red-600 text-lg py-6 h-auto rounded-full transition-all duration-300 disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         "Wird gesendet..."
                       ) : (
                         <>
-                          Kurze Demo anfragen
+                          <span className="hidden sm:inline">Kurze Demo anfragen</span>
+                          <span className="sm:hidden">Demo anfragen</span>
                           <ArrowRight className="ml-2 h-5 w-5" />
                         </>
                       )}
                     </Button>
 
                     <p className="text-xs text-gray-500 text-center">
-                      Mit dem Absenden akzeptierst du unsere{" "}
+                      Mit dem Absenden akzeptieren Sie unsere{" "}
                       <Link
                         href="/datenschutz"
                         className="underline hover:text-black"
@@ -589,11 +591,11 @@ export default function KlinikenPage() {
                     <CheckCircle className="h-8 w-8 text-green-600" />
                   </div>
                   <h3 className="text-2xl font-bold text-black mb-4">
-                    Danke für deine Anfrage
+                    Danke für Ihre Anfrage
                   </h3>
                   <p className="text-gray-600 mb-8">
-                    Deine Anfrage ist eingegangen. Ich melde mich in Kürze bei
-                    dir. Wenn du direkt einen Termin buchen willst, kannst du
+                    Ihre Anfrage ist eingegangen. Ich melde mich in Kürze bei
+                    Ihnen. Wenn Sie direkt einen Termin buchen möchten, können Sie
                     das hier tun.
                   </p>
                   {CALENDLY_URL ? (
@@ -602,7 +604,7 @@ export default function KlinikenPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button className="bg-black text-white hover:bg-red-600 text-lg px-8 py-6 h-auto rounded-full transition-all duration-300">
+                      <Button className="btn-premium bg-black text-white hover:bg-red-600 text-lg px-8 py-6 h-auto rounded-full transition-all duration-300">
                         <Calendar className="mr-2 h-5 w-5" />
                         Termin buchen
                       </Button>
@@ -640,7 +642,7 @@ export default function KlinikenPage() {
                 <AccordionContent className="text-gray-600">
                   Ja, gerade bei kleineren Teams macht ein klarer Ablauf viel
                   aus. Man hat weniger Ressourcen und kann es sich nicht
-                  leisten, Anfragen zu verlieren. Wir passen die Lösung an deine
+                  leisten, Anfragen zu verlieren. Wir passen die Lösung an Ihre
                   Grösse an.
                 </AccordionContent>
               </AccordionItem>
@@ -653,10 +655,10 @@ export default function KlinikenPage() {
                   Muss ich dafür ein neues System einführen?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-600">
-                  Nicht unbedingt. Oft können wir mit dem arbeiten, was du
-                  bereits hast, und es einfach besser verknüpfen. Falls ein
+                  Nicht unbedingt. Oft können wir mit dem arbeiten, was Sie
+                  bereits haben, und es einfach besser verknüpfen. Falls ein
                   neues Werkzeug sinnvoll ist, wählen wir etwas Einfaches, das
-                  zu dir passt.
+                  zu Ihnen passt.
                 </AccordionContent>
               </AccordionItem>
 
@@ -682,8 +684,8 @@ export default function KlinikenPage() {
                   Was passiert nach der Anfrage?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-600">
-                  Ich melde mich persönlich bei dir – per Telefon oder
-                  Video-Call, wie du willst. Wir schauen gemeinsam, wo bei euch
+                  Ich melde mich persönlich bei Ihnen – per Telefon oder
+                  Video-Call, wie Sie möchten. Wir schauen gemeinsam, wo bei Ihnen
                   Anfragen verloren gehen und was man verbessern kann. Kein
                   Verkaufsgespräch, sondern ein ehrliches Gespräch.
                 </AccordionContent>
