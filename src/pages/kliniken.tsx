@@ -160,36 +160,33 @@ export default function KlinikenPage() {
       </Head>
 
       <main className="min-h-screen bg-white">
-        {/* Compact Header */}
-        <header className="px-4 py-4 bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
-          <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 group">
-              <span className="text-lg font-bold text-black group-hover:text-red-600 transition-colors duration-300">
+        {/* Compact Trust Section */}
+        <section className="px-4 pt-8 pb-4 bg-white">
+          <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
+            <div className="relative mb-4 animate-fade-in-up">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
+                <img 
+                  src="/vincent-mbkuncn4.jpeg" 
+                  alt="Vincent - VincialMedia"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            
+            <div className="inline-flex items-center px-3 py-1.5 mb-3 bg-gray-100 border border-gray-200 rounded-full animate-fade-in-up animation-delay-100">
+              <span className="text-xs font-medium text-gray-700">
                 VincialMedia
               </span>
-            </Link>
+            </div>
             
-            <nav className="flex items-center gap-4">
-              <Link 
-                href="/" 
-                className="text-sm text-gray-600 hover:text-black transition-colors duration-300 hidden sm:block"
-              >
-                Startseite
-              </Link>
-              <Button
-                onClick={scrollToForm}
-                size="sm"
-                className="btn-premium bg-black text-white hover:bg-red-600 text-sm px-4 py-2 h-auto rounded-full transition-all duration-300"
-              >
-                <span className="hidden sm:inline">Demo anfragen</span>
-                <span className="sm:hidden">Demo</span>
-              </Button>
-            </nav>
+            <p className="text-sm text-gray-600 max-w-md animate-fade-in-up animation-delay-200">
+              Ich helfe Kliniken, mehr aus ihren Anfragen zu machen.
+            </p>
           </div>
-        </header>
+        </section>
 
         {/* Hero Section */}
-        <section className="px-4 pt-12 pb-20 md:pt-20 md:pb-28 bg-white">
+        <section className="px-4 pt-8 pb-20 md:pt-12 md:pb-28 bg-white">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center px-4 py-2 mb-8 bg-gray-100 border border-gray-200 rounded-full animate-fade-in-up">
               <span className="text-sm font-medium text-gray-700">
