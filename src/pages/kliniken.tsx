@@ -211,7 +211,7 @@ export default function KlinikenPage() {
                 <div className="order-1 lg:order-2 relative w-full flex justify-center lg:justify-end animate-fade-in-up">
                   <div className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-full overflow-hidden border border-gray-200">
                     <img 
-                      src="/vincent-mbkuncn4.jpeg" 
+                      src="/vince-mbggi03h.jpeg" 
                       alt="Vincent - VincialMedia"
                       className="w-full h-full object-cover"
                     />
