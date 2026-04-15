@@ -26,14 +26,17 @@ import {
   MessageSquare,
   Calendar,
   Zap,
+  UserCheck,
+  MessageCircle,
+  Bell,
 } from "lucide-react";
 
 // ============================================
 // CONFIGURATION - Update these values
 // ============================================
-const WEBHOOK_URL = "https://hook.eu1.make.com/ql1gz6k4cci96l6q4xd31xwqk057f7xq"; // Your Make/HubSpot webhook URL
-const CALENDLY_URL = ""; // Your Calendly booking link
-const NOTIFICATION_EMAIL = "vincent@vincialmedia.com"; // Fallback email notification
+const WEBHOOK_URL = "https://hook.eu1.make.com/ql1gz6k4cci96l6q4xd31xwqk057f7xq";
+const CALENDLY_URL = "";
+const NOTIFICATION_EMAIL = "vincent@vincialmedia.com";
 
 interface FormData {
   firstName: string;
@@ -153,14 +156,14 @@ export default function KlinikenPage() {
         <title>Mehr Anfragen zu Terminen machen | VincialMedia</title>
         <meta
           name="description"
-          content="Wir helfen Kliniken, schneller auf Anfragen zu reagieren und mehr Interessenten in echte Termine zu verwandeln. Einfach, klar, ohne unnötigen Aufwand."
+          content="Anfragen werden sofort erfasst, häufige Fragen automatisch beantwortet, Interessenten bis zur Terminbuchung begleitet. Für Kliniken mit beratungsintensiven Behandlungen."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="min-h-screen bg-white">
-        {/* Hero Section - Homepage Style */}
+        {/* Hero Section */}
         <section className="px-4 pt-6 pb-12 md:pt-8 md:pb-16 min-h-[85vh] md:min-h-[75vh] flex items-center">
           <div className="max-w-7xl mx-auto w-full">
             <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16">
@@ -186,7 +189,7 @@ export default function KlinikenPage() {
                     </h1>
                     
                     <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0 animate-fade-in-up animation-delay-200">
-                      Schneller reagieren, den Überblick behalten, weniger Interessenten verlieren.
+                      Neue Anfragen werden sofort erfasst. Häufige Fragen können direkt beantwortet werden. Interessenten werden bis zur Terminbuchung begleitet — automatisch, aber mit der Möglichkeit, jederzeit persönlich zu übernehmen.
                     </p>
                   </div>
 
@@ -203,7 +206,7 @@ export default function KlinikenPage() {
                   </div>
                   
                   <p className="text-xs md:text-sm text-gray-500 animate-fade-in-up animation-delay-400">
-                    Für ästhetische Kliniken, Laser-Kliniken, Beauty & Cosmetic, Premium-Zahnmedizin
+                    Besonders geeignet für Kliniken mit vielen Rückfragen vor der Buchung — ästhetische Medizin, Laser, Zahnmedizin, Cosmetic.
                   </p>
                 </div>
 
@@ -225,9 +228,12 @@ export default function KlinikenPage() {
         {/* What this helps with */}
         <section className="px-4 py-20 bg-gray-50">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-12">
-              Wobei ich Ihnen helfe
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-4">
+              Das konkrete Problem
             </h2>
+            <p className="text-base md:text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+              Viele Kliniken verlieren Interessenten, weil Anfragen zu langsam beantwortet werden, Rückfragen liegen bleiben oder der nächste Schritt unklar ist.
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
@@ -235,24 +241,34 @@ export default function KlinikenPage() {
                   <Clock className="h-7 w-7 text-gray-700" />
                 </div>
                 <h3 className="text-lg font-semibold text-black mb-2">
-                  Anfragen schneller beantworten
+                  Schnellere erste Antwort
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  Interessenten warten nicht gerne. Je schneller die Antwort,
-                  desto höher die Chance auf einen Termin.
+                  Anfragen werden sofort bestätigt. Interessenten wissen, dass ihre Nachricht angekommen ist — auch ausserhalb der Öffnungszeiten.
                 </p>
               </div>
 
               <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
                 <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                  <Users className="h-7 w-7 text-gray-700" />
+                  <MessageCircle className="h-7 w-7 text-gray-700" />
                 </div>
                 <h3 className="text-lg font-semibold text-black mb-2">
-                  Weniger Interessenten verlieren
+                  Häufige Fragen direkt beantwortet
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  Keine Anfrage mehr vergessen. Jeder Kontakt wird erfasst und
-                  weiterverfolgt.
+                  Standardfragen zu Preisen, Ablauf oder Vorbereitung können automatisch beantwortet werden. Das spart Zeit und hält das Gespräch am Laufen.
+                </p>
+              </div>
+
+              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
+                <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                  <Bell className="h-7 w-7 text-gray-700" />
+                </div>
+                <h3 className="text-lg font-semibold text-black mb-2">
+                  Niemand wird vergessen
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Jede Anfrage wird erfasst und weiterverfolgt. Wenn jemand nicht antwortet, gibt es eine Erinnerung — automatisch oder für Ihr Team.
                 </p>
               </div>
 
@@ -261,24 +277,10 @@ export default function KlinikenPage() {
                   <TrendingUp className="h-7 w-7 text-gray-700" />
                 </div>
                 <h3 className="text-lg font-semibold text-black mb-2">
-                  Mehr aus bestehenden Anfragen machen
+                  Mehr Termine aus gleich vielen Anfragen
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  Die Anfragen kommen bereits. Es geht darum, mehr davon in
-                  echte Termine zu verwandeln.
-                </p>
-              </div>
-
-              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
-                <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                  <Zap className="h-7 w-7 text-gray-700" />
-                </div>
-                <h3 className="text-lg font-semibold text-black mb-2">
-                  Weniger Chaos im Alltag
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Ein klarer Ablauf statt ständigem Hin und Her. Einfacher für
-                  Sie und Ihr Team.
+                  Weil Interessenten schneller Antworten bekommen und der Weg zum Termin klar ist, buchen mehr von ihnen tatsächlich.
                 </p>
               </div>
             </div>
@@ -288,9 +290,12 @@ export default function KlinikenPage() {
         {/* How it works */}
         <section className="px-4 py-20 bg-white">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-12">
-              So läuft es ab
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-4">
+              Was genau passiert
             </h2>
+            <p className="text-base md:text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+              Ein einfacher Ablauf, der Anfragen vom ersten Kontakt bis zum Termin begleitet.
+            </p>
 
             <div className="space-y-8">
               <div className="flex items-start gap-6">
@@ -299,11 +304,10 @@ export default function KlinikenPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-black mb-1">
-                    Jemand fragt an
+                    Jemand stellt eine Anfrage
                   </h3>
                   <p className="text-gray-600">
-                    Über die Website, per Telefon oder Social Media – egal
-                    woher.
+                    Über Ihre Website, per Telefon, WhatsApp oder Social Media — egal woher die Anfrage kommt.
                   </p>
                 </div>
               </div>
@@ -314,10 +318,10 @@ export default function KlinikenPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-black mb-1">
-                    Die Anfrage wird schnell erfasst
+                    Die Anfrage wird sofort erfasst
                   </h3>
                   <p className="text-gray-600">
-                    Alle wichtigen Infos an einem Ort, automatisch sortiert.
+                    Alle Angaben landen an einem Ort. Die Person erhält eine Bestätigung. Ihr Team wird informiert.
                   </p>
                 </div>
               </div>
@@ -328,25 +332,52 @@ export default function KlinikenPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-black mb-1">
-                    Der nächste Schritt ist klar
+                    Häufige Fragen werden direkt beantwortet
                   </h3>
                   <p className="text-gray-600">
-                    Sie oder Ihr Team wissen sofort, was zu tun ist – ohne
-                    Rätselraten.
+                    Fragen zu Preisen, Ablauf oder Terminen können automatisch beantwortet werden — klar, freundlich und sofort.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-6">
+                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  4
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-black mb-1">
+                    Die Person wird zum nächsten Schritt geführt
+                  </h3>
+                  <p className="text-gray-600">
+                    Ob Terminbuchung, Rückruf oder weitere Infos — der nächste Schritt ist klar und einfach.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-6">
+                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  5
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-black mb-1">
+                    Wenn nötig, übernimmt Ihr Team persönlich
+                  </h3>
+                  <p className="text-gray-600">
+                    Bei komplexen Fragen oder wenn jemand persönliche Beratung braucht, wird die Anfrage an Ihr Team übergeben.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-6">
                 <div className="step-number flex-shrink-0 w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  4
+                  6
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-black mb-1">
-                    Mehr Anfragen werden zu Terminen
+                    Mehr Anfragen werden zu echten Terminen
                   </h3>
                   <p className="text-gray-600">
-                    Weil nichts mehr untergeht und die Antwort schneller kommt.
+                    Weil niemand mehr vergessen wird, Antworten schneller kommen und der Ablauf klar ist.
                   </p>
                 </div>
               </div>
@@ -357,12 +388,11 @@ export default function KlinikenPage() {
         {/* Reassurance / Trust */}
         <section className="px-4 py-20 bg-gray-50">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-6">
-              Einfach, klar und ohne unnötigen Aufwand
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-4">
+              Sie bleiben in Kontrolle
             </h2>
-            <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-              Sie müssen nicht alles umstellen. Wir schauen gemeinsam, was bei Ihnen
-              Sinn macht.
+            <p className="text-base md:text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+              Das System unterstützt Ihr Team — es ersetzt es nicht. Sie entscheiden, was automatisch läuft und wann ein Mensch übernimmt.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -370,11 +400,10 @@ export default function KlinikenPage() {
                 <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold text-black mb-1">
-                    Kein kompliziertes System nötig
+                    Kein komplettes System-Wechsel nötig
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Wir nutzen einfache, bewährte Werkzeuge – keine
-                    überdimensionierte Software.
+                    Das Setup passt sich an Ihre bestehenden Abläufe an. Sie müssen nicht alles neu machen.
                   </p>
                 </div>
               </div>
@@ -383,11 +412,10 @@ export default function KlinikenPage() {
                 <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold text-black mb-1">
-                    Kann schlank aufgebaut werden
+                    AI beantwortet nur, was Sie freigeben
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Wir starten mit dem Wichtigsten und erweitern nur, wenn es
-                    Sinn macht.
+                    Sie definieren, welche Fragen automatisch beantwortet werden. Alles andere geht an Ihr Team.
                   </p>
                 </div>
               </div>
@@ -396,11 +424,10 @@ export default function KlinikenPage() {
                 <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold text-black mb-1">
-                    Passt zu bestehenden Abläufen
+                    Persönliche Übernahme jederzeit möglich
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Sie müssen nicht alles ändern. Wir passen uns an, was bei Ihnen
-                    funktioniert.
+                    Bei sensiblen Fragen oder wenn jemand persönliche Beratung braucht, kann Ihr Team sofort übernehmen.
                   </p>
                 </div>
               </div>
@@ -409,11 +436,27 @@ export default function KlinikenPage() {
                 <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold text-black mb-1">
-                    Persönliche Betreuung
+                    Schritt für Schritt aufbauen
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Kein anonymer Support – Sie arbeiten direkt mit mir
-                    zusammen.
+                    Wir starten mit dem Wichtigsten und erweitern nur, wenn es für Sie Sinn macht.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 p-6 bg-white border border-gray-200 rounded-2xl">
+              <div className="flex items-start gap-4">
+                <UserCheck className="h-8 w-8 text-black flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-semibold text-black mb-2 text-lg">
+                    Was macht die Automatisierung — und was nicht?
+                  </h3>
+                  <p className="text-gray-600">
+                    <strong>Automatisch:</strong> Anfragen erfassen, Bestätigungen senden, häufige Fragen beantworten, an Termine erinnern, Follow-ups bei Nicht-Antwort.
+                  </p>
+                  <p className="text-gray-600 mt-2">
+                    <strong>Persönlich:</strong> Medizinische Beratung, individuelle Preisverhandlungen, komplexe Rückfragen, persönliche Gespräche.
                   </p>
                 </div>
               </div>
@@ -435,9 +478,7 @@ export default function KlinikenPage() {
                       Kurze Demo anfragen
                     </h2>
                     <p className="text-gray-600">
-                      Schicken Sie mir kurz Ihre Angaben. Ich melde mich bei Ihnen und
-                      wir schauen gemeinsam, wo bei Ihnen Anfragen verloren gehen
-                      und wie man den Ablauf vereinfachen kann.
+                      Ich schaue mir an, wie Ihre Klinik aktuell mit Anfragen umgeht. Dann zeige ich Ihnen konkret, wo Interessenten verloren gehen und wie der Ablauf verbessert werden kann — kein Verkaufsgespräch, sondern eine praktische Analyse.
                     </p>
                   </div>
 
@@ -480,7 +521,7 @@ export default function KlinikenPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="clinic" className="text-black">
-                        Klinik / Firma *
+                        Klinik / Praxis *
                       </Label>
                       <Input
                         id="clinic"
@@ -515,7 +556,7 @@ export default function KlinikenPage() {
 
                       <div className="space-y-2">
                         <Label htmlFor="phone" className="text-black">
-                          Telefonnummer *
+                          Telefon *
                         </Label>
                         <Input
                           id="phone"
@@ -549,7 +590,7 @@ export default function KlinikenPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="currentProcess" className="text-black">
-                        Was passiert aktuell mit neuen Anfragen? *
+                        Wie läuft es aktuell mit neuen Anfragen? *
                       </Label>
                       <Select
                         value={formData.currentProcess}
@@ -563,16 +604,19 @@ export default function KlinikenPage() {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="manual">
-                            Wir antworten manuell
+                            Wir antworten manuell, meistens schnell genug
                           </SelectItem>
                           <SelectItem value="slow">
-                            Es geht manchmal zu lange
+                            Antworten dauern manchmal zu lange
+                          </SelectItem>
+                          <SelectItem value="lost">
+                            Anfragen gehen manchmal vergessen
                           </SelectItem>
                           <SelectItem value="no-process">
                             Es gibt keinen klaren Ablauf
                           </SelectItem>
                           <SelectItem value="unsure">
-                            Ich weiss es nicht genau
+                            Ich weiss nicht genau, wie viele wir verlieren
                           </SelectItem>
                         </SelectContent>
                       </Select>
@@ -621,9 +665,7 @@ export default function KlinikenPage() {
                     Danke für Ihre Anfrage
                   </h3>
                   <p className="text-gray-600 mb-8">
-                    Ihre Anfrage ist eingegangen. Ich melde mich in Kürze bei
-                    Ihnen. Wenn Sie direkt einen Termin buchen möchten, können Sie
-                    das hier tun.
+                    Ich melde mich innerhalb von 24 Stunden bei Ihnen. Wenn Sie direkt einen Termin für ein kurzes Gespräch buchen möchten, können Sie das hier tun.
                   </p>
                   {CALENDLY_URL ? (
                     <a
@@ -664,13 +706,10 @@ export default function KlinikenPage() {
                 className="bg-white border border-gray-200 rounded-xl px-6"
               >
                 <AccordionTrigger className="text-left text-black font-semibold hover:no-underline">
-                  Ist das auch für kleinere Kliniken sinnvoll?
+                  Muss ich mein ganzes System ändern?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-600">
-                  Ja, gerade bei kleineren Teams macht ein klarer Ablauf viel
-                  aus. Man hat weniger Ressourcen und kann es sich nicht
-                  leisten, Anfragen zu verlieren. Wir passen die Lösung an Ihre
-                  Grösse an.
+                  Nein. Das Setup wird an Ihre bestehenden Abläufe angepasst. Wenn Sie bereits ein CRM, eine Praxissoftware oder bestimmte Tools nutzen, können diese oft eingebunden werden. Das Ziel ist nicht mehr Technik, sondern weniger verlorene Anfragen.
                 </AccordionContent>
               </AccordionItem>
 
@@ -679,13 +718,10 @@ export default function KlinikenPage() {
                 className="bg-white border border-gray-200 rounded-xl px-6"
               >
                 <AccordionTrigger className="text-left text-black font-semibold hover:no-underline">
-                  Muss ich dafür ein neues System einführen?
+                  Werden Fragen von Interessenten automatisch beantwortet?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-600">
-                  Nicht unbedingt. Oft können wir mit dem arbeiten, was Sie
-                  bereits haben, und es einfach besser verknüpfen. Falls ein
-                  neues Werkzeug sinnvoll ist, wählen wir etwas Einfaches, das
-                  zu Ihnen passt.
+                  Nur die Fragen, die Sie freigeben. Typische Beispiele: Preise für bestimmte Behandlungen, Ablauf einer Erstberatung, Öffnungszeiten, Anfahrt. Bei allem anderen wird Ihr Team informiert und kann persönlich antworten.
                 </AccordionContent>
               </AccordionItem>
 
@@ -694,12 +730,10 @@ export default function KlinikenPage() {
                 className="bg-white border border-gray-200 rounded-xl px-6"
               >
                 <AccordionTrigger className="text-left text-black font-semibold hover:no-underline">
-                  Wie schnell kann so etwas umgesetzt werden?
+                  Wann übernimmt ein Mensch?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-600">
-                  Die ersten Verbesserungen sind oft innerhalb von wenigen Tagen
-                  spürbar. Ein vollständiger Ablauf kann in 2-4 Wochen stehen,
-                  je nach Komplexität.
+                  Immer wenn die Anfrage über Standardfragen hinausgeht. Bei medizinischen Details, individuellen Situationen oder wenn jemand explizit ein persönliches Gespräch wünscht. Ihr Team bekommt dann eine Benachrichtigung mit allen bisherigen Informationen.
                 </AccordionContent>
               </AccordionItem>
 
@@ -708,13 +742,10 @@ export default function KlinikenPage() {
                 className="bg-white border border-gray-200 rounded-xl px-6"
               >
                 <AccordionTrigger className="text-left text-black font-semibold hover:no-underline">
-                  Was passiert nach der Anfrage?
+                  Was passiert nach der Demo-Anfrage?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-600">
-                  Ich melde mich persönlich bei Ihnen – per Telefon oder
-                  Video-Call, wie Sie möchten. Wir schauen gemeinsam, wo bei Ihnen
-                  Anfragen verloren gehen und was man verbessern kann. Kein
-                  Verkaufsgespräch, sondern ein ehrliches Gespräch.
+                  Ich schaue mir an, wie Anfragen aktuell bei Ihnen ankommen und bearbeitet werden. Dann zeige ich Ihnen konkret, wo Interessenten verloren gehen könnten und wie ein verbesserter Ablauf aussehen würde — angepasst an Ihre Klinik, nicht ein Standard-Template.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -728,7 +759,7 @@ export default function KlinikenPage() {
               <div className="text-center md:text-left">
                 <p className="font-bold text-black text-lg">VincialMedia</p>
                 <p className="text-gray-500 text-sm">
-                  Mehr Anfragen zu echten Terminen machen.
+                  Mehr aus bestehenden Anfragen machen.
                 </p>
               </div>
               <div className="flex gap-6 text-sm">
