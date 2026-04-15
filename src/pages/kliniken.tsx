@@ -160,63 +160,64 @@ export default function KlinikenPage() {
       </Head>
 
       <main className="min-h-screen bg-white">
-        {/* Compact Trust Section */}
-        <section className="px-4 pt-8 pb-4 bg-white">
-          <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-            <div className="relative mb-4 animate-fade-in-up">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
-                <img 
-                  src="/vincent-mbkuncn4.jpeg" 
-                  alt="Vincent - VincialMedia"
-                  className="w-full h-full object-cover"
-                />
+        {/* Combined Hero with Trust */}
+        <section className="px-4 py-8 md:py-12 lg:py-16 bg-white min-h-[85vh] md:min-h-[80vh] flex items-center">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              
+              {/* Left: Trust + Intro */}
+              <div className="flex flex-col items-center lg:items-start text-center lg:text-left order-1 lg:order-1">
+                <div className="relative mb-6 animate-fade-in-up">
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-gray-100 shadow-lg">
+                    <img 
+                      src="/vincent-mbkuncn4.jpeg" 
+                      alt="Vincent - VincialMedia"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <div className="inline-flex items-center px-4 py-2 mb-4 bg-gray-100 border border-gray-200 rounded-full animate-fade-in-up animation-delay-100">
+                  <span className="text-sm font-medium text-gray-700">
+                    VincialMedia
+                  </span>
+                </div>
+                
+                <p className="text-base md:text-lg text-gray-600 max-w-md animate-fade-in-up animation-delay-200">
+                  Ich helfe Kliniken, mehr aus ihren Anfragen zu machen – einfach, klar und ohne unnötigen Aufwand.
+                </p>
+              </div>
+
+              {/* Right: Headline + CTA */}
+              <div className="flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-2">
+                <div className="inline-flex items-center px-3 py-1.5 mb-4 bg-red-50 border border-red-100 rounded-full animate-fade-in-up">
+                  <span className="text-xs font-medium text-red-700">
+                    Für Kliniken mit beratungsintensiven Anfragen
+                  </span>
+                </div>
+
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight mb-4 animate-fade-in-up animation-delay-100">
+                  Mehr Anfragen zu echten Terminen machen
+                </h1>
+
+                <p className="text-base md:text-lg text-gray-600 max-w-lg mb-6 animate-fade-in-up animation-delay-200">
+                  Schneller reagieren, den Überblick behalten, weniger Interessenten verlieren.
+                </p>
+
+                <Button
+                  onClick={scrollToForm}
+                  className="btn-premium bg-black text-white hover:bg-red-600 text-base md:text-lg px-6 md:px-8 py-4 md:py-5 h-auto rounded-full transition-all duration-300 animate-fade-in-up animation-delay-300"
+                >
+                  <span className="hidden sm:inline">Kurze Demo anfragen</span>
+                  <span className="sm:hidden">Demo anfragen</span>
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+
+                <p className="mt-6 text-xs md:text-sm text-gray-500 animate-fade-in-up animation-delay-400">
+                  Für ästhetische Kliniken, Laser-Kliniken, Beauty & Cosmetic, Premium-Zahnmedizin
+                </p>
               </div>
             </div>
-            
-            <div className="inline-flex items-center px-3 py-1.5 mb-3 bg-gray-100 border border-gray-200 rounded-full animate-fade-in-up animation-delay-100">
-              <span className="text-xs font-medium text-gray-700">
-                VincialMedia
-              </span>
-            </div>
-            
-            <p className="text-sm text-gray-600 max-w-md animate-fade-in-up animation-delay-200">
-              Ich helfe Kliniken, mehr aus ihren Anfragen zu machen.
-            </p>
-          </div>
-        </section>
-
-        {/* Hero Section */}
-        <section className="px-4 pt-8 pb-20 md:pt-12 md:pb-28 bg-white">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 mb-8 bg-gray-100 border border-gray-200 rounded-full animate-fade-in-up">
-              <span className="text-sm font-medium text-gray-700">
-                Für Kliniken mit beratungsintensiven Anfragen
-              </span>
-            </div>
-
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-6 animate-fade-in-up animation-delay-100">
-              Mehr Anfragen zu echten Terminen machen
-            </h1>
-
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 animate-fade-in-up animation-delay-200">
-              Wir helfen Ihnen, schneller auf Anfragen zu reagieren, den Überblick
-              zu behalten und weniger Interessenten zu verlieren – damit mehr
-              davon zu echten Terminen werden.
-            </p>
-
-            <Button
-              onClick={scrollToForm}
-              className="btn-premium bg-black text-white hover:bg-red-600 text-lg px-8 py-6 h-auto rounded-full transition-all duration-300 animate-fade-in-up animation-delay-300"
-            >
-              <span className="hidden sm:inline">Kurze Demo anfragen</span>
-              <span className="sm:hidden">Demo anfragen</span>
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-
-            <p className="mt-10 text-sm text-gray-500 animate-fade-in-up animation-delay-400">
-              Für ästhetische Kliniken, Laser-Kliniken, Beauty & Cosmetic
-              Anbieter, Premium-Zahnmedizin und ähnliche Terminanbieter.
-            </p>
           </div>
         </section>
 
