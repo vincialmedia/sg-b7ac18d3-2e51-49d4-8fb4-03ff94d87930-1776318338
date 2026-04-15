@@ -189,7 +189,7 @@ export default function KlinikenPage() {
                     </h1>
                     
                     <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0 animate-fade-in-up animation-delay-200">
-                      Neue Anfragen werden sofort erfasst. Häufige Fragen können direkt beantwortet werden. Interessenten werden bis zur Terminbuchung begleitet — automatisch, aber mit der Möglichkeit, jederzeit persönlich zu übernehmen.
+                      Ich helfe Kliniken, schneller auf Anfragen zu reagieren und weniger Interessenten zu verlieren – damit mehr daraus echte Termine werden.
                     </p>
                   </div>
 
@@ -206,12 +206,12 @@ export default function KlinikenPage() {
                   </div>
                   
                   <p className="text-xs md:text-sm text-gray-500 animate-fade-in-up animation-delay-400">
-                    Besonders geeignet für Kliniken mit vielen Rückfragen vor der Buchung — ästhetische Medizin, Laser, Zahnmedizin, Cosmetic.
+                    Besonders geeignet für ästhetische Kliniken, Laser, Cosmetic und Premium-Zahnmedizin.
                   </p>
                 </div>
 
                 {/* Right: Photo */}
-                <div className="order-1 lg:order-2 relative w-full flex justify-center lg:justify-end animate-fade-in-up">
+                <div className="order-1 lg:order-2 relative w-full flex flex-col items-center lg:items-end animate-fade-in-up">
                   <div className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-full overflow-hidden border border-gray-200">
                     <img 
                       src="/vince-mbggi03h.jpeg" 
@@ -219,6 +219,10 @@ export default function KlinikenPage() {
                       className="w-full h-full object-cover"
                     />
                   </div>
+                  {/* Handwritten-style personal note */}
+                  <p className="mt-4 text-sm md:text-base text-gray-600 italic font-handwriting animate-fade-in-up animation-delay-200" style={{ fontFamily: "'Caveat', cursive" }}>
+                    Vincent setzt sich persönlich für Ihr Projekt ein
+                  </p>
                 </div>
               </div>
             </div>
