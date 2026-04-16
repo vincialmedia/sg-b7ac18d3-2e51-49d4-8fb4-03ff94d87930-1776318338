@@ -49,6 +49,9 @@ export default function ImpressumPage() {
                 <p className="text-base text-gray-700">
                   E-Mail: <a href="mailto:vincent@vincialmedia.com" className="text-black underline hover:text-red-600 transition-colors">vincent@vincialmedia.com</a>
                 </p>
+                <p className="text-base text-gray-700">
+                  Telefon: <a href="tel:+41796891420" className="text-black underline hover:text-red-600 transition-colors">+41 79 689 14 20</a>
+                </p>
               </div>
 
               <hr className="border-gray-200" />
@@ -65,6 +68,7 @@ export default function ImpressumPage() {
               <div className="space-y-2">
                 <h2 className="text-lg font-semibold text-black">Handelsregister</h2>
                 <p className="text-base text-gray-700">Nicht im Handelsregister eingetragen</p>
+                <p className="text-base text-gray-700">VincialMedia wird von Vincent Hänggi in Schlieren persönlich aufgebaut und betreut.</p>
               </div>
 
               <hr className="border-gray-200" />
