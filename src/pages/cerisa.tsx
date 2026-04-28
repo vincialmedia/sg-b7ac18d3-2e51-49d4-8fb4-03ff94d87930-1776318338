@@ -33,7 +33,7 @@ import {
 // ============================================
 // CONFIGURATION - Update these values
 // ============================================
-const WEBHOOK_URL = "MAKE_WEBHOOK_PLACEHOLDER";
+const WEBHOOK_URL = "https://hook.eu1.make.com/yruhgm7vrbig4qnashcswegrx3wivsqt";
 const CALENDLY_URL = "";
 const NOTIFICATION_EMAIL = "vincent@vincialmedia.com";
 
