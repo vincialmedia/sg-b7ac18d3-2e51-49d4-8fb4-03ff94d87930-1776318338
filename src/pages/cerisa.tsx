@@ -183,7 +183,7 @@ export default function CerisaPage() {
                 {/* Left: Content */}
                 <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
                   <div className="space-y-4 lg:space-y-6">
-                    <div className="inline-flex items-center px-4 py-2 bg-[#1a1a1a] text-white rounded-full text-xs font-medium tracking-[0.2em] animate-fade-in-up">
+                    <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-[#1a1a1a] text-white rounded-full text-[10px] sm:text-xs font-medium tracking-[0.12em] sm:tracking-[0.2em] animate-fade-in-up whitespace-nowrap">
                       MEDICAL AESTHETICS &amp; LONGEVITY
                     </div>
 
@@ -205,10 +205,10 @@ export default function CerisaPage() {
                     <Button
                       onClick={scrollToForm}
                       size="lg"
-                      className="w-full sm:w-auto bg-[#1a1a1a] text-white hover:bg-[#C9A961] inline-flex items-center justify-center text-base md:text-lg px-6 md:px-8 py-4 md:py-5 h-auto rounded-full tracking-wide transition-colors duration-300"
+                      className="w-full sm:w-auto bg-[#1a1a1a] text-white hover:bg-[#C9A961] inline-flex items-center justify-center text-xs sm:text-base md:text-lg px-3 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 h-auto rounded-full tracking-wide transition-colors duration-300"
                     >
                       Persönliches Gespräch vereinbaren
-                      <ArrowRight className="ml-2 h-5 w-5" />
+                      <ArrowRight className="ml-2 h-5 w-5 hidden sm:inline-block" />
                     </Button>
                   </div>
 
@@ -661,14 +661,14 @@ export default function CerisaPage() {
                     <Button
                       type="submit"
                       disabled={isSubmitting || !formData.currentProcess || !formData.location}
-                      className="w-full bg-[#1a1a1a] text-white hover:bg-[#C9A961] text-lg py-6 h-auto rounded-full transition-colors duration-300 disabled:opacity-50 tracking-wide"
+                      className="w-full bg-[#1a1a1a] text-white hover:bg-[#C9A961] text-xs sm:text-base md:text-lg px-3 sm:px-6 py-3 sm:py-5 md:py-6 h-auto rounded-full transition-colors duration-300 disabled:opacity-50 tracking-wide"
                     >
                       {isSubmitting ? (
                         "Wird gesendet..."
                       ) : (
                         <>
                           Persönliches Gespräch anfragen
-                          <ArrowRight className="ml-2 h-5 w-5" />
+                          <ArrowRight className="ml-2 h-5 w-5 hidden sm:inline-block" />
                         </>
                       )}
                     </Button>
@@ -705,18 +705,19 @@ export default function CerisaPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button className="bg-[#1a1a1a] text-white hover:bg-[#C9A961] text-lg px-8 py-6 h-auto rounded-full transition-colors duration-300 tracking-wide">
-                        <Calendar className="mr-2 h-5 w-5" />
+                      <Button className="w-full sm:w-auto bg-[#1a1a1a] text-white hover:bg-[#C9A961] text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 h-auto rounded-full transition-colors duration-300 tracking-wide">
+                        <Calendar className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                         Termin reservieren
                       </Button>
                     </a>
                   ) : (
                     <Button
                       disabled
-                      className="bg-[#E8E1D5] text-[#8B7E72] text-lg px-8 py-6 h-auto rounded-full cursor-not-allowed"
+                      className="w-full sm:w-auto bg-[#E8E1D5] text-[#8B7E72] text-sm sm:text-lg px-5 sm:px-8 py-4 sm:py-6 h-auto rounded-full cursor-not-allowed"
                     >
-                      <Calendar className="mr-2 h-5 w-5" />
-                      Termin reservieren (in Kürze verfügbar)
+                      <Calendar className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                      <span className="hidden sm:inline">Termin reservieren (in Kürze verfügbar)</span>
+                      <span className="sm:hidden">In Kürze verfügbar</span>
                     </Button>
                   )}
                 </div>
@@ -798,7 +799,7 @@ export default function CerisaPage() {
                 >
                   CERISA
                 </p>
-                <p className="text-[#8B7E72] text-sm tracking-wider">
+                <p className="text-[#8B7E72] text-xs sm:text-sm tracking-wide sm:tracking-wider">
                   Ästhetische Medizin &amp; Longevity · Thun · Visp · Zug
                 </p>
               </div>
