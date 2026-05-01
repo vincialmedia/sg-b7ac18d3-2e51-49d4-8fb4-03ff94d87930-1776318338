@@ -34,7 +34,7 @@ import {
 // ============================================
 // CONFIGURATION - Update these values
 // ============================================
-const WEBHOOK_URL = "https://hook.eu1.make.com/ql1gz6k4cci96l6q4xd31xwqk057f7xq";
+const WEBHOOK_URL = "https://hook.eu1.make.com/vpcqj7hipbuadcziqi064u17jkr1h2fl";
 const CALENDLY_URL = "";
 const NOTIFICATION_EMAIL = "vincent@vincialmedia.com";
 
