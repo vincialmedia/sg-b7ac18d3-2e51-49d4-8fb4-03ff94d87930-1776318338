@@ -363,14 +363,14 @@ export default function KlinikenPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Left */}
-              <FadeIn className="order-2 lg:order-1">
+              <FadeIn className="order-2 lg:order-1 min-w-0">
                 <div className="space-y-8">
                   <div className="inline-flex items-center px-4 py-2 bg-black text-white rounded-xl text-xs font-mono uppercase tracking-wider">
                     <Users className="mr-2 h-3.5 w-3.5" />
                     Für Kliniken
                   </div>
 
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight text-black">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight text-black hyphens-auto break-words" lang="de">
                     Ihr KI-Mitarbeiter für Patientenanfragen.
                   </h1>
 
@@ -403,7 +403,7 @@ export default function KlinikenPage() {
               </FadeIn>
 
               {/* Right — chat mockup */}
-              <FadeIn className="order-1 lg:order-2" delay={0.1}>
+              <FadeIn className="order-1 lg:order-2 min-w-0" delay={0.1}>
                 <div className="bg-black/[0.03] rounded-xl p-4 sm:p-6 border border-black/10">
                   <MockupImage
                     src={IMG_HERO_CHAT}
