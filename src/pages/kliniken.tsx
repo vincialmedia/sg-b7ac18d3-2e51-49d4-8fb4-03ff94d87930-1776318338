@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -18,34 +21,44 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  Clock,
   Users,
-  TrendingUp,
   CheckCircle,
   ArrowRight,
-  MessageSquare,
   Calendar,
+  Inbox,
   Zap,
+  MessagesSquare,
+  ClipboardList,
   UserCheck,
   MessageCircle,
-  Bell,
+  Brain,
+  Clock,
+  Database,
+  ShieldCheck,
 } from "lucide-react";
 
 // ============================================
-// CONFIGURATION - Update these values
+// CONFIGURATION
 // ============================================
 const WEBHOOK_URL = "https://hook.eu1.make.com/t1d5pi9h9umufn8etcok7f3yp8lg94f5";
 const CALENDLY_URL = "";
 const NOTIFICATION_EMAIL = "vincent@vincialmedia.com";
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  clinic: string;
+// Image assets — placeholders render automatically when these files don't exist yet.
+const IMG_HERO_CHAT = "/images/kliniken/chat-mockup-hero.svg";
+const IMG_BOTOX = "/images/kliniken/chat-mockup-botox-15min.svg";
+const IMG_BOTOX_ERST = "/images/kliniken/chat-mockup-botox-erst-30min.svg";
+const IMG_LIPO = "/images/kliniken/chat-mockup-lipo-45min.svg";
+const IMG_HUBSPOT = "/images/kliniken/hubspot-pre-call-summary.svg";
+
+interface FormState {
+  name: string;
   email: string;
+  clinic: string;
   phone: string;
   website: string;
   currentProcess: string;
+  wantsWhatsApp: boolean;
 }
 
 interface UTMParams {
@@ -54,15 +67,91 @@ interface UTMParams {
   utm_campaign: string;
 }
 
+const splitName = (full: string): { firstName: string; lastName: string } => {
+  const trimmed = full.trim();
+  if (!trimmed) return { firstName: "", lastName: "" };
+  const idx = trimmed.indexOf(" ");
+  if (idx === -1) return { firstName: trimmed, lastName: "" };
+  return {
+    firstName: trimmed.slice(0, idx),
+    lastName: trimmed.slice(idx + 1).trim(),
+  };
+};
+
+const digitsOnly = (value: string) => value.replace(/\D+/g, "");
+
+// Scroll-triggered fade-in wrapper
+function FadeIn({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.5, ease: "easeOut", delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// Image with built-in placeholder fallback so layout works without assets
+function MockupImage({
+  src,
+  alt,
+  aspect = "aspect-[5/6]",
+}: {
+  src: string;
+  alt: string;
+  aspect?: string;
+}) {
+  const [errored, setErrored] = useState(false);
+  if (errored) {
+    return (
+      <div
+        className={`${aspect} w-full rounded-xl border border-dashed border-black/20 bg-white flex items-center justify-center`}
+      >
+        <div className="text-center px-4">
+          <p className="font-mono text-xs uppercase tracking-wider text-black/50">
+            Image placeholder
+          </p>
+          <p className="mt-2 text-sm text-black/60">{alt}</p>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div
+      className={`${aspect} w-full rounded-xl border border-black/10 bg-white overflow-hidden`}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        onError={() => setErrored(true)}
+        className="w-full h-full object-contain"
+      />
+    </div>
+  );
+}
+
 export default function KlinikenPage() {
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    clinic: "",
+  const [formData, setFormData] = useState<FormState>({
+    name: "",
     email: "",
+    clinic: "",
     phone: "",
     website: "",
     currentProcess: "",
+    wantsWhatsApp: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -84,7 +173,10 @@ export default function KlinikenPage() {
     }
   }, []);
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
+  const handleFieldChange = <K extends keyof FormState>(
+    field: K,
+    value: FormState[K]
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setError("");
   };
@@ -101,8 +193,17 @@ export default function KlinikenPage() {
     setIsSubmitting(true);
     setError("");
 
+    const { firstName, lastName } = splitName(formData.name);
+
     const submissionData = {
-      ...formData,
+      firstName,
+      lastName,
+      email: formData.email.trim(),
+      clinic: formData.clinic.trim(),
+      phone: digitsOnly(formData.phone),
+      website: formData.website.trim(),
+      currentProcess: formData.currentProcess,
+      wantsWhatsApp: formData.wantsWhatsApp ? "true" : "false",
       source_page: "/kliniken",
       source_type: "clinic_lead",
       submitted_at: new Date().toISOString(),
@@ -113,32 +214,21 @@ export default function KlinikenPage() {
       if (WEBHOOK_URL) {
         const response = await fetch(WEBHOOK_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(submissionData),
         });
-
-        if (!response.ok) {
-          throw new Error("Webhook submission failed");
-        }
+        if (!response.ok) throw new Error("Webhook submission failed");
       } else {
         const response = await fetch("/api/clinic-lead", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...submissionData,
             notificationEmail: NOTIFICATION_EMAIL,
           }),
         });
-
-        if (!response.ok) {
-          throw new Error("Email submission failed");
-        }
+        if (!response.ok) throw new Error("Email submission failed");
       }
-
       setIsSubmitted(true);
     } catch (err) {
       console.error("Submission error:", err);
@@ -150,636 +240,680 @@ export default function KlinikenPage() {
     }
   };
 
+  const flowSteps = [
+    {
+      icon: Inbox,
+      title: "Anfrage kommt rein, egal über welchen Kanal",
+      body: "Webformular, E-Mail oder WhatsApp. Auch nachts, am Wochenende, an Feiertagen.",
+    },
+    {
+      icon: Zap,
+      title: "Antwort in unter 60 Sekunden",
+      body: "Persönlich, in Schweizer Tonalität, mit dem Wissen Ihrer Klinik.",
+    },
+    {
+      icon: MessagesSquare,
+      title: "Echtes Gespräch",
+      body: "Mehrrunden-Dialog, bis die wichtigsten Fragen geklärt sind.",
+    },
+    {
+      icon: Calendar,
+      title: "Terminbuchung in der richtigen Länge",
+      body: "Buchungslink mit Termindauer passend zur Behandlung — 15 Min für Botox, 45 für Liposuktion.",
+    },
+    {
+      icon: ClipboardList,
+      title: "Pre-Call-Briefing für Ihr Team",
+      body: "Vor dem Gespräch: Ziele, Budget, Vorerfahrungen. Ihr Team ist vorbereitet.",
+    },
+    {
+      icon: UserCheck,
+      title: "Bei Bedarf übernimmt Ihr Team",
+      body: "Sensible oder komplexe Themen gehen direkt an Sie — manuell oder per Regel.",
+    },
+  ];
+
+  const differentiators = [
+    {
+      icon: MessageCircle,
+      title: "Multi-Channel statt nur Webformular",
+      body: "Patientinnen schreiben per WhatsApp, weil das ihr Standard-Kanal ist. Wer nur Web-Forms automatisiert, verpasst die Hälfte. Mein System läuft auf E-Mail, WhatsApp und Web — alles zentral verwaltet.",
+    },
+    {
+      icon: Brain,
+      title: "Trainiert auf Ihre Klinik, nicht auf das Internet",
+      body: "Vor dem Go-Live lese ich Ihre Webseite, Behandlungsbeschreibungen und Preisliste ein. Der Assistent kennt Ihren Tonfall, Ihre Standorte und Ihre Spezialitäten. Antworten klingen aus Ihrer Praxis — nicht aus ChatGPT.",
+    },
+    {
+      icon: MessagesSquare,
+      title: "Mehrrunden-Dialog statt Standard-Antwort",
+      body: 'Übliche Chatbots sagen "Danke für Ihre Anfrage, wir melden uns." Mein Assistent stellt Rückfragen, beantwortet Folge-Fragen und führt das Gespräch bis zum Termin. Wie ein Mitarbeiter — nur in Sekunden.',
+    },
+    {
+      icon: Clock,
+      title: "Termindauer, die zur Behandlung passt",
+      body: "15 Minuten für Botox. 45 für Liposuktion. 30 für Erstpatientinnen, die noch nie hier waren. Der Assistent erkennt die Behandlung und den Kontext — und reserviert die richtige Beratungszeit.",
+    },
+    {
+      icon: Database,
+      title: "CRM-Anbindung mit Pre-Call-Briefing",
+      body: "Jeder Lead, jede Konversation, jede Buchung landet automatisch in Ihrem CRM (HubSpot — weitere CRMs auf Anfrage), inklusive Pre-Call-Zusammenfassung als Notiz im Kontakt. Kein Copy-Paste, keine vergessenen Leads.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "Ihr Team bleibt in Kontrolle",
+      body: "Sie definieren, was automatisch läuft. Sensible Fragen, medizinische Beratung, persönliche Themen gehen direkt an Ihr Team. Der Assistent übernimmt das Volumen — Ihr Team macht das Hochwertige.",
+    },
+  ];
+
+  const treatments = [
+    { name: "Botox · Standard", duration: "15 Min" },
+    { name: "Botox · Erstberatung", duration: "30 Min" },
+    { name: "Filler", duration: "20 Min" },
+    { name: "Kombination Botox + Filler", duration: "30 Min" },
+    { name: "Liposuktion-Beratung", duration: "45 Min" },
+  ];
+
+  const faqs = [
+    {
+      q: "Muss ich mein ganzes System ändern?",
+      a: "Nein. Das System dockt an Ihre bestehenden Tools an — Ihr E-Mail-Postfach, Ihr Kalender, Ihr CRM. Ich passe das Setup an Ihre Abläufe an, nicht umgekehrt.",
+    },
+    {
+      q: "Werden Fragen von Patientinnen wirklich automatisch beantwortet — oder nur Standard-Vorlagen?",
+      a: "Echte Antworten. Der Assistent ist auf Ihre Klinik trainiert und führt Mehrrunden-Gespräche. Er beantwortet Fragen zu Behandlungen, Preisen, Standorten und Vorbereitungen — alles, was Sie freigeben.",
+    },
+    {
+      q: "Wie weiss der Assistent, wie lange ein Termin sein muss?",
+      a: "Im Setup hinterlegen wir Ihre Behandlungsliste mit Standarddauern — z.B. Botox 15 Min, Filler 20 Min, Liposuktion-Beratung 45 Min. Der Assistent passt die Dauer aber zusätzlich an den Kontext an: Erstpatientinnen, die signalisieren, dass sie noch keine Erfahrung haben, bekommen automatisch einen längeren Slot. Kombinations-Anfragen (z.B. Botox + Filler) werden zusammengelegt. Die Regeln und Auslöser definieren Sie — der Assistent setzt sie konsistent um.",
+    },
+    {
+      q: "Wann übernimmt ein Mensch?",
+      a: 'Sie definieren die Regeln. Standardmässig: medizinische Beratung, Fragen zu Risiken, Beschwerden, Sonderwünsche. Sie können auch sagen "Nach drei Antworten immer an mein Team" — flexibel anpassbar.',
+    },
+    {
+      q: "Wie sieht der Datenschutz aus?",
+      a: "Schweizer Setup, DSG- und DSGVO-konform. Patientendaten bleiben in Ihrem CRM. Keine Weitergabe an Marketing-Plattformen, kein Re-Targeting. Auf Wunsch Auftragsdatenverarbeitungs-Vertrag (ADV).",
+    },
+    {
+      q: "Wie lange dauert das Setup?",
+      a: "Typischerweise zwei bis vier Wochen. Erste Woche: Analyse und KI-Training auf Ihre Inhalte. Zweite Woche: Test-Setup mit Ihrem Team. Dritte und vierte Woche: schrittweiser Go-Live.",
+    },
+    {
+      q: "Was kostet das?",
+      a: "Einmalige Setup-Pauschale plus monatliche Betreuung. Konkrete Zahlen besprechen wir im Demo-Call — abhängig von Kanälen, CRM und Anfrage-Volumen.",
+    },
+  ];
+
   return (
     <>
       <Head>
-        <title>Mehr Anfragen zu Terminen machen | VincialMedia</title>
+        <title>KI-Mitarbeiter für Patientenanfragen | VincialMedia</title>
         <meta
           name="description"
-          content="Anfragen werden sofort erfasst, häufige Fragen automatisch beantwortet, Interessenten bis zur Terminbuchung begleitet. Für Kliniken mit beratungsintensiven Behandlungen."
+          content="Ihr KI-Mitarbeiter beantwortet Patientenanfragen in Sekunden — per E-Mail, WhatsApp und Web. Termindauer passend zur Behandlung. Pre-Call-Briefing für Ihr Team."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="min-h-screen bg-white">
-        {/* Hero Section */}
-        <section className="px-4 pt-6 pb-12 md:pt-8 md:pb-16 min-h-[85vh] md:min-h-[75vh] flex items-center">
-          <div className="max-w-7xl mx-auto w-full">
-            <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16">
-              <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                
-                {/* Left: Content */}
-                <div className="order-2 lg:order-1 space-y-6 lg:space-y-8 text-center lg:text-left">
-                  <div className="space-y-4 lg:space-y-6">
-                    <div className="inline-flex items-center px-4 py-2 bg-black text-white rounded-full text-sm font-medium animate-fade-in-up">
-                      <Users className="mr-2 h-4 w-4" />
-                      Für Kliniken
-                    </div>
-                    
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-black animate-fade-in-up animation-delay-100">
-                      Mehr Anfragen<br />
-                      zu Terminen<br />
-                      <span className="relative inline-block">
-                        <span className="text-red-600 italic transform -rotate-1 inline-block font-black tracking-wide">
-                          machen
-                        </span>
-                        <div className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-red-600 transform rotate-1 rounded-full"></div>
-                      </span>
-                    </h1>
-                    
-                    <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0 animate-fade-in-up animation-delay-200">
-                      Ich helfe Kliniken, schneller auf Anfragen zu reagieren und weniger Interessenten zu verlieren – damit mehr daraus echte Termine werden.
-                    </p>
+      <main className="min-h-screen bg-white text-black antialiased">
+        {/* ============ HERO ============ */}
+        <section className="px-6 pt-16 pb-16 md:pt-24 md:pb-24">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Left */}
+              <FadeIn className="order-2 lg:order-1">
+                <div className="space-y-8">
+                  <div className="inline-flex items-center px-4 py-2 bg-black text-white rounded-xl text-xs font-mono uppercase tracking-wider">
+                    <Users className="mr-2 h-3.5 w-3.5" />
+                    Für Kliniken
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start animate-fade-in-up animation-delay-300">
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight text-black">
+                    Ihr KI-Mitarbeiter für Patientenanfragen.
+                  </h1>
+
+                  <p className="text-base md:text-lg leading-relaxed text-black/70 max-w-xl">
+                    Antwortet in{" "}
+                    <span className="relative inline-block">
+                      <span className="text-red-600 italic font-black tracking-wide">
+                        Sekunden
+                      </span>
+                      <span className="absolute -bottom-1 left-0 right-0 h-[3px] bg-gradient-to-r from-red-500 to-red-600 rounded-full" />
+                    </span>
+                    . Kennt Ihre Klinik. Bucht den Termin. Per E-Mail, WhatsApp und Web — 24/7.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-4 pt-2">
                     <Button
                       onClick={scrollToForm}
                       size="lg"
-                      className="btn-premium w-full sm:w-auto bg-black text-white hover:bg-red-600 inline-flex items-center justify-center text-base md:text-lg px-6 md:px-8 py-4 md:py-5 h-auto rounded-full"
+                      className="w-full sm:w-auto bg-black text-white hover:bg-black hover:scale-[0.98] transition-transform inline-flex items-center justify-center text-base px-8 py-6 h-auto rounded-xl"
                     >
-                      <span className="hidden sm:inline">Kurze Demo anfragen</span>
-                      <span className="sm:hidden">Demo anfragen</span>
+                      Kurze Demo anfragen
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </div>
-                  
-                  <p className="text-xs md:text-sm text-gray-500 animate-fade-in-up animation-delay-400">
-                    Besonders geeignet für ästhetische Kliniken, Laser, Cosmetic und Premium-Zahnmedizin.
-                  </p>
-                </div>
 
-                {/* Right: Photo */}
-                <div className="order-1 lg:order-2 relative w-full flex flex-col items-center lg:items-end animate-fade-in-up">
-                  <div className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-full overflow-hidden border border-gray-200">
-                    <img 
-                      src="/vince-mbggi03h.jpeg" 
-                      alt="Vincent - VincialMedia"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  {/* Handwritten-style personal note */}
-                  <p className="mt-4 text-sm md:text-base text-gray-600 italic font-handwriting animate-fade-in-up animation-delay-200" style={{ fontFamily: "'Caveat', cursive" }}>
-                    Vincent setzt sich persönlich für Ihr Projekt ein
+                  <p className="text-sm text-black/50">
+                    Speziell für ästhetische Kliniken, Laser, Cosmetic und Premium-Zahnmedizin.
                   </p>
                 </div>
-              </div>
+              </FadeIn>
+
+              {/* Right — chat mockup */}
+              <FadeIn className="order-1 lg:order-2" delay={0.1}>
+                <div className="bg-black/[0.03] rounded-xl p-4 sm:p-6 border border-black/10">
+                  <MockupImage
+                    src={IMG_HERO_CHAT}
+                    alt="Chat conversation mockup"
+                    aspect="aspect-[5/6]"
+                  />
+                </div>
+              </FadeIn>
             </div>
           </div>
         </section>
 
-        {/* What this helps with */}
-        <section className="px-4 py-20 bg-gray-50">
+        <div className="border-t border-black/5" />
+
+        {/* ============ PROBLEM — big stat ============ */}
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-3xl mx-auto text-center">
+            <FadeIn>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-black/50 mb-8">
+                Das Problem
+              </p>
+              <p className="text-7xl md:text-9xl font-medium tabular-nums tracking-tight leading-none text-black">
+                30–50%
+              </p>
+              <p className="mt-8 text-base md:text-lg text-black/70 max-w-2xl mx-auto leading-relaxed">
+                der Patientenanfragen gehen verloren — nicht wegen Ihrer Behandlung, sondern wegen langsamer Antwortzeiten.
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <p className="mt-12 text-base md:text-lg text-black/60 max-w-2xl mx-auto leading-relaxed">
+                Sonntagabend, <span className="font-mono tabular-nums">21:47</span>. Eine potenzielle Patientin schreibt eine Anfrage zu einer Behandlung im Wert von mehreren tausend Franken. Niemand antwortet. Montag früh geht die Anfrage im Posteingang unter. Mittwoch hat sie bei der Konkurrenz gebucht. Das passiert in jeder Klinik — jede Woche.
+              </p>
+            </FadeIn>
+          </div>
+        </section>
+
+        <div className="border-t border-black/5" />
+
+        {/* ============ SOLUTION INTRO ============ */}
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-3xl mx-auto">
+            <FadeIn>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-center mb-10">
+                Was, wenn jede Anfrage in unter <span className="font-mono tabular-nums">60</span> Sekunden beantwortet wird?
+              </h2>
+            </FadeIn>
+            <div className="space-y-6 text-base md:text-lg text-black/70 leading-relaxed">
+              <FadeIn delay={0.05}>
+                <p>
+                  Genau dafür baue ich KI-gestützte Lead-Systeme für Kliniken. Kein generischer Chatbot — sondern ein KI-Mitarbeiter, der mit den Inhalten Ihrer Klinik trainiert wird. Er kennt Ihre Behandlungen, Preise, Standorte und Ihren Tonfall. Er führt echte Gespräche per E-Mail und WhatsApp, qualifiziert Interessenten, beantwortet Rückfragen und leitet zur Terminbuchung.
+                </p>
+              </FadeIn>
+              <FadeIn delay={0.1}>
+                <p>
+                  Sobald jemand bucht, bekommt Ihr Team automatisch eine kurze Zusammenfassung: Was will die Patientin? Welches Budget? Welche Bedenken? So gehen Sie informiert ins Beratungsgespräch — und schliessen häufiger ab.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        <div className="border-t border-black/5" />
+
+        {/* ============ TERMINDAUER-INTELLIGENZ ============ */}
+        <section className="px-6 py-24 md:py-32">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-4">
-              Das konkrete Problem
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-              Viele Kliniken verlieren Interessenten, weil Anfragen zu langsam beantwortet werden, Rückfragen liegen bleiben oder der nächste Schritt unklar ist.
-            </p>
+            <FadeIn>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-black/50 mb-6 text-center">
+                Termindauer-Intelligenz
+              </p>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-center max-w-3xl mx-auto">
+                Eine KI, die nicht nur die Behandlung kennt — sondern auch den Patienten.
+              </h2>
+              <p className="mt-6 text-base md:text-lg text-black/70 max-w-2xl mx-auto text-center leading-relaxed">
+                Standard-Buchungstools schicken jeden in den gleichen Slot. Mein Assistent erkennt die gewünschte Behandlung, Kombinationen und den Patientenkontext — und reserviert die passende Beratungszeit.
+              </p>
+            </FadeIn>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
-                <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                  <Clock className="h-7 w-7 text-gray-700" />
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <FadeIn delay={0.05}>
+                <div className="space-y-4">
+                  <MockupImage
+                    src={IMG_BOTOX}
+                    alt="Standard Botox conversation, 15-min booking"
+                    aspect="aspect-[5/6]"
+                  />
+                  <p className="text-sm text-black/60 text-center">
+                    Standardanfrage <span className="font-mono">→</span> Standarddauer
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold text-black mb-2">
-                  Schnellere erste Antwort
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Anfragen werden sofort bestätigt. Interessenten wissen, dass ihre Nachricht angekommen ist — auch ausserhalb der Öffnungszeiten.
-                </p>
-              </div>
-
-              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
-                <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                  <MessageCircle className="h-7 w-7 text-gray-700" />
+              </FadeIn>
+              <FadeIn delay={0.1}>
+                <div className="space-y-4">
+                  <MockupImage
+                    src={IMG_BOTOX_ERST}
+                    alt="Botox-Erstpatientin conversation, 30-min booking"
+                    aspect="aspect-[5/6]"
+                  />
+                  <p className="text-sm text-black/60 text-center">
+                    Erstpatientin-Signal <span className="font-mono">→</span> erweiterter Slot
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold text-black mb-2">
-                  Häufige Fragen direkt beantwortet
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Standardfragen zu Preisen, Ablauf oder Vorbereitung können automatisch beantwortet werden. Das spart Zeit und hält das Gespräch am Laufen.
-                </p>
-              </div>
-
-              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
-                <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                  <Bell className="h-7 w-7 text-gray-700" />
+              </FadeIn>
+              <FadeIn delay={0.15}>
+                <div className="space-y-4">
+                  <MockupImage
+                    src={IMG_LIPO}
+                    alt="Liposuktion conversation, 45-min booking"
+                    aspect="aspect-[5/6]"
+                  />
+                  <p className="text-sm text-black/60 text-center">
+                    Komplexer Eingriff <span className="font-mono">→</span> ausführlicher Slot
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold text-black mb-2">
-                  Niemand wird vergessen
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Jede Anfrage wird erfasst und weiterverfolgt. Wenn jemand nicht antwortet, gibt es eine Erinnerung — automatisch oder für Ihr Team.
-                </p>
-              </div>
-
-              <div className="card-hover bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300">
-                <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                  <TrendingUp className="h-7 w-7 text-gray-700" />
-                </div>
-                <h3 className="text-lg font-semibold text-black mb-2">
-                  Mehr Termine aus gleich vielen Anfragen
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Weil Interessenten schneller Antworten bekommen und der Weg zum Termin klar ist, buchen mehr von ihnen tatsächlich.
-                </p>
-              </div>
+              </FadeIn>
             </div>
+
+            <FadeIn delay={0.15}>
+              <div className="mt-12 max-w-md mx-auto bg-black/[0.04] rounded-xl p-6 border border-black/5">
+                <p className="font-mono text-xs uppercase tracking-wider text-black/50 mb-4">
+                  Ihre Behandlungsliste — Beispiel
+                </p>
+                <ul className="space-y-2">
+                  {treatments.map((t) => (
+                    <li
+                      key={t.name}
+                      className="flex items-center justify-between text-sm"
+                    >
+                      <span className="text-black">{t.name}</span>
+                      <span className="font-mono tabular-nums text-black/60">
+                        {t.duration}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-xs text-black/50 leading-relaxed">
+                  Sie definieren die Liste und die Auslöser — der Assistent setzt sie konsistent um.
+                </p>
+              </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* How it works */}
-        <section className="px-4 py-20 bg-white">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-4">
-              Was genau passiert
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-              Ein einfacher Ablauf, der Anfragen vom ersten Kontakt bis zum Termin begleitet.
-            </p>
+        <div className="border-t border-black/5" />
 
-            <div className="space-y-8">
-              <div className="flex items-start gap-6">
-                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  1
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-black mb-1">
-                    Jemand stellt eine Anfrage
-                  </h3>
-                  <p className="text-gray-600">
-                    Über Ihre Website, per Telefon, WhatsApp oder Social Media — egal woher die Anfrage kommt.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-6">
-                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  2
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-black mb-1">
-                    Die Anfrage wird sofort erfasst
-                  </h3>
-                  <p className="text-gray-600">
-                    Alle Angaben landen an einem Ort. Die Person erhält eine Bestätigung. Ihr Team wird informiert.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-6">
-                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  3
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-black mb-1">
-                    Häufige Fragen werden direkt beantwortet
-                  </h3>
-                  <p className="text-gray-600">
-                    Fragen zu Preisen, Ablauf oder Terminen können automatisch beantwortet werden — klar, freundlich und sofort.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-6">
-                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  4
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-black mb-1">
-                    Die Person wird zum nächsten Schritt geführt
-                  </h3>
-                  <p className="text-gray-600">
-                    Ob Terminbuchung, Rückruf oder weitere Infos — der nächste Schritt ist klar und einfach.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-6">
-                <div className="step-number flex-shrink-0 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  5
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-black mb-1">
-                    Wenn nötig, übernimmt Ihr Team persönlich
-                  </h3>
-                  <p className="text-gray-600">
-                    Bei komplexen Fragen oder wenn jemand persönliche Beratung braucht, wird die Anfrage an Ihr Team übergeben.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-6">
-                <div className="step-number flex-shrink-0 w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  6
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-black mb-1">
-                    Mehr Anfragen werden zu echten Terminen
-                  </h3>
-                  <p className="text-gray-600">
-                    Weil niemand mehr vergessen wird, Antworten schneller kommen und der Ablauf klar ist.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Reassurance / Trust */}
-        <section className="px-4 py-20 bg-gray-50">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-4">
-              Sie bleiben in Kontrolle
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-              Das System unterstützt Ihr Team — es ersetzt es nicht. Sie entscheiden, was automatisch läuft und wann ein Mensch übernimmt.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex items-start gap-4">
-                <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-black mb-1">
-                    Kein komplettes System-Wechsel nötig
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Das Setup passt sich an Ihre bestehenden Abläufe an. Sie müssen nicht alles neu machen.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-black mb-1">
-                    AI beantwortet nur, was Sie freigeben
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Sie definieren, welche Fragen automatisch beantwortet werden. Alles andere geht an Ihr Team.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-black mb-1">
-                    Persönliche Übernahme jederzeit möglich
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Bei sensiblen Fragen oder wenn jemand persönliche Beratung braucht, kann Ihr Team sofort übernehmen.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-black mb-1">
-                    Schritt für Schritt aufbauen
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Wir starten mit dem Wichtigsten und erweitern nur, wenn es für Sie Sinn macht.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-12 p-6 bg-white border border-gray-200 rounded-2xl">
-              <div className="flex items-start gap-4">
-                <UserCheck className="h-8 w-8 text-black flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-black mb-2 text-lg">
-                    Was macht die Automatisierung — und was nicht?
-                  </h3>
-                  <p className="text-gray-600">
-                    <strong>Automatisch:</strong> Anfragen erfassen, Bestätigungen senden, häufige Fragen beantworten, an Termine erinnern, Follow-ups bei Nicht-Antwort.
-                  </p>
-                  <p className="text-gray-600 mt-2">
-                    <strong>Persönlich:</strong> Medizinische Beratung, individuelle Preisverhandlungen, komplexe Rückfragen, persönliche Gespräche.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Lead Form */}
-        <section id="anfrage-form" className="px-4 py-20 bg-white">
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 shadow-sm">
-              {!isSubmitted ? (
-                <>
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
-                      <MessageSquare className="h-8 w-8 text-white" />
+        {/* ============ SO FUNKTIONIERT ES — icon flow ============ */}
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-6xl mx-auto">
+            <FadeIn>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-center mb-16">
+                So funktioniert es
+              </h2>
+            </FadeIn>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
+              {flowSteps.map((step, i) => {
+                const Icon = step.icon;
+                return (
+                  <FadeIn key={step.title} delay={i * 0.05}>
+                    <div className="rounded-xl border border-black/10 p-6 h-full bg-white">
+                      <p className="font-mono text-xs uppercase tracking-wider text-black/40 mb-3 tabular-nums">
+                        {String(i + 1).padStart(2, "0")}
+                      </p>
+                      <Icon className="h-8 w-8 text-black mb-4" strokeWidth={1.5} />
+                      <h3 className="text-base font-semibold text-black mb-2 leading-snug">
+                        {step.title}
+                      </h3>
+                      <p className="text-sm text-black/60 leading-relaxed">
+                        {step.body}
+                      </p>
                     </div>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4">
-                      Kurze Demo anfragen
-                    </h2>
-                    <p className="text-gray-600">
-                      Ich schaue mir an, wie Ihre Klinik aktuell mit Anfragen umgeht. Dann zeige ich Ihnen konkret, wo Interessenten verloren gehen und wie der Ablauf verbessert werden kann — kein Verkaufsgespräch, sondern eine praktische Analyse.
+                  </FadeIn>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <div className="border-t border-black/5" />
+
+        {/* ============ DIFFERENTIATORS ============ */}
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-6xl mx-auto">
+            <FadeIn>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-center mb-16 max-w-3xl mx-auto">
+                Warum das funktioniert (und ein Standard-Chatbot nicht)
+              </h2>
+            </FadeIn>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {differentiators.map((d, i) => {
+                const Icon = d.icon;
+                return (
+                  <FadeIn key={d.title} delay={i * 0.05}>
+                    <div className="rounded-xl border border-black/10 p-8 h-full bg-white">
+                      <Icon className="h-7 w-7 text-black mb-5" strokeWidth={1.5} />
+                      <h3 className="text-lg font-semibold text-black mb-3 leading-snug">
+                        {d.title}
+                      </h3>
+                      <p className="text-sm text-black/60 leading-relaxed">
+                        {d.body}
+                      </p>
+                    </div>
+                  </FadeIn>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <div className="border-t border-black/5" />
+
+        {/* ============ HUBSPOT PRE-CALL BRIEFING ============ */}
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-5xl mx-auto">
+            <FadeIn>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-black/50 mb-6 text-center">
+                Pre-Call-Briefing
+              </p>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-center max-w-3xl mx-auto">
+                Sie gehen nie wieder unvorbereitet ins Beratungsgespräch.
+              </h2>
+              <p className="mt-6 text-base md:text-lg text-black/70 max-w-2xl mx-auto text-center leading-relaxed">
+                Vor jedem Termin landet eine kurze Zusammenfassung im CRM: Ziele der Patientin, Vorerfahrungen, Budgetvorstellungen, offene Fragen.
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <div className="mt-12">
+                <MockupImage
+                  src={IMG_HUBSPOT}
+                  alt="HubSpot contact card showing lead_intent_summary field"
+                  aspect="aspect-[16/10]"
+                />
+                <p className="mt-4 text-xs italic text-black/50 text-center">
+                  Beispieldarstellung. In Ihrer Umgebung mit echten Patientendaten.
+                </p>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        <div className="border-t border-black/5" />
+
+        {/* ============ ABOUT VINCENT ============ */}
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 items-center">
+              <FadeIn className="md:col-span-1">
+                <div className="w-48 h-48 md:w-full md:h-auto md:aspect-square mx-auto rounded-xl overflow-hidden border border-black/10">
+                  <Image
+                    src="/vince-mbggi03h.jpeg"
+                    alt="Vincent Hänggi"
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </FadeIn>
+              <FadeIn className="md:col-span-2" delay={0.05}>
+                <div className="space-y-6">
+                  <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight">
+                    Wer hinter VincialMedia steht
+                  </h2>
+                  <div className="space-y-4 text-base md:text-lg text-black/70 leading-relaxed">
+                    <p>
+                      Ich bin Vincent Hänggi. VincialMedia ist eine Schweizer Agentur für KI-Lead-Automation, spezialisiert auf Kliniken mit beratungsintensiven Behandlungen.
+                    </p>
+                    <p>
+                      Ich übernehme jedes Projekt persönlich — von der Analyse über das Setup bis zum Live-Betrieb. Keine Account-Manager, keine Junior-Übergaben. Sie sprechen mit mir, ich baue für Sie, ich bleibe Ihr Ansprechpartner.
+                    </p>
+                    <p>
+                      Mein Ansatz: ich starte mit dem Kanal, der sofort Wirkung zeigt (in der Regel E-Mail), und baue Schritt für Schritt aus. Sie sehen Ergebnisse, bevor das gesamte System aufgesetzt ist.
                     </p>
                   </div>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
 
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="border-t border-black/5" />
+
+        {/* ============ DEMO FORM ============ */}
+        <section id="anfrage-form" className="px-6 py-24 md:py-32">
+          <div className="max-w-2xl mx-auto">
+            <FadeIn>
+              <div className="bg-white rounded-xl border border-black/10 p-8 md:p-12">
+                {!isSubmitted ? (
+                  <>
+                    <div className="text-center mb-10">
+                      <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-black mb-4">
+                        Kurze Demo anfragen
+                      </h2>
+                      <p className="text-base text-black/70 leading-relaxed">
+                        Ich schaue mir an, wie Ihre Klinik aktuell mit Anfragen umgeht. Dann zeige ich Ihnen konkret, wo Interessenten verloren gehen — und wie Ihr System in wenigen Wochen live laufen könnte. Kein Verkaufsgespräch, sondern eine praktische Analyse.
+                      </p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="space-y-2">
-                        <Label htmlFor="firstName" className="text-black">
-                          Vorname *
-                        </Label>
+                        <Label htmlFor="name" className="text-black">Name *</Label>
                         <Input
-                          id="firstName"
+                          id="name"
                           type="text"
                           required
-                          value={formData.firstName}
-                          onChange={(e) =>
-                            handleInputChange("firstName", e.target.value)
-                          }
-                          className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
-                          placeholder="Ihr Vorname"
+                          value={formData.name}
+                          onChange={(e) => handleFieldChange("name", e.target.value)}
+                          className="rounded-xl border-black/15"
+                          placeholder="Vor- und Nachname"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="lastName" className="text-black">
-                          Nachname *
-                        </Label>
-                        <Input
-                          id="lastName"
-                          type="text"
-                          required
-                          value={formData.lastName}
-                          onChange={(e) =>
-                            handleInputChange("lastName", e.target.value)
-                          }
-                          className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
-                          placeholder="Ihr Nachname"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="clinic" className="text-black">
-                        Klinik / Praxis *
-                      </Label>
-                      <Input
-                        id="clinic"
-                        type="text"
-                        required
-                        value={formData.clinic}
-                        onChange={(e) =>
-                          handleInputChange("clinic", e.target.value)
-                        }
-                        className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
-                        placeholder="Name der Klinik"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="email" className="text-black">
-                          E-Mail *
-                        </Label>
+                        <Label htmlFor="email" className="text-black">E-Mail *</Label>
                         <Input
                           id="email"
                           type="email"
                           required
                           value={formData.email}
-                          onChange={(e) =>
-                            handleInputChange("email", e.target.value)
-                          }
-                          className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
+                          onChange={(e) => handleFieldChange("email", e.target.value)}
+                          className="rounded-xl border-black/15"
                           placeholder="ihre@email.ch"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-black">
-                          Telefon *
-                        </Label>
+                        <Label htmlFor="clinic" className="text-black">Klinik / Praxis *</Label>
                         <Input
-                          id="phone"
-                          type="tel"
+                          id="clinic"
+                          type="text"
                           required
-                          value={formData.phone}
-                          onChange={(e) =>
-                            handleInputChange("phone", e.target.value)
-                          }
-                          className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
-                          placeholder="+41 79 123 45 67"
+                          value={formData.clinic}
+                          onChange={(e) => handleFieldChange("clinic", e.target.value)}
+                          className="rounded-xl border-black/15"
+                          placeholder="Name der Klinik"
                         />
                       </div>
-                    </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="website" className="text-black">
-                        Website (optional)
-                      </Label>
-                      <Input
-                        id="website"
-                        type="text"
-                        value={formData.website}
-                        onChange={(e) =>
-                          handleInputChange("website", e.target.value)
-                        }
-                        className="input-premium bg-white border-gray-200 text-black placeholder:text-gray-400"
-                        placeholder="ihre-klinik.ch"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="currentProcess" className="text-black">
-                        Wie läuft es aktuell mit neuen Anfragen? *
-                      </Label>
-                      <Select
-                        value={formData.currentProcess}
-                        onValueChange={(value) =>
-                          handleInputChange("currentProcess", value)
-                        }
-                        required
-                      >
-                        <SelectTrigger className="input-premium bg-white border-gray-200 text-black">
-                          <SelectValue placeholder="Bitte wählen" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="manual">
-                            Wir antworten manuell, meistens schnell genug
-                          </SelectItem>
-                          <SelectItem value="slow">
-                            Antworten dauern manchmal zu lange
-                          </SelectItem>
-                          <SelectItem value="lost">
-                            Anfragen gehen manchmal vergessen
-                          </SelectItem>
-                          <SelectItem value="no-process">
-                            Es gibt keinen klaren Ablauf
-                          </SelectItem>
-                          <SelectItem value="unsure">
-                            Ich weiss nicht genau, wie viele wir verlieren
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {error && (
-                      <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                        {error}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="phone" className="text-black">Telefon</Label>
+                          <Input
+                            id="phone"
+                            type="tel"
+                            value={formData.phone}
+                            onChange={(e) => handleFieldChange("phone", e.target.value)}
+                            className="rounded-xl border-black/15"
+                            placeholder="+41 79 123 45 67"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="website" className="text-black">Website</Label>
+                          <Input
+                            id="website"
+                            type="text"
+                            value={formData.website}
+                            onChange={(e) => handleFieldChange("website", e.target.value)}
+                            className="rounded-xl border-black/15"
+                            placeholder="ihre-klinik.ch"
+                          />
+                        </div>
                       </div>
-                    )}
 
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting || !formData.currentProcess}
-                      className="btn-premium w-full bg-black text-white hover:bg-red-600 text-lg py-6 h-auto rounded-full transition-all duration-300 disabled:opacity-50"
-                    >
-                      {isSubmitting ? (
-                        "Wird gesendet..."
-                      ) : (
-                        <>
-                          <span className="hidden sm:inline">Kurze Demo anfragen</span>
-                          <span className="sm:hidden">Demo anfragen</span>
-                          <ArrowRight className="ml-2 h-5 w-5" />
-                        </>
-                      )}
-                    </Button>
+                      <div className="space-y-2">
+                        <Label htmlFor="currentProcess" className="text-black">
+                          Wie läuft es aktuell mit neuen Anfragen?
+                        </Label>
+                        <Select
+                          value={formData.currentProcess}
+                          onValueChange={(value) => handleFieldChange("currentProcess", value)}
+                        >
+                          <SelectTrigger className="rounded-xl border-black/15">
+                            <SelectValue placeholder="Bitte wählen" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="within-24h">Wir antworten meistens innert 24h</SelectItem>
+                            <SelectItem value="irregular">Antwortzeiten sind unregelmässig</SelectItem>
+                            <SelectItem value="losing-leads">Wir verlieren regelmässig Anfragen</SelectItem>
+                            <SelectItem value="other">Anderes</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <p className="text-xs text-gray-500 text-center">
-                      Mit dem Absenden akzeptieren Sie unsere{" "}
-                      <Link
-                        href="/datenschutz"
-                        className="underline hover:text-black"
+                      <label
+                        htmlFor="wantsWhatsApp"
+                        className="flex items-center justify-between gap-4 rounded-xl border border-black/10 p-4 cursor-pointer hover:border-black/20 transition-colors"
                       >
-                        Datenschutzerklärung
-                      </Link>
-                      .
-                    </p>
-                  </form>
-                </>
-              ) : (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-black mb-4">
-                    Danke für Ihre Anfrage
-                  </h3>
-                  <p className="text-gray-600 mb-8">
-                    Ich melde mich innerhalb von 24 Stunden bei Ihnen. Wenn Sie direkt einen Termin für ein kurzes Gespräch buchen möchten, können Sie das hier tun.
-                  </p>
-                  {CALENDLY_URL ? (
-                    <a
-                      href={CALENDLY_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button className="btn-premium bg-black text-white hover:bg-red-600 text-lg px-8 py-6 h-auto rounded-full transition-all duration-300">
-                        <Calendar className="mr-2 h-5 w-5" />
-                        Termin buchen
+                        <span className="text-sm leading-snug text-black">
+                          Ich möchte per WhatsApp kontaktiert werden{" "}
+                          <span className="text-black/50">anstatt per E-Mail</span>
+                        </span>
+                        <Switch
+                          id="wantsWhatsApp"
+                          checked={formData.wantsWhatsApp}
+                          onCheckedChange={(checked) =>
+                            handleFieldChange("wantsWhatsApp", checked === true)
+                          }
+                          className="shrink-0 data-[state=checked]:bg-black data-[state=unchecked]:bg-black/15"
+                        />
+                      </label>
+
+                      {error && (
+                        <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                          {error}
+                        </div>
+                      )}
+
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-black text-white hover:bg-black hover:scale-[0.98] transition-transform text-base py-6 h-auto rounded-xl disabled:opacity-50"
+                      >
+                        {isSubmitting ? (
+                          "Wird gesendet..."
+                        ) : (
+                          <>
+                            Demo anfragen
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                          </>
+                        )}
                       </Button>
-                    </a>
-                  ) : (
-                    <Button
-                      disabled
-                      className="bg-gray-300 text-gray-500 text-lg px-8 py-6 h-auto rounded-full cursor-not-allowed"
-                    >
-                      <Calendar className="mr-2 h-5 w-5" />
-                      Termin buchen (bald verfügbar)
-                    </Button>
-                  )}
-                </div>
-              )}
-            </div>
+
+                      <p className="text-xs text-black/50 text-center">
+                        Mit dem Absenden akzeptieren Sie unsere{" "}
+                        <Link href="/datenschutz" className="underline hover:text-black">
+                          Datenschutzerklärung
+                        </Link>
+                        .
+                      </p>
+                    </form>
+                  </>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 bg-black/[0.04] rounded-xl flex items-center justify-center mx-auto mb-6">
+                      <CheckCircle className="h-8 w-8 text-black" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-black mb-4">
+                      Danke für Ihre Anfrage
+                    </h3>
+                    <p className="text-black/70 mb-8">
+                      Ich melde mich innerhalb von 24 Stunden bei Ihnen. Wenn Sie direkt einen Termin für ein kurzes Gespräch buchen möchten, können Sie das hier tun.
+                    </p>
+                    {CALENDLY_URL ? (
+                      <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+                        <Button className="bg-black text-white hover:bg-black hover:scale-[0.98] transition-transform text-base px-8 py-6 h-auto rounded-xl">
+                          <Calendar className="mr-2 h-5 w-5" />
+                          Termin buchen
+                        </Button>
+                      </a>
+                    ) : (
+                      <Button
+                        disabled
+                        className="bg-black/10 text-black/40 text-base px-8 py-6 h-auto rounded-xl cursor-not-allowed"
+                      >
+                        <Calendar className="mr-2 h-5 w-5" />
+                        Termin buchen (bald verfügbar)
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* FAQ */}
-        <section className="px-4 py-20 bg-gray-50">
+        <div className="border-t border-black/5" />
+
+        {/* ============ FAQ ============ */}
+        <section className="px-6 py-24 md:py-32">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center mb-12">
-              Häufige Fragen
-            </h2>
-
-            <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem
-                value="item-1"
-                className="bg-white border border-gray-200 rounded-xl px-6"
-              >
-                <AccordionTrigger className="text-left text-black font-semibold hover:no-underline">
-                  Muss ich mein ganzes System ändern?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600">
-                  Nein. Das Setup wird an Ihre bestehenden Abläufe angepasst. Wenn Sie bereits ein CRM, eine Praxissoftware oder bestimmte Tools nutzen, können diese oft eingebunden werden. Das Ziel ist nicht mehr Technik, sondern weniger verlorene Anfragen.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem
-                value="item-2"
-                className="bg-white border border-gray-200 rounded-xl px-6"
-              >
-                <AccordionTrigger className="text-left text-black font-semibold hover:no-underline">
-                  Werden Fragen von Interessenten automatisch beantwortet?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600">
-                  Nur die Fragen, die Sie freigeben. Typische Beispiele: Preise für bestimmte Behandlungen, Ablauf einer Erstberatung, Öffnungszeiten, Anfahrt. Bei allem anderen wird Ihr Team informiert und kann persönlich antworten.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem
-                value="item-3"
-                className="bg-white border border-gray-200 rounded-xl px-6"
-              >
-                <AccordionTrigger className="text-left text-black font-semibold hover:no-underline">
-                  Wann übernimmt ein Mensch?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600">
-                  Immer wenn die Anfrage über Standardfragen hinausgeht. Bei medizinischen Details, individuellen Situationen oder wenn jemand explizit ein persönliches Gespräch wünscht. Ihr Team bekommt dann eine Benachrichtigung mit allen bisherigen Informationen.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem
-                value="item-4"
-                className="bg-white border border-gray-200 rounded-xl px-6"
-              >
-                <AccordionTrigger className="text-left text-black font-semibold hover:no-underline">
-                  Was passiert nach der Demo-Anfrage?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600">
-                  Ich schaue mir an, wie Anfragen aktuell bei Ihnen ankommen und bearbeitet werden. Dann zeige ich Ihnen konkret, wo Interessenten verloren gehen könnten und wie ein verbesserter Ablauf aussehen würde — angepasst an Ihre Klinik, nicht ein Standard-Template.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+            <FadeIn>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-center mb-16">
+                Häufige Fragen
+              </h2>
+            </FadeIn>
+            <FadeIn delay={0.05}>
+              <Accordion type="single" collapsible className="space-y-3">
+                {faqs.map((item, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`item-${i}`}
+                    className="bg-white border border-black/10 rounded-xl px-6"
+                  >
+                    <AccordionTrigger className="text-left text-black text-base font-semibold hover:no-underline py-5">
+                      {item.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-black/70 text-base leading-relaxed pb-5">
+                      {item.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="px-4 py-12 bg-white border-t border-gray-200">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="text-center md:text-left">
-                <p className="font-bold text-black text-lg">VincialMedia</p>
-                <p className="text-gray-500 text-sm">
-                  Mehr aus bestehenden Anfragen machen.
-                </p>
-              </div>
-              <div className="flex gap-6 text-sm">
-                <Link
-                  href="/impressum"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  Impressum
-                </Link>
-                <Link
-                  href="/datenschutz"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  Datenschutz
-                </Link>
-              </div>
+        {/* ============ FOOTER ============ */}
+        <footer className="px-6 py-12 border-t border-black/10">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="text-center md:text-left">
+              <p className="font-bold text-black">VincialMedia</p>
+              <p className="text-sm text-black/50">
+                KI-Mitarbeiter für Patientenanfragen.
+              </p>
+            </div>
+            <div className="flex gap-6 text-sm">
+              <Link href="/impressum" className="text-black/60 hover:text-black transition-colors">
+                Impressum
+              </Link>
+              <Link href="/datenschutz" className="text-black/60 hover:text-black transition-colors">
+                Datenschutz
+              </Link>
             </div>
           </div>
         </footer>
