@@ -1,6 +1,6 @@
 # VincialMedia Site — Repo Guide
 
-This file gives Claude Code persistent context for this codebase. Add to repo root as `CLAUDE.md`.
+This file gives Claude Code persistent context for this codebase.
 
 ## Project
 
