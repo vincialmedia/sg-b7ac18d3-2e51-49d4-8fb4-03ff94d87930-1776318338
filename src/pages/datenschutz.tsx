@@ -68,7 +68,8 @@ export default function DatenschutzPage() {
                 <h2 className="text-xl font-bold text-black">Welche Daten wir erheben</h2>
                 <p className="text-gray-600">Wir erheben folgende Daten:</p>
                 <ul className="list-disc list-inside text-gray-600 space-y-2 ml-2">
-                  <li><strong>Kontaktformular-Daten:</strong> Vorname, Klinik/Firma, E-Mail-Adresse, Telefonnummer, Website (optional), aktuelle Situation</li>
+                  <li><strong>Kontaktformular-Daten:</strong> Name (Vor- und Nachname), Klinik/Praxis, E-Mail-Adresse, Telefonnummer (optional), Website (optional), aktuelle Situation (optional), Einwilligung zur WhatsApp-Kontaktaufnahme (optional)</li>
+                  <li><strong>WhatsApp-Konversationsdaten:</strong> Bei aktivierter WhatsApp-Einwilligung zusätzlich Telefonnummer, WhatsApp-Profilname, Nachrichteninhalte, Zeitstempel, Zustell- und Lesebestätigungen — siehe Abschnitt &laquo;Kommunikation per WhatsApp Business&raquo;</li>
                   <li><strong>Technische Daten:</strong> IP-Adresse, Browsertyp, Betriebssystem, Zugriffszeit, besuchte Seiten</li>
                   <li><strong>Nutzungsdaten:</strong> Interaktionen mit der Website, Klickverhalten, Verweildauer</li>
                 </ul>
@@ -117,6 +118,45 @@ export default function DatenschutzPage() {
                   Weitere Informationen zum Datenschutz bei HubSpot finden Sie unter:{" "}
                   <a href="https://legal.hubspot.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">
                     https://legal.hubspot.com/privacy-policy
+                  </a>
+                </p>
+              </div>
+
+              {/* WhatsApp Business */}
+              <div className="space-y-3 pt-6 border-t border-gray-100">
+                <h2 className="text-xl font-bold text-black">Kommunikation per WhatsApp Business</h2>
+                <p className="text-gray-600">
+                  Im Anfrageformular können Sie über einen Schalter ausdrücklich einwilligen, dass wir Ihre Anfrage anstatt per E-Mail über WhatsApp beantworten (&laquo;Ich möchte per WhatsApp kontaktiert werden anstatt per E-Mail&raquo;). Wir nutzen hierfür die <strong>WhatsApp Business Platform (Cloud API)</strong> von Meta.
+                </p>
+                <p className="text-gray-600">
+                  <strong>Anbieter:</strong> WhatsApp Ireland Limited, 4 Grand Canal Square, Grand Canal Harbour, Dublin 2, Irland — Teil von Meta Platforms, Inc., 1 Hacker Way, Menlo Park, CA 94025, USA.
+                </p>
+                <p className="text-gray-600">
+                  <strong>Verarbeitete Daten:</strong> Telefonnummer, WhatsApp-Profilname, Nachrichteninhalte (Text, Sprachnachrichten, Anhänge), Zeitstempel sowie Zustell- und Lesebestätigungen.
+                </p>
+                <p className="text-gray-600">
+                  <strong>Zweck:</strong> Beantwortung Ihrer Anfrage, Klärung von Rückfragen und Koordination eines Demo-Termins.
+                </p>
+                <p className="text-gray-600">
+                  <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO bzw. Art. 31 Abs. 1 DSG — ausdrückliche Einwilligung durch Aktivierung des entsprechenden Schalters im Formular.
+                </p>
+                <p className="text-gray-600">
+                  <strong>Drittlandtransfer:</strong> Mit der Aktivierung des Schalters willigen Sie ausdrücklich in die Übermittlung der genannten Daten an Meta Platforms, Inc. in den USA ein. Meta Platforms, Inc. ist im Rahmen des EU-U.S. Data Privacy Framework zertifiziert; ergänzend kommen die EU-Standardvertragsklauseln zur Anwendung. Ein vergleichbares Datenschutzniveau wie in der Schweiz oder im EWR kann in den USA dennoch nicht garantiert werden.
+                </p>
+                <p className="text-gray-600">
+                  <strong>Speicherdauer:</strong> WhatsApp-Konversationen werden zusammen mit den übrigen Lead-Daten in unserem CRM bis zu <strong>12 Monate</strong> ab dem letzten Kontakt gespeichert. Anschliessend werden sie gelöscht oder anonymisiert, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+                </p>
+                <p className="text-gray-600">
+                  <strong>Widerruf der Einwilligung:</strong> Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen — formlos per E-Mail an{" "}
+                  <a href="mailto:vincent@vincialmedia.com" className="text-red-600 hover:underline">
+                    vincent@vincialmedia.com
+                  </a>
+                  . Die Rechtmässigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt unberührt.
+                </p>
+                <p className="text-gray-600">
+                  Weiterführende Informationen finden Sie in der WhatsApp Business Privacy Policy:{" "}
+                  <a href="https://www.whatsapp.com/legal/business-privacy-policy" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">
+                    https://www.whatsapp.com/legal/business-privacy-policy
                   </a>
                 </p>
               </div>
@@ -194,7 +234,7 @@ export default function DatenschutzPage() {
               {/* Stand */}
               <div className="space-y-3 pt-6 border-t border-gray-100">
                 <p className="text-sm text-gray-500">
-                  Stand: April 2025
+                  Stand: Mai 2026
                 </p>
               </div>
             </div>

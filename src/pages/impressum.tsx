@@ -45,12 +45,15 @@ export default function ImpressumPage() {
                 <p className="text-base text-gray-700">Schweiz</p>
               </div>
 
-              <div>
+              <div className="space-y-1">
                 <p className="text-base text-gray-700">
                   E-Mail: <a href="mailto:vincent@vincialmedia.com" className="text-black underline hover:text-red-600 transition-colors">vincent@vincialmedia.com</a>
                 </p>
                 <p className="text-base text-gray-700">
                   Telefon: <a href="tel:+41796891420" className="text-black underline hover:text-red-600 transition-colors">+41 79 689 14 20</a>
+                </p>
+                <p className="text-base text-gray-700">
+                  WhatsApp Business: <a href="https://wa.me/41796891420" target="_blank" rel="noopener noreferrer" className="text-black underline hover:text-red-600 transition-colors">+41 79 689 14 20</a>
                 </p>
               </div>
 
