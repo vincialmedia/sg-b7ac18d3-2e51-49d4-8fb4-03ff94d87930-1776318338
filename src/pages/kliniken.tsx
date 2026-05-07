@@ -914,6 +914,9 @@ export default function KlinikenPage() {
               <Link href="/datenschutz" className="text-black/60 hover:text-black transition-colors">
                 Datenschutz
               </Link>
+              <Link href="/agb" className="text-black/60 hover:text-black transition-colors">
+                AGB
+              </Link>
             </div>
           </div>
         </footer>

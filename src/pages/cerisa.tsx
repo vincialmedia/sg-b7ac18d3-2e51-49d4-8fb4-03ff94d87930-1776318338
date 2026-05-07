@@ -816,6 +816,12 @@ export default function CerisaPage() {
                 >
                   Datenschutz
                 </Link>
+                <Link
+                  href="/agb"
+                  className="text-[#3D3D3D] hover:text-[#C9A961] transition-colors"
+                >
+                  AGB
+                </Link>
               </div>
             </div>
           </div>
