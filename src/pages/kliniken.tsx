@@ -41,7 +41,6 @@ import {
 // CONFIGURATION
 // ============================================
 const WEBHOOK_URL = "https://hook.eu1.make.com/t1d5pi9h9umufn8etcok7f3yp8lg94f5";
-const CALENDLY_URL = "";
 const NOTIFICATION_EMAIL = "vincent@vincialmedia.com";
 
 // Image assets — placeholders render automatically when these files don't exist yet.
@@ -230,6 +229,12 @@ export default function KlinikenPage() {
         if (!response.ok) throw new Error("Email submission failed");
       }
       setIsSubmitted(true);
+      requestAnimationFrame(() => {
+        const formSection = document.getElementById("anfrage-form");
+        if (formSection) {
+          formSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
     } catch (err) {
       console.error("Submission error:", err);
       setError(
@@ -834,32 +839,16 @@ export default function KlinikenPage() {
                     </form>
                   </>
                 ) : (
-                  <div className="text-center py-8">
-                    <div className="w-16 h-16 bg-black/[0.04] rounded-xl flex items-center justify-center mx-auto mb-6">
-                      <CheckCircle className="h-8 w-8 text-black" strokeWidth={1.5} />
+                  <div className="text-center py-12">
+                    <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8">
+                      <CheckCircle className="h-14 w-14 text-green-600" strokeWidth={2} />
                     </div>
-                    <h3 className="text-2xl font-bold text-black mb-4">
-                      Danke für Ihre Anfrage
+                    <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">
+                      Danke für Ihre Nachricht
                     </h3>
-                    <p className="text-black/70 mb-8">
-                      Ich melde mich innerhalb von 24 Stunden bei Ihnen. Wenn Sie direkt einen Termin für ein kurzes Gespräch buchen möchten, können Sie das hier tun.
+                    <p className="text-black/70 text-base md:text-lg">
+                      Unser Team meldet sich in Kürze bei Ihnen.
                     </p>
-                    {CALENDLY_URL ? (
-                      <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
-                        <Button className="bg-black text-white hover:bg-black hover:scale-[0.98] transition-transform text-base px-8 py-6 h-auto rounded-xl">
-                          <Calendar className="mr-2 h-5 w-5" />
-                          Termin buchen
-                        </Button>
-                      </a>
-                    ) : (
-                      <Button
-                        disabled
-                        className="bg-black/10 text-black/40 text-base px-8 py-6 h-auto rounded-xl cursor-not-allowed"
-                      >
-                        <Calendar className="mr-2 h-5 w-5" />
-                        Termin buchen (bald verfügbar)
-                      </Button>
-                    )}
                   </div>
                 )}
               </div>
