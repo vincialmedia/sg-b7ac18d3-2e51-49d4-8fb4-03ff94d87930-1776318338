@@ -364,7 +364,7 @@ export default function KlinikenPage() {
 
       <main className="min-h-screen bg-white text-black antialiased">
         {/* ============ HERO ============ */}
-        <section className="px-6 pt-16 pb-16 md:pt-24 md:pb-24">
+        <section className="px-6 pt-24 pb-16 md:pt-28 md:pb-24">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Left */}

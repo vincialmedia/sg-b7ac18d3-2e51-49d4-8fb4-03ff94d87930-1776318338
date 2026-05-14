@@ -14,7 +14,7 @@ export default function AGBPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="min-h-screen bg-white px-4 py-16">
+      <main className="min-h-screen bg-white px-4 pt-24 pb-16">
         <div className="max-w-5xl mx-auto">
           <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12">
             <div className="flex items-center justify-between gap-6 pb-6 border-b border-gray-100">

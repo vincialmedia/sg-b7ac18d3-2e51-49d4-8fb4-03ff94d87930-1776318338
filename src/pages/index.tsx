@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import Head from "next/head";
 import Script from "next/script";
 import Image from "next/image";
+import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Globe, Zap, Users, ArrowRight, CheckCircle, Mail, Award, TrendingUp, Target, Package, ExternalLink, Code, Gauge, Cpu, Rocket } from "lucide-react";
 
@@ -172,7 +173,7 @@ export default function Home() {
       
       <main className="min-h-screen bg-white overflow-x-hidden">
         {/* Hero Section */}
-        <section ref={heroRef} className="relative px-4 pt-6 pb-20 md:pt-8 md:pb-32 min-h-screen flex items-center">
+        <section ref={heroRef} className="relative px-4 pt-20 pb-20 md:pt-24 md:pb-32 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto w-full">
             <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16 mt-6">
               <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
@@ -543,7 +544,7 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section className="px-4 py-20 relative bg-gray-50">
+        <section id="contact" className="px-4 py-20 relative bg-gray-50">
           <div className="max-w-7xl mx-auto">
             <div className="w-[90%] mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-12 text-center">
               <div className="space-y-8">
@@ -563,7 +564,9 @@ export default function Home() {
         <footer className="px-4 py-12 relative border-t border-gray-200">
           <div className="max-w-7xl mx-auto">
             <div className="w-[90%] mx-auto text-center">
-              <h3 className="text-3xl font-bold text-black mb-4">Vincialmedia</h3>
+              <Link href="/" className="inline-block">
+                <h3 className="text-3xl font-bold text-black mb-4 hover:text-red-600 transition-colors duration-300">Vincialmedia</h3>
+              </Link>
               <p className="text-gray-600 mb-6">Fortschrittliche Digitale Architektur • Performance Engineering • Strategische Innovation</p>
               <div className="flex justify-center gap-3 flex-wrap">
                 <Badge className="bg-gray-100 text-black border-gray-200">Fortschrittliches Webdesign</Badge>
