@@ -175,7 +175,7 @@ export default function CerisaPage() {
 
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="px-4 pt-6 pb-12 md:pt-8 md:pb-16 min-h-[85vh] md:min-h-[75vh] flex items-center">
+        <section className="px-4 pt-24 pb-12 md:pt-28 md:pb-16 min-h-[85vh] md:min-h-[75vh] flex items-center">
           <div className="max-w-7xl mx-auto w-full">
             <div className="w-[90%] mx-auto bg-white border border-[#E8E1D5] rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16">
               <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
